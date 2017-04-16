@@ -1,0 +1,31 @@
+﻿#capturefor(pageTitle)微课堂#end
+
+<ol class="breadcrumb">
+    <li class="active">雨露微课堂</li>
+</ol>
+
+<div class="left-container">
+    <ul class="nav nav-tabs" role="tablist">
+        #foreach($item in ${schoolTermList})
+        <li role="presentation" #if(${item.ID} == ${params.STID}) class="active" #end><a href="Video.do?stID=$!{item.ID}">$!{item.Name}</a></li>
+        #end
+    </ul>
+
+    #if(${videoList.Count} > 0) 
+    <div class="row" style="width:99%;">
+		#foreach($item in ${videoList})
+        <div class="col-sm-3">
+            <div class="thumbnail">
+                <img data-src="holder.js/300x300" alt="$!{item.Title}" src="$!{item.CoversUrl}"/>
+                <div class="caption text-center" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;-o-text-overflow:ellipsis;">
+                    <a href="VideoDetail.do?pageIndex=$!{params.PageIndex}&videoID=$!{item.ID}">$!{item.Title}--<strong>$!{item.SchoolTermName}</strong></a>
+                </div>
+            </div>
+        </div>
+        #end
+    </div>
+    <ul class="pagination">
+        $!{ltlShowPager}
+    </ul>
+    #end
+</div>

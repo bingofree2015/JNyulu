@@ -1,0 +1,27 @@
+﻿        #if(${syllabusList.Count} > 0)
+        <table class="table table-condensed">
+          <tr class="active">
+            <th>学员编号</th>
+            <th>姓名</th>
+            <th>班级</th>
+            <th>课表路径</th>
+            <th colspan="2">操 作</th>
+          </tr>        
+          #foreach($item in ${syllabusList})
+          <input type="hidden" name="employeeID" value="$!{item.EmployeeID}"/>
+          <input type="hidden" name="stID" value="$!{item.STID}"/>
+          <tr>
+            <td>$!{item.Name}</td>
+            <td>$!{item.TrueName}</td>
+            <td>$!{item.SchoolTermName}</td>
+            <td><input class="form-control-sm input-sm" name="syllabusUrl" type="text" style="width:240px;" value="$!{item.SyllabusUrl}" /></td>
+            <td><input type="checkbox" name="syllabusID" id="syllabusID$!{item.ID}" value="$!{item.ID}"/></td>
+            <td>#if(${item.SyllabusUrl}) <a href="${item.SyllabusUrl}"><span class="glyphicon glyphicon-download-alt"></span></a>  #end</td>
+          </tr>
+          #end
+        </table>
+		<ul class="pagination">
+		    $!{ltlShowPager}
+		</ul>
+        <p class="text-right"><input class="btn btn-success" type="button" name="btnSave" id="btnSave" value="保存学生课表" onclick="PostSave();" /></p>
+        #end

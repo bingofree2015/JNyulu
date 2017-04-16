@@ -1,0 +1,53 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostCreateMessage() {
+        var key = ["subject", "issue"];
+        $("#btnCreateMessage").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostCreateMessage.do", info, function (result) {
+            alert(result.message);
+            if (result.code > 0) {
+                $("#btnCreateMessage").removeAttr("disabled").val("我要留言");
+            }
+            location.replace("Message.do?pageIndex=$!{params.PageIndex}");
+        }, "json");
+
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="message.do?pageIndex=$!{params.PageIndex}">我的留言</a></li>
+    <li class="active">我要留言</li>
+</ol>
+
+<div class="form-container">
+    <form method="post" class="form-horizontal" target="_self" id="MessageForm" name="MessageForm" action="PostCreateMessage.do">
+        <div class="form-group">
+            <label class="control-label col-sm-3">留言标题：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="subject" id="subject" type="text" />
+            </div>
+        </div>
+        <span class="help-block" id="subjectTip"></span>
+        <div class="form-group">
+            <label class="control-label col-sm-3">留言内容：</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="issue" id="issue"></textarea>
+            </div>
+        </div>
+        <span class="form-block" id="issueTip"></span>
+        <div class="form-right">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button class="btn btn-success btn-block" name="btnCreateMessage" id="btnCreateMessage" type="button" value="我要留言" onclick="PostCreateMessage();">我要留言</button>
+            </div>
+        </div>
+    </form>
+</div>
+

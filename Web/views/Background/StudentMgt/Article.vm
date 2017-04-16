@@ -1,0 +1,27 @@
+﻿#capturefor(pageTitle)小班信息管理#end
+
+<ol class="breadcrumb">
+    <li class="active">答案下载</li>
+</ol>
+
+<div class="left-container">
+    <table class="table table-condensed">
+        <tr class="active">
+            <th>编号</th>
+            <th>标 题</th>
+            <th>日 期</th>
+            <th>操作</th>
+        </tr>
+        #foreach($item in ${articleList})
+        <tr>
+            <td>$!{item.ID}</td>
+            <td>$!{item.Subject}</td>
+            <td>$!{item.RecordDate.ToString("yyyy-MM-dd")}</td>
+            <td><a href="ArticleDetail.do?catalogID=$!{item.CatalogID}&pageIndex=$!{params.PageIndex}&articleID=$!{item.ID}">详细内容</a></td>
+        </tr>
+        #end
+    </table>
+    <ul class="pagination pagination-sm">
+        $!{ltlShowPager}
+    </ul>
+</div>

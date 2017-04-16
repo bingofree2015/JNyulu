@@ -1,0 +1,3 @@
+﻿#foreach($item in ${schoolMasterList})
+<input type="checkbox" name="schoolMaster" id="schoolMaster$!{item.ID}" value="$!{item.ID}"/>$!{item.Name} 
+#end

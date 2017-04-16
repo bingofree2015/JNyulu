@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : DeviceToken
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="DeviceToken" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.DeviceToken" />
+  </alias>
+  <parameterMaps>
+    <parameterMap class="map" id="devicetokenregisterInfo-insert-params">
+      <parameter property="ClientID" column="clientID"  direction="Input" dbType="NVarChar"/>
+      <parameter property="UserID" column="userID"  direction="Input" dbType="Int"/>
+      <parameter property="Token" column="token"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Platform" column="platform"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Ver" column="ver"  direction="Input" dbType="NVarChar"/>
+      <parameter property="UpdateTime" column="updateTime"  direction="Input" dbType="DateTime"/>
+      
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="devicetokenregisterInfo-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>  
+  <statements>
+
+    <select id="GetDeviceTokenByID" parameterClass="int" resultClass="DeviceToken">
+      <![CDATA[ 
+      SELECT 
+	      [ID],
+	      [ClientID],
+	      [UserID],
+	      [Token],
+	      [Platform],
+	      [Ver],
+	      [UpdateTime],
+	      [RegisterTime]
+      FROM DeviceToken
+      WHERE DeviceToken.ID = #value# ]]>
+    </select>
+
+    <select id="GetDeviceToken" parameterClass="map" resultClass="DeviceToken">
+      <![CDATA[ 
+      SELECT
+	      [ID],
+	      [ClientID],
+	      [UserID],
+	      [Token],
+	      [Platform],
+	      [Ver],
+	      [UpdateTime],
+	      [RegisterTime]
+      FROM DeviceToken ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="Platform">
+          <![CDATA[ DeviceToken.Platform = #Platform# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Token">
+          <![CDATA[ DeviceToken.Token = #Token# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="UserID">
+          <iterate property="UserID" open="(" close=")" conjunction="OR">
+            <![CDATA[ UserID=#UserID[]# ]]>
+          </iterate>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <procedure id="InsertDeviceToken" resultClass="int" parameterMap="devicetokenregisterInfo-insert-params">
+      InsertDeviceToken
+    </procedure>
+
+    <procedure id="PaginatedDeviceToken" resultClass="DeviceToken" parameterMap="devicetokenregisterInfo-paginated-params">
+      PaginatedDeviceToken
+    </procedure>
+
+    <update id="UpdateDeviceToken" parameterClass="DeviceToken">
+      <![CDATA[ 
+      UPDATE DeviceToken
+      SET 
+	      [ClientID] = #ClientID#, 
+	      [UserID] = #UserID#, 
+	      [Token] = #Token#, 
+	      [Platform] = #Platform#, 
+	      [Ver] = #Ver#, 
+	      [UpdateTime] = #UpdateTime#
+      WHERE  DeviceToken.ID = #ID# 
+      ]]>
+    </update>
+
+    <delete id="DeleteDeviceTokenByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM DeviceToken
+      WHERE DeviceToken.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

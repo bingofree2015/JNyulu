@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.Common.Logging.Log4Net.dll
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.Common.Logging.Log4Net.pdb
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.Common.Logging.Log4Net\obj\Debug\IBatisNet.Common.Logging.Log4Net.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.Common.Logging.Log4Net\obj\Debug\IBatisNet.Common.Logging.Log4Net.dll
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.Common.Logging.Log4Net\obj\Debug\IBatisNet.Common.Logging.Log4Net.pdb

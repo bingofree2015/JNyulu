@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.Common.dll
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.Common.pdb
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.Common\obj\Debug\IBatisNet.Common.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.Common\obj\Debug\IBatisNet.Common.dll
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.Common\obj\Debug\IBatisNet.Common.pdb

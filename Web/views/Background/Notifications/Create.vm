@@ -1,0 +1,83 @@
+﻿#capturefor(pageTitle)新增小班#end
+
+#capturefor(includeCode)
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(function () {
+
+        //接收表单验证通过的事件
+        jq('#createForm').bind('valid.form', function () {
+            jq.ajax({
+                url: 'PostCreate.do',
+                type: 'POST',
+                dataType: "json",
+                data: jq(this).serialize(),
+                success: function (result) {
+                    alert(result.message);
+                    if (result.code > 0) {
+                        location.replace("List.do?pageIndex=$!{params.PageIndex}");
+                    }
+                }
+            });
+        });
+    })
+
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?pageIndex=$!{params.PageIndex}">网站信息发布</a></li>
+    <li class="active">发布推送消息</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="createForm" name="createForm" autocomplete="off">
+        <div class="form-group">
+            <label class="control-label col-sm-3">消息标题：</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="title" id="title" data-rule="消息标题:required;length[5~]" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">消息内容：</label>
+            <div class="col-sm-9">
+                <textarea name="body" id="body" cols="3" class="form-control" data-rule="消息内容:required;length[10~]"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">接收者：</label>
+            <div class="col-sm-9">
+                <textarea name="receivers" id="receivers" cols="3" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">平　　台：</label>
+            <div class="col-sm-9">
+                <label class="checkbox-inline" for="platform0">
+                    <input type="checkbox" name="platform" id="platform0" value="iphone">苹果</label>
+                <label class="checkbox-inline" for="platform1">
+                    <input type="checkbox" name="platform" id="platform1" value="android">安卓</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">报名班级：</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="schoolTermID" id="schoolTermID">
+                    <option value="0" >所有人</option>
+                    #foreach($item in ${schoolTermList})
+                    <option value="$!{item.ID}">$!{item.Name}</option>
+                    #end
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input class="btn btn-success btn-block" type="submit" name="btnCreate" id="btnCreate" value="推送消息" />
+            </div>
+        </div>
+    </form>
+</div>

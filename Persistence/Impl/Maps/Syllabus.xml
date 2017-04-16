@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Syllabus
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Syllabus" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Syllabus" />
+  </alias>
+  <resultMaps>
+    <resultMap id="SyllabusBaseResult" class="Syllabus">
+      <result property="ID" column="ID"  des="" /> 
+      <result property="EmployeeID" column="EmployeeID"  des="学生ID" />
+      <result property="STID" column="STID"  des="班级ID" />
+      <result property="SyllabusUrl" column="SyllabusUrl"  des="试卷路径" />
+      <result property="CreateTime" column="CreateTime"  des="创建日期" /> 
+    </resultMap>
+
+    <resultMap id="SyllabusResult" class="Syllabus" extends="SyllabusBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="syllabus-insert-params">
+      <parameter property="EmployeeID" column="employeeID"  direction="Input" dbType="Int" />
+      <parameter property="STID" column="stID"  direction="Input" dbType="Int" />
+      <parameter property="SyllabusUrl" column="testPaperUrl"  direction="Input" dbType="NVarChar" />
+
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="syllabus-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetBaseSyllabus" parameterClass="Syllabus" resultMap="SyllabusBaseResult">
+      <![CDATA[ 
+      SELECT 
+        Syllabus.ID AS ID,
+        Syllabus.EmployeeID AS EmployeeID, 
+        Syllabus.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        Syllabus.SyllabusUrl AS SyllabusUrl,
+        Syllabus.CreateTime AS CreateTime
+      FROM Syllabus INNER JOIN SchoolTerm ON SchoolTerm.ID = Syllabus.STID
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ Syllabus.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ Syllabus.STID = #STID# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseSyllabusByID" parameterClass="string" resultMap="SyllabusBaseResult">
+      <![CDATA[
+      SELECT
+        Syllabus.ID AS ID,
+        Syllabus.EmployeeID AS EmployeeID, 
+        Syllabus.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        Syllabus.SyllabusUrl AS SyllabusUrl,
+        Syllabus.CreateTime AS CreateTime
+     FROM Syllabus INNER JOIN SchoolTerm ON SchoolTerm.ID = Syllabus.STID
+     WHERE Syllabus.ID = #value# ]]>
+    </select>
+
+    <select id="GetSyllabus" parameterClass="map" resultClass="Syllabus">
+      <![CDATA[ 
+      SELECT 
+        Syllabus.ID AS ID,
+        Syllabus.EmployeeID AS EmployeeID,
+        Employee.Name AS EmployeeName,         
+        Syllabus.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        SchoolTerm.Name AS SchoolTermName, 
+        Syllabus.SyllabusUrl AS SyllabusUrl,
+        Syllabus.CreateTime AS CreateTime
+      FROM Syllabus 
+      INNER JOIN  Employee ON Syllabus.EmployeeID = Employee.ID 
+      INNER JOIN  SchoolTerm ON Syllabus.STID = SchoolTerm.ID      
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ Syllabus.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ STID = #STID# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetSyllabusByID" parameterClass="string" resultMap="SyllabusResult">
+      <![CDATA[ 
+      SELECT
+        Syllabus.ID AS ID,
+        Syllabus.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        Syllabus.EmployeeID AS EmployeeID, 
+        Syllabus.SyllabusUrl AS SyllabusUrl,
+        Syllabus.CreateTime AS CreateTime
+     FROM Syllabus INNER JOIN SchoolTerm ON SchoolTerm.ID = Syllabus.STID
+     WHERE Syllabus.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertSyllabus" resultClass="int" parameterMap="syllabus-insert-params">
+      InsertSyllabus
+    </procedure>
+
+    <procedure id="PaginatedSyllabus" resultClass="Syllabus" parameterMap="syllabus-paginated-params">
+      PaginatedSyllabus
+    </procedure>
+
+    <update id="UpdateSyllabus" parameterClass="Syllabus">
+      <![CDATA[ 
+      UPDATE Syllabus
+      SET 
+        EmployeeID = #EmployeeID#, 
+        STID = #STID#,
+        SyllabusUrl = #SyllabusUrl#
+      WHERE  Syllabus.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteSyllabusByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Syllabus WHERE Syllabus.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

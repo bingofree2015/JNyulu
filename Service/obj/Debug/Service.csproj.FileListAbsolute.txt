@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\JNyuluSoft.Service.dll
+C:\project\NET\JNyuluV3.0\Lib\JNyuluSoft.Service.pdb
+C:\project\NET\JNyuluV3.0\Service\obj\Debug\Service.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\Service\obj\Debug\JNyuluSoft.Service.dll
+C:\project\NET\JNyuluV3.0\Service\obj\Debug\JNyuluSoft.Service.pdb

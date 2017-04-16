@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:20
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Assessment
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Assessment" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Assessment" />
+  </alias>
+  <resultMaps>
+    <resultMap id="AssessmentBaseResult" class="Assessment">
+      <result property="ID" column="ID"  des="自增型ID" />
+      <result property="STID" column="STID"  des="班级ID" />
+      <result property="EmployeeID" column="EmployeeID"  des="学生ID" /> 
+      <result property="TrueName" column="TrueName"  des="学生姓名" /> 
+      <result property="DisciplineRank" column="DisciplineRank"  des="纪律评价" /> 
+      <result property="IntegrateRank" column="IntegrateRank"  des="综合评价" /> 
+      <result property="Judgment" column="Judgment"  des="评语" />
+      <result property="RecordDate" column="RecordDate"  des="创建日期" />
+    </resultMap>
+
+    <resultMap id="AssessmentResult" class="Assessment" extends="AssessmentBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="assessment-insert-params">
+      <parameter property="STID" column="stid"  direction="Input" dbType="Int" />
+      <parameter property="EmployeeID" column="employeeID"  direction="Input" dbType="Int" />
+      <parameter property="TrueName" column="trueName"  direction="Input" dbType="NVarChar" />
+      <parameter property="DisciplineRank" column="disciplineRank"  direction="Input" dbType="NVarChar" />
+      <parameter property="IntegrateRank" column="integrateRank"  direction="Input" dbType="NVarChar" />
+      <parameter property="Judgment" column="judgment"  direction="Input" dbType="NVarChar" />
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    
+    <parameterMap class="map" id="assessment-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  
+  <statements>
+    <select id="GetBaseAssessment" parameterClass="Assessment" resultMap="AssessmentBaseResult">
+      <![CDATA[ 
+      SELECT
+        Assessment.ID AS ID,
+        Assessment.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        Assessment.EmployeeID AS EmployeeID, 
+        Assessment.TrueName AS TrueName,
+        Assessment.DisciplineRank AS DisciplineRank,
+        Assessment.IntegrateRank AS IntegrateRank,
+        Assessment.Judgment AS Judgment,
+        Assessment.RecordDate AS RecordDate
+      FROM Assessment INNER JOIN SchoolTerm ON SchoolTerm.ID = Assessment.STID]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ Assessment.STID = #STID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ Assessment.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseAssessmentByID" parameterClass="string" resultMap="AssessmentBaseResult">
+      <![CDATA[ 
+      SELECT 
+        Assessment.ID AS ID, 
+        Assessment.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        Assessment.EmployeeID AS EmployeeID,
+        Assessment.TrueName AS TrueName,
+        Assessment.DisciplineRank AS DisciplineRank,
+        Assessment.IntegrateRank AS IntegrateRank,
+        Assessment.Judgment AS Judgment, 
+        Assessment.RecordDate AS RecordDate
+      FROM Assessment INNER JOIN SchoolTerm ON SchoolTerm.ID = Assessment.STID
+      WHERE Assessment.ID = #value# ]]>
+    </select>
+
+    <select id="GetAssessment" parameterClass="Assessment" resultClass="Assessment">
+      <![CDATA[ 
+      SELECT 
+        Assessment.ID AS ID, 
+        Assessment.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        Assessment.EmployeeID AS EmployeeID,
+        Assessment.TrueName AS TrueName,
+        Assessment.DisciplineRank AS DisciplineRank, 
+        Assessment.IntegrateRank AS IntegrateRank, 
+        Assessment.Judgment AS Judgment,
+        Assessment.RecordDate AS RecordDate
+      FROM Assessment INNER JOIN SchoolTerm ON SchoolTerm.ID = Assessment.STID]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ Assessment.STID = #STID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ Assessment.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetAssessmentByID" parameterClass="string" resultMap="AssessmentResult">
+      <![CDATA[ 
+      SELECT 
+        Assessment.ID AS ID, 
+        Assessment.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,        
+        Assessment.EmployeeID AS EmployeeID, 
+        Assessment.TrueName AS TrueName, 
+        Assessment.DisciplineRank AS DisciplineRank, 
+        Assessment.IntegrateRank AS IntegrateRank,
+        Assessment.Judgment AS Judgment, 
+        Assessment.RecordDate AS RecordDate
+      FROM Assessment INNER JOIN SchoolTerm ON SchoolTerm.ID = Assessment.STID
+      WHERE Assessment.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertAssessment" resultClass="int" parameterMap="assessment-insert-params">
+      InsertAssessment
+    </procedure>
+
+    <procedure id="PaginatedAssessment" resultClass="Assessment" parameterMap="assessment-paginated-params">
+      PaginatedAssessment
+    </procedure>
+
+    <update id="UpdateAssessment" parameterClass="Assessment">
+      <![CDATA[ 
+      UPDATE Assessment
+      SET
+        STID = #STID#,
+        EmployeeID = #EmployeeID#,
+        TrueName = #TrueName#, 
+        DisciplineRank = #DisciplineRank#,
+        IntegrateRank = #IntegrateRank#, 
+        Judgment = #Judgment#
+      WHERE  Assessment.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteAssessmentByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Assessment
+      WHERE Assessment.ID = #value# 
+      ]]>
+    </delete>
+  </statements>
+</sqlMap>

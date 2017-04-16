@@ -1,0 +1,20 @@
+﻿#capturefor(pageTitle)班级考评#end
+
+<ol class="breadcrumb">
+    <li class="active">班级考评</li>
+</ol>
+
+<div class="left-container">
+    #foreach($item in ${registrationList})
+    <h4>$!{item.SchoolTermName}</h4>
+    <table class="table table-bordered">
+        <tr>
+            <th rowspan="2" class="text-center">考评</th>
+            <td>$!{item.Judgment}</td>
+        </tr>
+        <tr>
+            <td class="text-right">$!{item.RecordDate.ToString("yyyy-MM-dd hh:mm:ss")}</td>
+        </tr>
+    </table>
+    #end
+</div>

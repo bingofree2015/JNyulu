@@ -1,0 +1,25 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+<link href="/resources/web/css/jnyulu.css" rel="stylesheet" type="text/css" />
+#end
+
+#parse("shared/head.vm")
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 left-context">
+            <div class="panel-box">
+                <dl>
+                    <dt><span class="title">$!{catalog.Name}</span></dt>
+                    #foreach($item in ${articleList})
+                    <dd class="#if(${velocityCount}%2 == 0) active #end"><a href="article.do?articleID=$!{item.ID}">$!{item.Subject}</a>$!{item.RecordDate}</dd>
+                    #end
+                </dl>
+                <ul class="pagination">$!{ltlShowPager}</ul>
+            </div>
+        </div>
+        <div class="col-md-3 right-nav">
+        </div>
+    </div>
+</div>
+#parse("shared/footer.vm")

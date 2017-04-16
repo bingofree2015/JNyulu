@@ -1,0 +1,43 @@
+﻿#capturefor(pageTitle)分类管理#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostEdit() {
+        $("#btnEditCatalog").attr("disabled", "disabled").val("处理中,请稍候...");
+
+        var key = ["CatalogID", "name"];
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostEdit.do", info, function (r) {
+            alert(r.message);
+            $("#btnEditCatalog").removeAttr("disabled").val("修改分类");
+            if (r.code > 0) {
+                location.replace("List.do?moduleCn=$!{catalog.ModuleCn}&fatherID=$!{catalog.FatherID}");
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?moduleCn=$!{catalog.ModuleCn}">分类管理</a></li>
+    <li class="active">修改分类</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="CatalogForm" name="CatalogForm" action="PostEdit.do">
+        <input type="hidden" name="CatalogID" id="CatalogID" value="$!{catalog.ID}" />
+        <div class="input-group">
+            <span class="input-group-addon">分类名称：</span>
+            <input type="text" class="form-control" name="name" id="name" value="$!{catalog.Name}" />
+            <span class="input-group-btn">
+                <button class="btn btn-success" name="btnEditCatalog" id="btnEditCatalog" type="button" value="修改分类" onclick="PostEdit();">
+                    <span class="glyphicon glyphicon-save"></span>修改分类
+                </button>
+            </span>
+        </div>
+    </form>
+</div>

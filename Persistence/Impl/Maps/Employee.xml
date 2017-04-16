@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Employee
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Employee" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Employee" />
+  </alias>
+  <resultMaps>
+    <resultMap id="EmployeeBaseResult" class="Employee">
+      <result property="ID" column="ID"  des="自增型ID" /> 
+      <result property="UserType" column="UserType"  des="用户类型：0:学生;1:教师;2:管理人员" /> 
+      <result property="Name" column="Name"  des="用户名或学号" /> 
+      <result property="PassWord" column="PassWord"  des="密码" /> 
+      <result property="TrueName" column="TrueName"  des="" />
+      <result property="Mobile" column="Mobile"  des="手机号码" />
+      <result property="Phone" column="Phone"  des="联系电话" />
+      <result property="Permission" column="Permission"  des="权限" /> 
+      <result property="Description" column="Description"  des="描述(课程管理员、销售专员、出纳人员、业务分析员、系统管理员)" />
+      <result property="Locked" column="Locked"  des="0:未锁定;1锁定" />
+      <result property="LastLoginDate" column="LastLoginDate"  des="最后登录日期" />
+      <result property="LoginDate" column="LoginDate"  des="" />
+      <result property="RecordDate" column="RecordDate"  des="创建日期" /> 
+    </resultMap>
+
+    <resultMap id="EmployeeResult" class="Employee" extends="EmployeeBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="employee-insert-params">
+      <parameter property="UserType" column="userType"  direction="Input" dbType="TinyInt" />
+      <parameter property="Name" column="name"  direction="Input" dbType="NVarChar" />
+      <parameter property="PassWord" column="passWord"  direction="Input" dbType="NVarChar" />
+      <parameter property="TrueName" column="trueName"  direction="Input" dbType="NVarChar" />
+      <parameter property="Mobile" column="mobile"  direction="Input" dbType="NVarChar" />
+      <parameter property="Phone" column="phone"  direction="Input" dbType="NVarChar" />
+      <parameter property="Permission" column="permission"  direction="Input" dbType="Int" />
+      <parameter property="Description" column="description"  direction="Input" dbType="NVarChar" />
+
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+
+    <parameterMap class="map" id="verify-params">
+      <parameter property="name" column="name"  direction="Input" dbType="NVarChar" />
+      <parameter property="passWord" column="passWord"  direction="Input" dbType="NVarChar" />
+
+      <parameter property="id" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    
+    <parameterMap class="map" id="employee-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetBaseEmployee" parameterClass="Employee" resultClass="Employee">
+      <![CDATA[ 
+      SELECT 
+        Employee.ID AS ID, 
+        Employee.UserType AS UserType, 
+        Employee.Name AS Name,
+        Employee.PassWord AS PassWord,
+        Employee.TrueName AS TrueName,
+        Employee.Mobile AS Mobile,
+        Employee.Phone AS Phone,
+        Employee.Permission AS Permission, 
+        Employee.Description AS Description,
+        Employee.Locked AS Locked,
+        Employee.RecordDate AS RecordDate
+      FROM Employee ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="UserType">
+          <![CDATA[ Employee.UserType = #UserType# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ Employee.Name = #Name# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="PassWord">
+          <![CDATA[ Employee.PassWord = #PassWord# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="TrueName">
+          <![CDATA[ Employee.TrueName = #TrueName# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Permission">
+          <![CDATA[ Employee.Permission = #Permission# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseEmployeeByID" parameterClass="string" resultMap="EmployeeBaseResult">
+      <![CDATA[
+      SELECT 
+        Employee.ID AS ID, 
+        Employee.UserType AS UserType, 
+        Employee.Name AS Name, 
+        Employee.PassWord AS PassWord,
+        Employee.TrueName AS TrueName,
+        Employee.Mobile AS Mobile,
+        Employee.Phone AS Phone, 
+        Employee.Permission AS Permission,
+        Employee.Description AS Description,
+        Employee.Locked AS Locked,
+        Employee.LastLoginDate AS LastLoginDate,
+        Employee.LoginDate AS LoginDate,
+        Employee.RecordDate AS RecordDate
+      FROM Employee
+      WHERE Employee.ID = #value# ]]>
+    </select>
+
+    <select id="GetEmployee" parameterClass="Employee" resultMap="EmployeeResult">
+      <![CDATA[ 
+      SELECT
+        Employee.ID AS ID,
+        Employee.UserType AS UserType, 
+        Employee.Name AS Name,
+        Employee.PassWord AS PassWord,
+        Employee.TrueName AS TrueName,
+        Employee.Mobile AS Mobile,        
+        Employee.Phone AS Phone,
+        Employee.Permission AS Permission,
+        Employee.Description AS Description,
+        Employee.Locked AS Locked,
+        Employee.LastLoginDate AS LastLoginDate,
+        Employee.LoginDate AS LoginDate, 
+        Employee.RecordDate AS RecordDate
+      FROM Employee ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="UserType">
+          <![CDATA[ Employee.UserType = #UserType# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ Employee.Name = #Name# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="PassWord">
+          <![CDATA[ Employee.PassWord = #PassWord# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="TrueName">
+          <![CDATA[ Employee.TrueName = #TrueName# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Permission">
+          <![CDATA[ Employee.Permission = #Permission# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetEmployeeByID" parameterClass="string" resultMap="EmployeeResult">
+      <![CDATA[
+      SELECT
+        Employee.ID AS ID, 
+        Employee.UserType AS UserType, 
+        Employee.Name AS Name,
+        Employee.PassWord AS PassWord,
+        Employee.TrueName AS TrueName,
+        Employee.Mobile AS Mobile,        
+        Employee.Phone AS Phone,
+        Employee.Permission AS Permission, 
+        Employee.Description AS Description,
+        Employee.Locked AS Locked,
+        Employee.LastLoginDate AS LastLoginDate,
+        Employee.LoginDate AS LoginDate,
+        Employee.RecordDate AS RecordDate
+      FROM Employee
+      WHERE Employee.ID = #value# ]]>
+    </select>
+
+    <select id="GetEmployeeByNames" parameterClass="map" resultMap="EmployeeResult">
+      <![CDATA[ 
+      SELECT
+        Employee.ID AS ID, 
+        Employee.UserType AS UserType, 
+        Employee.Name AS Name,
+        Employee.PassWord AS PassWord,
+        Employee.TrueName AS TrueName,
+        Employee.Mobile AS Mobile,        
+        Employee.Phone AS Phone,
+        Employee.Permission AS Permission, 
+        Employee.Description AS Description,
+        Employee.Locked AS Locked,
+        Employee.LastLoginDate AS LastLoginDate,
+        Employee.LoginDate AS LoginDate,
+        Employee.RecordDate AS RecordDate
+      FROM Employee
+      ]]>
+      <dynamic prepend="WHERE">
+        <iterate property="Names" open="(" close=")" conjunction="OR">
+          <![CDATA[ Name=#Names[]# ]]>
+        </iterate>
+      </dynamic>
+    </select>
+    
+    <select id="GetEmployeeByName" parameterClass="string" resultMap="EmployeeResult">
+      <![CDATA[
+      SELECT
+        Employee.ID AS ID, 
+        Employee.UserType AS UserType, 
+        Employee.Name AS Name,
+        Employee.PassWord AS PassWord,
+        Employee.TrueName AS TrueName,
+        Employee.Mobile AS Mobile,        
+        Employee.Phone AS Phone,
+        Employee.Permission AS Permission, 
+        Employee.Description AS Description,
+        Employee.Locked AS Locked,
+        Employee.LastLoginDate AS LastLoginDate,
+        Employee.LoginDate AS LoginDate,
+        Employee.RecordDate AS RecordDate
+      FROM Employee
+      WHERE Employee.Name = #value# ]]>
+    </select>
+
+    <procedure id="InsertEmployee" resultClass="int" parameterMap="employee-insert-params">
+      InsertEmployee
+    </procedure>
+
+    <procedure id="PaginatedEmployee" resultClass="Employee" parameterMap="employee-paginated-params">
+      PaginatedEmployee
+    </procedure>
+
+    <update id="UpdateEmployee" parameterClass="Employee">
+      <![CDATA[ 
+      UPDATE Employee
+      SET 
+        UserType = #UserType#, 
+        Name = #Name#,
+        PassWord = #PassWord#,
+        TrueName = #TrueName#,
+        Mobile = #Mobile#, 
+        Phone = #Phone#, 
+        Permission = #Permission#, 
+        Description = #Description#, 
+        Locked = #Locked#,
+        LastLoginDate = #LastLoginDate#, 
+        LoginDate = #LoginDate#
+      WHERE  Employee.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteEmployeeByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Employee
+      WHERE Employee.ID = #value# 
+      ]]>
+    </delete>
+
+    <procedure id="VerifyEmployee" resultClass="int" parameterMap="verify-params">
+      VerifyEmployee
+    </procedure>    
+
+  </statements>
+</sqlMap>

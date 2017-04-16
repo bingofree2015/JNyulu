@@ -1,0 +1,787 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19D5C330-9C53-4C8A-8CD6-5A613FC715FB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JNyuluSoft.Web</RootNamespace>
+    <AssemblyName>JNyuluSoft.Web</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
+    <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework.Views.NVelocity, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Castle.MonoRail.Framework.Views.NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.WindsorExtension">
+      <HintPath>..\Lib\Castle.MonoRail.WindsorExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppQRCode.aspx" />
+    <Content Include="AppQRCode.html" />
+    <Content Include="Default.aspx" />
+    <Content Include="demo.html" />
+    <Content Include="resources\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="resources\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="resources\bootstrap\css\bootstrap.css" />
+    <Content Include="resources\bootstrap\css\bootstrap.min.css" />
+    <Content Include="resources\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="resources\bootstrap\js\bootstrap.js" />
+    <Content Include="resources\bootstrap\js\bootstrap.min.js" />
+    <Content Include="resources\images\app.png" />
+    <Content Include="resources\images\close.png" />
+    <Content Include="resources\images\erweima.png" />
+    <Content Include="resources\images\fcurrent.gif" />
+    <Content Include="resources\images\loading.gif" />
+    <Content Include="resources\images\logo.gif" />
+    <Content Include="resources\images\weixin.png" />
+    <Content Include="resources\jscripts\datepicker\css\datepicker.css" />
+    <Content Include="resources\jscripts\datepicker\css\datepicker3.css" />
+    <Content Include="resources\jscripts\datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ar.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.az.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.bg.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ca.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.cs.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.cy.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.da.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.de.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.el.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.es.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.et.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.fa.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.fi.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.fr.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.gl.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.he.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.hr.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.hu.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.id.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.is.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.it.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ja.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ka.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.kk.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.kr.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.lt.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.lv.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.mk.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ms.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.nb.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.nl-BE.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.nl.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.no.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.pl.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.pt-BR.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.pt.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ro.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.rs-latin.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.rs.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ru.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.sk.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.sl.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.sq.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.sv.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.sw.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.th.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.tr.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.ua.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.vi.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.zh-CN.js" />
+    <Content Include="resources\jscripts\datepicker\js\locales\bootstrap-datepicker.zh-TW.js" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\embed.min.js" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\flowplayer.js" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\flowplayer.min.js" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\flowplayer.swf" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\index.html" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\all-skins.css" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\functional.css" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\black%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\black.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\black_rtl%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\black_rtl.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\flowplayer%402x.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\flowplayer.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_black%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_black.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_black_rtl%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_black_rtl.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_white%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_white.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_white_rtl%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\playful_white_rtl.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_black%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_black.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_black_rtl%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_black_rtl.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_white%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_white.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_white_rtl%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\play_white_rtl.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\white%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\white.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\white_rtl%40x2.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\img\white_rtl.png" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\minimalist.css" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\skin\playful.css" />
+    <Content Include="resources\jscripts\holder.min.js" />
+    <Content Include="resources\jscripts\jcarousel\jcarousel.responsive.css" />
+    <Content Include="resources\jscripts\jcarousel\jcarousel.responsive.js" />
+    <Content Include="resources\jscripts\jcarousel\jquery.jcarousel.min.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\add-on\jplayer.playlist.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\add-on\jplayer.playlist.min.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\add-on\jquery.jplayer.inspector.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\add-on\jquery.jplayer.inspector.min.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\jplayer\jquery.jplayer.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\jplayer\jquery.jplayer.min.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\jplayer\jquery.jplayer.swf" />
+    <Content Include="resources\jscripts\jPlayer\dist\popcorn\popcorn.jplayer.js" />
+    <Content Include="resources\jscripts\jPlayer\dist\popcorn\popcorn.jplayer.min.js" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\jplayer.blue.monday.css" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\jplayer.blue.monday.jpg" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\jplayer.blue.monday.seeking.gif" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\jplayer.blue.monday.video.play.png" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\mustache\jplayer.blue.monday.audio.playlist.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\mustache\jplayer.blue.monday.audio.single.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\mustache\jplayer.blue.monday.audio.stream.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\mustache\jplayer.blue.monday.video.playlist.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\blue.monday\mustache\jplayer.blue.monday.video.single.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\circle.player\bgr.jpg" />
+    <Content Include="resources\jscripts\jPlayer\skin\circle.player\buffer.png" />
+    <Content Include="resources\jscripts\jPlayer\skin\circle.player\circle.player.css" />
+    <Content Include="resources\jscripts\jPlayer\skin\circle.player\controls.jpg" />
+    <Content Include="resources\jscripts\jPlayer\skin\circle.player\progress.png" />
+    <Content Include="resources\jscripts\jPlayer\skin\circle.player\progress_sprite.jpg" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\jplayer.pink.flag.css" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\jplayer.pink.flag.jpg" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\jplayer.pink.flag.seeking.gif" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\jplayer.pink.flag.video.play.png" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\mustache\jplayer.pink.flag.audio.playlist.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\mustache\jplayer.pink.flag.audio.single.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\mustache\jplayer.pink.flag.audio.stream.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\mustache\jplayer.pink.flag.video.playlist.html" />
+    <Content Include="resources\jscripts\jPlayer\skin\pink.flag\mustache\jplayer.pink.flag.video.single.html" />
+    <Content Include="resources\jscripts\jqfloat.js" />
+    <Content Include="resources\jscripts\jquery.fixed.js" />
+    <Content Include="resources\jscripts\jquery.smartAD.js" />
+    <Content Include="resources\jscripts\plupload\i18n\bs.js" />
+    <Content Include="resources\jscripts\plupload\i18n\cs.js" />
+    <Content Include="resources\jscripts\plupload\i18n\cy.js" />
+    <Content Include="resources\jscripts\plupload\i18n\da.js" />
+    <Content Include="resources\jscripts\plupload\i18n\de.js" />
+    <Content Include="resources\jscripts\plupload\i18n\el.js" />
+    <Content Include="resources\jscripts\plupload\i18n\en.js" />
+    <Content Include="resources\jscripts\plupload\i18n\es.js" />
+    <Content Include="resources\jscripts\plupload\i18n\et.js" />
+    <Content Include="resources\jscripts\plupload\i18n\fa.js" />
+    <Content Include="resources\jscripts\plupload\i18n\fi.js" />
+    <Content Include="resources\jscripts\plupload\i18n\fr.js" />
+    <Content Include="resources\jscripts\plupload\i18n\hr.js" />
+    <Content Include="resources\jscripts\plupload\i18n\hu.js" />
+    <Content Include="resources\jscripts\plupload\i18n\hy.js" />
+    <Content Include="resources\jscripts\plupload\i18n\it.js" />
+    <Content Include="resources\jscripts\plupload\i18n\ja.js" />
+    <Content Include="resources\jscripts\plupload\i18n\ka.js" />
+    <Content Include="resources\jscripts\plupload\i18n\ko.js" />
+    <Content Include="resources\jscripts\plupload\i18n\lt.js" />
+    <Content Include="resources\jscripts\plupload\i18n\lv.js" />
+    <Content Include="resources\jscripts\plupload\i18n\nl.js" />
+    <Content Include="resources\jscripts\plupload\i18n\pl.js" />
+    <Content Include="resources\jscripts\plupload\i18n\pt_BR.js" />
+    <Content Include="resources\jscripts\plupload\i18n\ro.js" />
+    <Content Include="resources\jscripts\plupload\i18n\ru.js" />
+    <Content Include="resources\jscripts\plupload\i18n\sk.js" />
+    <Content Include="resources\jscripts\plupload\i18n\sr.js" />
+    <Content Include="resources\jscripts\plupload\i18n\sv.js" />
+    <Content Include="resources\jscripts\plupload\i18n\th_TH.js" />
+    <Content Include="resources\jscripts\plupload\i18n\tr.js" />
+    <Content Include="resources\jscripts\plupload\i18n\uk_UA.js" />
+    <Content Include="resources\jscripts\plupload\i18n\zh_CN.js" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\css\jquery.plupload.queue.css" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\backgrounds.gif" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\buttons-disabled.png" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\buttons.png" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\delete.gif" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\done.gif" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\error.gif" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\throbber.gif" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\img\transp50.png" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\jquery.plupload.queue.js" />
+    <Content Include="resources\jscripts\plupload\jquery.plupload.queue\jquery.plupload.queue.min.js" />
+    <Content Include="resources\jscripts\plupload\moxie.js" />
+    <Content Include="resources\jscripts\plupload\moxie.min.js" />
+    <Content Include="resources\jscripts\plupload\Moxie.swf" />
+    <Content Include="resources\jscripts\plupload\Moxie.xap" />
+    <Content Include="resources\jscripts\plupload\plupload.dev.js" />
+    <Content Include="resources\jscripts\plupload\plupload.full.min.js" />
+    <Content Include="resources\jscripts\plupload\plupload.min.js" />
+    <Content Include="resources\images\apk.png" />
+    <Content Include="resources\images\ios.png" />
+    <Content Include="resources\jscripts\jquery.jeditable.js" />
+    <Content Include="resources\jscripts\slider.js" />
+    <Content Include="resources\jscripts\switch\css\bootstrap2\bootstrap-switch.css" />
+    <Content Include="resources\jscripts\switch\css\bootstrap2\bootstrap-switch.min.css" />
+    <Content Include="resources\jscripts\switch\css\bootstrap3\bootstrap-switch.css" />
+    <Content Include="resources\jscripts\switch\css\bootstrap3\bootstrap-switch.min.css" />
+    <Content Include="resources\jscripts\switch\js\bootstrap-switch.js" />
+    <Content Include="resources\jscripts\switch\js\bootstrap-switch.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\upload\plugin.css" />
+    <Content Include="resources\jscripts\tinymce\plugins\upload\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\upload\upload_icon.png" />
+    <Content Include="resources\jscripts\tinymce\langs\zh_CN.js" />
+    <Content Include="resources\jscripts\tinymce\license.txt" />
+    <Content Include="resources\jscripts\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="resources\jscripts\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\example\dialog.html" />
+    <Content Include="resources\jscripts\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\media\moxieplayer.swf" />
+    <Content Include="resources\jscripts\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="resources\jscripts\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="resources\jscripts\tinymce\themes\modern\theme.min.js" />
+    <Content Include="resources\jscripts\tinymce\tinymce.min.js" />
+    <Content Include="resources\jscripts\uploadify\Change Log.txt" />
+    <Content Include="resources\jscripts\uploadify\jquery.uploadify.js" />
+    <Content Include="resources\jscripts\uploadify\jquery.uploadify.min.js" />
+    <Content Include="resources\jscripts\uploadify\license.txt" />
+    <Content Include="resources\jscripts\uploadify\uploadify-cancel.png" />
+    <Content Include="resources\jscripts\uploadify\uploadify.css" />
+    <Content Include="resources\jscripts\uploadify\uploadify.swf" />
+    <Content Include="resources\jscripts\uploadify\__MACOSX\._Change Log.txt" />
+    <Content Include="resources\jscripts\uploadify\__MACOSX\._uploadify.swf" />
+    <Content Include="resources\jscripts\validation\additional-methods.js" />
+    <Content Include="resources\jscripts\validation\additional-methods.min.js" />
+    <Content Include="resources\jscripts\validation\jquery.validate.js" />
+    <Content Include="resources\jscripts\validation\jquery.validate.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ar.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ar.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_bg.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_bg.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ca.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ca.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_cs.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_cs.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_da.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_da.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_de.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_de.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_el.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_el.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_es.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_es.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_es_AR.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_es_AR.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_et.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_et.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_eu.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_eu.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_fa.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_fa.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_fi.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_fi.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_fr.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_fr.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_gl.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_gl.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_he.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_he.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_hr.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_hr.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_hu.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_hu.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_id.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_id.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_is.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_is.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_it.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_it.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ja.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ja.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ka.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ka.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_kk.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_kk.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ko.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ko.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_lt.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_lt.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_lv.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_lv.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_my.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_my.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_nl.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_nl.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_no.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_no.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_pl.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_pl.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_pt_BR.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_pt_BR.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_pt_PT.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_pt_PT.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ro.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ro.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ru.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_ru.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_si.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_si.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sk.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sk.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sl.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sl.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sr.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sr.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sr_lat.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sr_lat.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sv.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_sv.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_th.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_th.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_tj.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_tj.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_tr.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_tr.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_uk.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_uk.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_vi.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_vi.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_zh.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_zh.min.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_zh_TW.js" />
+    <Content Include="resources\jscripts\validation\localization\messages_zh_TW.min.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_de.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_de.min.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_es_CL.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_es_CL.min.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_fi.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_fi.min.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_nl.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_nl.min.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_pt.js" />
+    <Content Include="resources\jscripts\validation\localization\methods_pt.min.js" />
+    <Content Include="resources\jscripts\validator\images\loading.gif" />
+    <Content Include="resources\jscripts\validator\images\validator_default.png" />
+    <Content Include="resources\jscripts\validator\images\validator_simple.png" />
+    <Content Include="resources\jscripts\validator\jquery.validator.css" />
+    <Content Include="resources\jscripts\validator\jquery.validator.js" />
+    <Content Include="resources\jscripts\validator\local\en.js" />
+    <Content Include="resources\jscripts\validator\local\ja.js" />
+    <Content Include="resources\jscripts\validator\local\zh_CN.js" />
+    <Content Include="resources\jscripts\validator\local\zh_TW.js" />
+    <Content Include="resources\web\css\style.css" />
+    <Content Include="resources\web\css\jnyulu.css" />
+    <Content Include="resources\web\images\about_03.jpg" />
+    <Content Include="resources\web\images\about_07.jpg" />
+    <Content Include="resources\web\images\about_10.jpg" />
+    <Content Include="resources\web\images\about_13.jpg" />
+    <Content Include="resources\web\images\about_13.png" />
+    <Content Include="resources\web\images\about_14.jpg" />
+    <Content Include="resources\web\images\about_14.png" />
+    <Content Include="resources\web\images\about_18.jpg" />
+    <Content Include="resources\web\images\about_21.jpg" />
+    <Content Include="resources\web\images\banner_01.jpg" />
+    <Content Include="resources\web\images\banner_yq.png" />
+    <Content Include="resources\web\images\news-icon.jpg" />
+    <Content Include="resources\web\images\hdtbac2.jpg" />
+    <Content Include="resources\web\images\hdtbac3.jpg" />
+    <Content Include="resources\web\images\hvideo.png" />
+    <Content Include="resources\web\images\list_07.jpg" />
+    <Content Include="resources\web\images\list_09.jpg" />
+    <Content Include="resources\web\images\list_stu.jpg" />
+    <Content Include="resources\web\images\logo.jpg" />
+    <Content Include="resources\web\images\phone-logo.jpg" />
+    <Content Include="resources\web\images\phone_07.jpg" />
+    <Content Include="resources\web\images\phone_09.jpg" />
+    <Content Include="resources\web\images\phone_11.jpg" />
+    <Content Include="resources\web\images\phone_13.jpg" />
+    <Content Include="resources\web\images\vinfo_03.jpg" />
+    <Content Include="resources\web\images\vpic.png" />
+    <Content Include="resources\web\images\video-logo.jpg" />
+    <Content Include="resources\web\images\wkt_03.jpg" />
+    <Content Include="resources\web\images\wkt_06.jpg" />
+    <Content Include="resources\web\images\wkt_11.jpg" />
+    <Content Include="resources\web\images\wkt_ct.jpg" />
+    <Content Include="resources\web\images\syllabus_bg.jpg" />
+    <Content Include="resources\web\images\yls_left.jpg" />
+    <Content Include="resources\web\images\yls_right.jpg" />
+    <Content Include="resources\web\images\yl_03.jpg" />
+    <Content Include="resources\web\images\yl_05.jpg" />
+    <Content Include="resources\web\images\yl_13.jpg" />
+    <Content Include="resources\web\images\yl_17.jpg" />
+    <Content Include="resources\web\images\yl_21.png" />
+    <Content Include="resources\web\images\yl_24.jpg" />
+    <Content Include="resources\web\images\yl_27.jpg" />
+    <Content Include="resources\web\images\about-bg.jpg" />
+    <Content Include="resources\web\images\video-bg.jpg" />
+    <Content Include="resources\web\images\yl_37.jpg" />
+    <Content Include="resources\web\images\yl_40.jpg" />
+    <Content Include="resources\web\images\yl_44.jpg" />
+    <Content Include="resources\web\images\yl_47.jpg" />
+    <Content Include="resources\web\images\yl_49.jpg" />
+    <Content Include="resources\web\images\yl_55.jpg" />
+    <Content Include="resources\web\images\yl_57.jpg" />
+    <Content Include="resources\web\images\yl_59.jpg" />
+    <Content Include="resources\web\images\yl_65.jpg" />
+    <Content Include="resources\web\js\jquery.js" />
+    <Content Include="resources\web\js\jquery2.js" />
+    <Content Include="resources\web\js\slider.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppQRCode.aspx.cs">
+      <DependentUpon>AppQRCode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AppQRCode.aspx.designer.cs">
+      <DependentUpon>AppQRCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dao.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="common-facilities.config" />
+    <Content Include="Global.asax" />
+    <Content Include="resources\images\uploadloading.gif" />
+    <Content Include="resources\jscripts\jquery.cascadingSelect.js" />
+    <Content Include="resources\jscripts\jquery.fillOptions.js" />
+    <Content Include="resources\jscripts\jquery.json.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="log4net.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\JNyuluV2.0.pubxml" />
+    <Content Include="resources\bootstrap\config.json" />
+    <Content Include="resources\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="resources\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="resources\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="resources\jscripts\flowplayer-5.5.1\LICENSE.md" />
+    <Content Include="resources\jscripts\uploadify\check-exists.php" />
+    <Content Include="resources\jscripts\uploadify\index.php" />
+    <Content Include="resources\jscripts\uploadify\uploadify.php" />
+    <Content Include="resources\jscripts\tinymce\langs\readme.md" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="resources\jscripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="resources\web\images\Thumbs.db" />
+    <None Include="SqlMap.config" />
+    <Content Include="jnyulu_iphone_dist.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="views\Web\Corp.vm" />
+    <Content Include="views\Web\Video.vm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="templates\学籍表.xls" />
+    <Content Include="templates\成绩表.xls" />
+    <Content Include="templates\考勤表.xls" />
+    <Content Include="templates\报班信息表.xls" />
+    <None Include="views\Background\BulletinBoard\Create.vm" />
+    <None Include="views\Background\Article\Create.vm" />
+    <None Include="views\Background\Catalog\List.vm" />
+    <None Include="views\Background\Catalog\Edit.vm" />
+    <None Include="views\Background\BulletinBoard\Edit.vm" />
+    <None Include="views\Background\BulletinBoard\List.vm" />
+    <None Include="views\Background\Article\List.vm" />
+    <None Include="views\Background\Article\Edit.vm" />
+    <Content Include="views\Background\Employee\XHrList.vm" />
+    <None Include="views\Background\Message\List.vm" />
+    <None Include="views\Background\Message\Edit.vm" />
+    <None Include="views\Background\PhotoGraph\List.vm" />
+    <None Include="views\Background\PhotoGraph\Create.vm" />
+    <None Include="views\Background\PhotoGraph\Edit.vm" />
+    <Content Include="views\Background\Video\Edit.vm" />
+    <Content Include="views\Background\Video\Create.vm" />
+    <Content Include="views\Background\Video\List.vm" />
+    <Content Include="views\Background\Registration\Main.vm" />
+    <Content Include="views\Background\Registration\XHrList.vm">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="views\Background\Registration\Edit.vm" />
+    <Content Include="views\Background\Registration\Assessment.vm" />
+    <Content Include="views\Background\Registration\Refund.vm" />
+    <None Include="views\Background\ReportCard\ImportExcel.vm" />
+    <None Include="views\Background\ReportCard\XHrList.vm" />
+    <Content Include="views\Background\ReportCard\UploadTestPaper.vm" />
+    <None Include="views\Background\Employee\ImportExcel.vm" />
+    <Content Include="views\Background\Employee\Create.vm" />
+    <Content Include="views\Background\Employee\List.vm" />
+    <Content Include="views\Background\Registration\Create.vm" />
+    <Content Include="views\Background\Registration\Build.vm" />
+    <Content Include="views\Background\Registration\ImportExcel.vm" />
+    <Content Include="views\Background\Syllabus\ImportExcel.vm" />
+    <Content Include="views\Background\Syllabus\List.vm" />
+    <Content Include="views\Background\Syllabus\UploadSyllabus.vm" />
+    <Content Include="views\Background\Syllabus\XHrList.vm" />
+    <Content Include="views\Background\StudentMgt\Notification.vm" />
+    <Content Include="views\Background\ScheNotice\ImportExcel.vm" />
+    <Content Include="views\Background\ScheNotice\List.vm" />
+    <None Include="views\Helper\GradeList.vm" />
+    <None Include="views\Background\ReportCard\List.vm" />
+    <None Include="views\Background\Campus\List.vm" />
+    <None Include="views\Background\SchoolRoom\List.vm" />
+    <None Include="views\Background\SchoolTerm\Edit.vm" />
+    <None Include="views\Background\Home\WeekPeriod.vm" />
+    <None Include="views\Background\SchoolRoom\Edit.vm" />
+    <None Include="views\Background\Campus\Edit.vm" />
+    <None Include="views\Background\Grade\List.vm" />
+    <None Include="views\Background\Grade\Edit.vm" />
+    <None Include="views\Background\Home\Index.vm" />
+    <None Include="views\Background\Home\Welcome.vm" />
+    <None Include="views\Background\Home\EditAccount.vm" />
+    <None Include="views\Background\Home\Login.vm" />
+    <None Include="views\Helper\SchoolRoomList.vm" />
+    <None Include="views\Helper\CampusList.vm" />
+    <None Include="views\Helper\SchoolTermList.vm" />
+    <None Include="views\Helper\LearingGroupList.vm" />
+    <None Include="views\Helper\LearingGroupCheckList.vm" />
+    <Content Include="views\Helper\EmployeeCheckList.vm" />
+    <Content Include="views\Helper\CatalogList.vm" />
+    <None Include="views\Layouts\default.vm" />
+    <None Include="views\Background\SchoolTerm\Create.vm" />
+    <None Include="views\Background\SchoolTerm\List.vm" />
+    <Content Include="views\Web\ScheNotice.vm" />
+    <None Include="views\Web\Index.vm" />
+    <Content Include="views\Web\ScheNoticeList.vm" />
+    <None Include="views\Web\List.vm" />
+    <None Include="views\Web\Article.vm" />
+    <None Include="views\Web\CreateMessage.vm" />
+    <None Include="views\Web\CreateRegistration.vm" />
+    <Content Include="views\Background\Notifications\List.vm" />
+    <Content Include="views\Background\Notifications\Create.vm" />
+    <Content Include="views\Background\Notifications\Edit.vm" />
+    <Content Include="views\Web\Mobile.vm" />
+    <Content Include="views\Web\VideoList.vm" />
+    <None Include="views\Background\Security\List.vm" />
+    <None Include="views\Background\Security\Edit.vm" />
+    <None Include="views\Background\Security\Create.vm" />
+    <None Include="views\Shared\head.vm" />
+    <None Include="views\Shared\footer.vm" />
+    <None Include="views\Background\StudentMgt\BulletinBoard.vm" />
+    <Content Include="views\Background\StudentMgt\BulletinBoardDetail.vm" />
+    <Content Include="views\Background\StudentMgt\CreateMessage.vm" />
+    <Content Include="views\Background\StudentMgt\Message.vm" />
+    <None Include="views\Background\StudentMgt\Index.vm" />
+    <None Include="views\Background\StudentMgt\ReportCard.vm" />
+    <None Include="views\Background\StudentMgt\Assessment.vm" />
+    <None Include="views\Background\StudentMgt\EditAccount.vm" />
+    <Content Include="views\Background\StudentMgt\Article.vm" />
+    <Content Include="views\Background\StudentMgt\ArticleDetail.vm" />
+    <Content Include="views\Background\StudentMgt\VideoDetail.vm" />
+    <Content Include="views\Background\StudentMgt\Video.vm" />
+    <None Include="views\Background\Employee\Edit.vm" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Controllers\Controllers.csproj">
+      <Project>{6b800bcb-534d-4a3b-9640-ce0da452c16f}</Project>
+      <Name>Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBatisNet\IBatisNet.Common.Logging.Log4Net\IBatisNet.Common.Logging.Log4Net.csproj">
+      <Project>{023fe8d7-7e1a-4ddf-a0ea-8fb0e1b3122b}</Project>
+      <Name>IBatisNet.Common.Logging.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\log4net\Log4net.csproj">
+      <Project>{181fe707-e161-4722-9f38-6aaab6faa106}</Project>
+      <Name>Log4net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{02bf41f6-2dc0-4c95-abb4-32947b860e90}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{2c4c0430-e915-49d9-92f9-1d025394415a}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{7900537e-4e3c-464f-a6df-c596affffef2}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>29361</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

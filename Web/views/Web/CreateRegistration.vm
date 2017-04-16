@@ -1,0 +1,88 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+
+
+<link href="/resources/css/formValidator.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="/resources/jscripts/formValidator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/formValidatorRegex.js"></script>
+
+<script type="text/javascript">
+var key = [];
+  
+$().ready(function(){
+
+  jQuery.formValidator.initConfig({onError:function(msg){alert(msg)}});
+  key = ["userName", "phone", "schoolName", "gradeName", "remark"];
+
+  $("#userName").formValidator({onshow:"请输入学员编号,学员编号不能为空",onfocus:"请输入正确的学员编号,2-28个字符组成",oncorrect:"该学员编号可以使用"}).InputValidator({min:2,max:28,onerror:"你输入的学员编号长度错误,限制2-28个字符"}).RegexValidator({regexp:"notempty",datatype:"enum",onerror:"学员编号不能为空"});
+  $("#schoolName").formValidator({ onshow: "请输入学校名称,学校名称不能为空", onfocus: "请输入正确的学校名称,2-28个字符组成", oncorrect: "该学校名称可以使用" }).InputValidator({ min: 2, max: 28, onerror: "你输入的学校名称长度错误,限制2-28个字符" }).RegexValidator({ regexp: "notempty", datatype: "enum", onerror: "学校名称不能为空" });
+  $("#gradeName").formValidator({ onshow: "请输入年级,年级不能为空", onfocus: "请输入正确的年级,2-28个字符组成", oncorrect: "该年级可以使用" }).InputValidator({ min: 2, max: 28, onerror: "你输入的年级长度错误,限制2-28个字符" }).RegexValidator({ regexp: "notempty", datatype: "enum", onerror: "年级不能为空" });
+
+  $("#remark").formValidator({ empty: true, onshow: "请输入你的提交报名表内容", onfocus: "内容至少要输入5个汉字或10个字符", oncorrect: "恭喜你,你输对了" }).InputValidator({ min: 10, onerror: "你输入的内容长度不正确,请确认" });
+});
+  
+function PostCreateRegistration(){
+  if(jQuery.formValidator.PageIsValid('1')){
+    $("#btnCreateRegistration").attr("disabled","disabled").val("处理中,请稍候...");
+    var info = {};
+    jQuery.each(key,function(k,v){
+      info[v]=$("#" + v).val();
+    });
+
+    jQuery.post("PostCreateRegistration.do",info,function(r){
+      alert(r.message);
+      $("#btnCreateRegistration").removeAttr("disabled").val("我要提交报名表");
+      if(r.code > 0){
+        location.replace("Registration.do");
+      }
+    },"json");
+  }
+}
+</script>
+#end
+
+#parse("shared/head.vm")
+
+<div class="main">
+    <div class="con">
+        <h2>请您提交报名表</h2>
+          <form method="post" target="_self" id="RegistrationForm" name="RegistrationForm" action="PostCreateRegistration.do">
+            <table class="list2" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>您的姓名：</td>
+                <td><input name="userName" id="userName" type="text" /></td>
+                <td><span id="userNameTip"></span></td>
+              </tr>
+              <tr>
+                <td>您的电话：</td>
+                <td><input style="width:400px;" name="phone" id="phone" type="text" /></td>
+                <td><span id="phoneTip"></span></td>
+              </tr>
+              <tr>
+                <td>您所在的学校：</td>
+                <td><input style="width:400px;" name="schoolName" id="schoolName" type="text" /></td>
+                <td><span id="schoolNameTip"></span></td>
+              </tr>
+              <tr>
+                <td>您的年级：</td>
+                <td><input style="width:400px;" name="gradeName" id="gradeName" type="text" /></td>
+                <td><span id="gradeNameTip"></span></td>
+              </tr>
+              <tr>
+                <td>备 注：</td>
+                <td><textarea style="width:400px; height:120px;" name="remark" id="remark" cols="" rows=""></textarea></td>
+                <td><span id="remarkTip"></span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><input name="btnCreateRegistration" id="btnCreateRegistration" type="button" value="我要提交报名表" onclick="PostCreateRegistration();" />　<input name="" type="reset" value="重填" /></td>
+                <td></td>
+              </tr>
+            </table>
+          </form>  
+    </div>
+</div>
+
+#parse("shared/footer.vm")

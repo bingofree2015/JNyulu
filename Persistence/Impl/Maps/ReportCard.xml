@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : ReportCard
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="ReportCard" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.ReportCard" />
+  </alias>
+  <resultMaps>
+    <resultMap id="ReportCardBaseResult" class="ReportCard">
+      <result property="ID" column="ID"  des="" /> 
+      <result property="EmployeeID" column="EmployeeID"  des="学生ID" />
+      <result property="STID" column="STID"  des="班级ID" />
+      <result property="ExamDate" column="ExamDate"  des="考试日期" />
+      <result property="TestPaperUrl" column="TestPaperUrl"  des="试卷路径" />
+      <result property="RecordDate" column="RecordDate"  des="创建日期" /> 
+    </resultMap>
+
+    <resultMap id="ReportCardResult" class="ReportCard" extends="ReportCardBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="reportCard-insert-params">
+      <parameter property="EmployeeID" column="employeeID"  direction="Input" dbType="Int" />
+      <parameter property="STID" column="stID"  direction="Input" dbType="Int" />
+      <parameter property="ExamDate" column="examDate"  direction="Input" dbType="DateTime" />
+      <parameter property="TestPaperUrl" column="testPaperUrl"  direction="Input" dbType="NVarChar" />
+
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="reportCard-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetBaseReportCard" parameterClass="ReportCard" resultMap="ReportCardBaseResult">
+      <![CDATA[ 
+      SELECT 
+        ReportCard.ID AS ID,
+        ReportCard.EmployeeID AS EmployeeID, 
+        ReportCard.STID AS STID,
+        ReportCard.ExamDate AS ExamDate,
+        ReportCard.TestPaperUrl AS TestPaperUrl,
+        ReportCard.RecordDate AS RecordDate
+      FROM ReportCard 
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ ReportCard.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ ReportCard.STID = #STID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="ExamDate">
+          <![CDATA[ ReportCard.ExamDate = #ExamDate# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseReportCardByID" parameterClass="string" resultMap="ReportCardBaseResult">
+      <![CDATA[
+      SELECT
+        ReportCard.ID AS ID,
+        ReportCard.EmployeeID AS EmployeeID, 
+        ReportCard.STID AS STID,
+        ReportCard.ExamDate AS ExamDate,
+        ReportCard.TestPaperUrl AS TestPaperUrl,
+        ReportCard.RecordDate AS RecordDate
+     FROM ReportCard
+     WHERE ReportCard.ID = #value# ]]>
+    </select>
+
+    <select id="GetReportCard" parameterClass="map" resultClass="ReportCard">
+      <![CDATA[ 
+      SELECT 
+        ReportCard.ID AS ID,
+        ReportCard.EmployeeID AS EmployeeID,
+        Employee.Name AS EmployeeName,         
+        ReportCard.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName, 
+        ReportCard.ExamDate AS ExamDate,
+        ReportCard.TestPaperUrl AS TestPaperUrl,
+        ReportCard.RecordDate AS RecordDate
+      FROM ReportCard 
+      INNER JOIN  Employee ON ReportCard.EmployeeID = Employee.ID 
+      INNER JOIN  SchoolTerm ON ReportCard.STID = SchoolTerm.ID      
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ ReportCard.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ STID = #STID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="TestPaperUrl">
+          <![CDATA[ TestPaperUrl = #TestPaperUrl# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetReportCardByID" parameterClass="string" resultMap="ReportCardResult">
+      <![CDATA[ 
+      SELECT
+        ReportCard.ID AS ID,
+        ReportCard.STID AS STID,
+        ReportCard.EmployeeID AS EmployeeID, 
+        ReportCard.ExamDate AS ExamDate,
+        ReportCard.TestPaperUrl AS TestPaperUrl,
+        ReportCard.RecordDate AS RecordDate
+     FROM ReportCard
+     WHERE ReportCard.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertReportCard" resultClass="int" parameterMap="reportCard-insert-params">
+      InsertReportCard
+    </procedure>
+
+    <procedure id="PaginatedReportCard" resultClass="ReportCard" parameterMap="reportCard-paginated-params">
+      PaginatedReportCard
+    </procedure>
+
+    <update id="UpdateReportCard" parameterClass="ReportCard">
+      <![CDATA[ 
+      UPDATE ReportCard
+      SET 
+        EmployeeID = #EmployeeID#, 
+        STID = #STID#,
+        ExamDate = #ExamDate#,
+        TestPaperUrl = #TestPaperUrl#,
+        RecordDate = GETDATE()
+      WHERE  ReportCard.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteReportCardByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM ReportCard WHERE ReportCard.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

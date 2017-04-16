@@ -1,0 +1,42 @@
+﻿#capturefor(pageTitle)小班信息管理#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostDelete(messageID) {
+        var info = {};
+        info["messageID"] = messageID;
+
+        jQuery.post("PostDelete.do", info, function (r) {
+            alert(r.message);
+            location.reload();
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">用户留言管理</li>
+</ol>
+
+<div class="left-container">
+    <table class="table table-striped">
+      <tr class="active">
+            <th>编 号</th>
+            <th>学 号</th>
+            <th>标 题</th>
+            <th>日 期</th>
+            <th>操 作</th>
+        </tr>
+        #foreach($item in ${messageList})
+            <tr>
+                <td>$!{item.ID}</td>
+                <td>$!{item.UserName}</td>
+                <td #if(${item.Reply.Length()} > 0) style="color:blue;"  #else style="color:red;" #end >$!{item.Subject}</td>
+                <td>$!{item.RecordDate.ToString("yyyy-MM-dd")}</td>
+                <td><a href="Edit.do?messageID=$!{item.ID}&pageIndex=$!{params.PageIndex}">回复</a> | <a class="h" href="#" onclick="PostDelete($!{item.ID});">删除</a></td>
+            </tr>
+        #end
+    </table>
+    <ul class="pagination">$!{ltlShowPager}</ul>
+</div>
+

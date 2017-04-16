@@ -1,0 +1,28 @@
+﻿#capturefor(pageTitle)留言板#end
+
+<ol class="breadcrumb">
+    <li class="active">留言板</li>
+</ol>
+
+<div class="left-container">
+    <p class="text-right"><a title="我要留言" class="btn btn-success" href="CreateMessage.do">我要留言</a></p>
+    #foreach($item in ${messageList})
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            标题：$!{item.Subject}
+            <span class="right">$!{item.RecordDate.ToString("yyyy-MM-dd hh:mm:ss")}</span>
+        </div>
+        <div class="panel-body">
+            内容：$!{item.Issue}
+            #if(${item.Reply})
+            <div class="container" style="color: red;">雨露回复：${item.Reply}</div>
+            #end
+        </div>
+        <div class="panel-footer text-right">$!{item.UserName}</div>
+    </div>
+    #end
+    <ul class="pagination pagination-sm">
+        $!{ltlShowPager}
+    </ul>
+</div>
+

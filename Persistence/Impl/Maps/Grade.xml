@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Grade
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Grade" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Grade" />
+  </alias>
+  <resultMaps>
+    <resultMap id="GradeResult" class="Grade">
+      <result property="ID" column="ID"  des="自增型ID" />
+      <result property="SN" column="sn"  des="小班编号" />
+      <result property="Name" column="Name"  des="小班名称" />
+      <result property="RecordDate" column="RecordDate"  des="创建时间" />
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="grade-insert-params">
+      <parameter property="Name" column="name"  direction="Input" dbType="NVarChar"/>
+      <parameter property="SN" column="sn"  direction="Input" dbType="NVarChar"/>
+      
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="grade-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>  
+  <statements>
+
+    <select id="GetGrade" parameterClass="Grade" resultMap="GradeResult">
+      <![CDATA[ 
+      SELECT 
+        Grade.ID AS ID, 
+        Grade.SN AS SN, 
+        Grade.Name AS Name, 
+        Grade.RecordDate AS RecordDate
+      FROM Grade ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="SN">
+          <![CDATA[ Grade.SN = #SN# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ Grade.Name = #Name# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetGradeByID" parameterClass="string" resultMap="GradeResult">
+      <![CDATA[ 
+      SELECT 
+        Grade.ID AS ID, 
+        Grade.SN AS SN, 
+        Grade.Name AS Name, 
+        Grade.RecordDate AS RecordDate
+      FROM Grade
+      WHERE Grade.ID = #value# ]]>
+    </select>
+
+    <select id="GetGradeByName" parameterClass="string" resultMap="GradeResult">
+      <![CDATA[ 
+      SELECT 
+        Grade.ID AS ID, 
+        Grade.SN AS SN, 
+        Grade.Name AS Name, 
+        Grade.RecordDate AS RecordDate
+      FROM Grade
+      WHERE Grade.Name = #value# ]]>
+    </select>
+
+    <procedure id="InsertGrade" resultClass="int" parameterMap="grade-insert-params">
+      InsertGrade
+    </procedure>
+
+    <procedure id="PaginatedGrade" resultClass="Grade" parameterMap="grade-paginated-params">
+      PaginatedGrade
+    </procedure>
+
+    <update id="UpdateGrade" parameterClass="Grade">
+      <![CDATA[ 
+      UPDATE Grade
+      SET SN = #SN#,
+        Name = #Name#
+      WHERE  Grade.ID = #ID# 
+      ]]>
+    </update>
+
+    <delete id="DeleteGradeByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Grade
+      WHERE Grade.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

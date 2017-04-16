@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\JNyuluSoft.Persistence.dll
+C:\project\NET\JNyuluV3.0\Lib\JNyuluSoft.Persistence.pdb
+C:\project\NET\JNyuluV3.0\Persistence\obj\Debug\Persistence.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\Persistence\obj\Debug\JNyuluSoft.Persistence.dll
+C:\project\NET\JNyuluV3.0\Persistence\obj\Debug\JNyuluSoft.Persistence.pdb

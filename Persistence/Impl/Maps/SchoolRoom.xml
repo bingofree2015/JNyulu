@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:20
+    修 改 者 : 
+    修改时间 : 
+    描    述 : SchoolRoom
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="SchoolRoom" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.SchoolRoom" />
+  </alias>
+  <resultMaps>
+    <resultMap id="SchoolRoomBaseResult" class="SchoolRoom">
+      <result property="ID" column="ID"  des="自增型ID" /> 
+      <result property="CampusID" column="CampusID"  des="校区ID" />
+      <result property="CampusName" column="CampusName"  des="校区名称" />
+      <result property="Name" column="Name"  des="教室名称" />
+      <result property="TotalNum" column="TotalNum"  des="教室人数" />
+      <result property="RecordDate" column="RecordDate"  des="创建时间" /> 
+    </resultMap>
+
+    <resultMap id="SchoolRoomResult" class="SchoolRoom" extends="SchoolRoomBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="schoolRoom-insert-params">
+      <parameter property="CampusID" column="campusID"  direction="Input" dbType="Int" />
+      <parameter property="Name" column="name"  direction="Input" dbType="NVarChar" />
+
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="schoolRoom-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetBaseSchoolRoom" parameterClass="SchoolRoom" resultMap="SchoolRoomBaseResult">
+      <![CDATA[
+      SELECT 
+        SchoolRoom.ID AS ID, 
+        SchoolRoom.CampusID AS CampusID, 
+        Campus.Name AS CampusName, 
+        SchoolRoom.Name AS Name, 
+        SchoolRoom.TotalNum AS TotalNum,
+        SchoolRoom.RecordDate AS RecordDate
+      FROM SchoolRoom ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="CampusID">
+          <![CDATA[ SchoolRoom.CampusID = #CampusID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ SchoolRoom.Name = #Name# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseSchoolRoomByID" parameterClass="string" resultMap="SchoolRoomBaseResult">
+      <![CDATA[
+      SELECT 
+        SchoolRoom.ID AS ID,
+        SchoolRoom.CampusID AS CampusID, 
+        Campus.Name AS CampusName, 
+        SchoolRoom.Name AS Name,
+        SchoolRoom.TotalNum AS TotalNum,
+        SchoolRoom.RecordDate AS RecordDate
+      FROM SchoolRoom
+      INNER JOIN  Campus ON SchoolRoom.CampusID = Campus.ID
+      WHERE SchoolRoom.ID = #value# ]]>
+    </select>
+
+    <select id="GetSchoolRoom" parameterClass="SchoolRoom" resultMap="SchoolRoomResult">
+      <![CDATA[ 
+      SELECT
+        SchoolRoom.ID AS ID,
+        SchoolRoom.CampusID AS CampusID,
+        Campus.Name AS CampusName,
+        SchoolRoom.Name AS Name,
+        SchoolRoom.TotalNum AS TotalNum,
+        SchoolRoom.RecordDate AS RecordDate
+      FROM SchoolRoom 
+      INNER JOIN  Campus ON SchoolRoom.CampusID = Campus.ID]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="CampusID">
+          <![CDATA[ SchoolRoom.CampusID = #CampusID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ SchoolRoom.Name = #Name# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetSchoolRoomByID" parameterClass="string" resultMap="SchoolRoomResult">
+      <![CDATA[
+      SELECT
+        SchoolRoom.ID AS ID, 
+        SchoolRoom.CampusID AS CampusID, 
+        Campus.Name AS CampusName, 
+        SchoolRoom.Name AS Name, 
+        SchoolRoom.TotalNum AS TotalNum,
+        SchoolRoom.RecordDate AS RecordDate
+      FROM SchoolRoom
+      INNER JOIN Campus ON SchoolRoom.CampusID = Campus.ID
+      WHERE SchoolRoom.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertSchoolRoom" resultClass="int" parameterMap="schoolRoom-insert-params">
+      InsertSchoolRoom
+    </procedure>
+
+    <procedure id="PaginatedSchoolRoom" resultClass="SchoolRoom" parameterMap="schoolRoom-paginated-params">
+      PaginatedSchoolRoom
+    </procedure>
+
+    <update id="UpdateSchoolRoom" parameterClass="SchoolRoom">
+      <![CDATA[ 
+      UPDATE SchoolRoom
+      SET 
+        CampusID = #CampusID#,
+        Name = #Name#,
+        TotalNum = #TotalNum#
+      WHERE  SchoolRoom.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteSchoolRoomByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM SchoolRoom
+      WHERE SchoolRoom.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

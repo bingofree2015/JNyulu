@@ -1,0 +1,74 @@
+﻿#capturefor(pageTitle)分类管理#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostCreate() {
+        $("#btnCreateCatalog").attr("disabled", "disabled").val("处理中,请稍候...");
+
+        var key = ["moduleCn", "fatherID", "name"];
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostCreate.do", info, function (r) {
+            alert(r.message);
+            $("#btnCreateCatalog").removeAttr("disabled").val("新增分类").css("background", "").css("color", "");
+            if (r.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+
+    function PostDelete(catalogID) {
+        var info = {};
+        info["catalogID"] = catalogID;
+
+        jQuery.post("PostDelete.do", info, function (r) {
+            alert(r.message);
+            location.reload();
+        }, "json");
+    }
+
+</script>
+#end
+
+<ol class="breadcrumb">
+    #if(${catalog})
+    <li><a href="List.do?moduleCn=${catalog.ModuleCn}">分类列表</a></li>
+    <li class="active">${catalog.Name}</li>
+    #else
+    <li class="active">分类列表</li>
+    #end
+</ol>
+<div class="left-container">
+    <form class="form-inline" role="form" method="post" target="_self" id="CatalogForm" name="CatalogForm" action="PostCreate.do">
+        <input type="hidden" class="form-control" name="moduleCn" id="moduleCn" value="$!{moduleCn}" />
+        <input type="hidden" class="form-control" name="fatherID" id="fatherID" value="$!{fatherID}" />
+        <div class="input-group">
+            <span class="input-group-addon">分类名称：</span>
+            <input type="text" class="form-control" name="name" id="name" />
+            <span class="input-group-btn">
+                <button class="btn btn-success" name="btnCreateCatalog" id="btnCreateCatalog" type="button" value="增加分类" onclick="PostCreate();">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>增加分类
+                </button>
+            </span>
+        </div>
+    </form>
+    <hr class="help-block" />
+    <table class="table table-striped">
+        <tr class="active">
+            <th>分类名称</th>
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+        #foreach($item in ${catalogList})
+        <tr>
+            <td><a href="List.do?moduleCn=$!{item.ModuleCn}&fatherID=$!{item.ID}">$!{item.Name}</a></td>
+            <td>$!{item.RecordDate.ToString("yyyy-MM-dd hh:mm:ss")}</td>
+            <td><a href="Edit.do?catalogID=$!{item.ID}">修改</a> | <a class="h" href="#" onclick="PostDelete($!{item.ID});">删除</a></td>
+        </tr>
+        #end
+    </table>
+</div>
+

@@ -1,0 +1,117 @@
+﻿#capturefor(pageTitle)试卷列表#end
+
+#capturefor(includeCode)
+<link rel="stylesheet" type="text/css" href="/resources/jscripts/datepicker/css/datepicker3.css" />
+<script type="text/javascript" src="/resources/jscripts/datepicker/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+    $().ready(function () {
+        jsPaginated($!{params.EmployeeID}, $!{params.STID}, '$!{params.ExamDate}', $!{params.PageIndex});
+    });
+
+    function PostSave() {
+        $("#btnSave").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+
+        var _employeeIDList = [];
+        var _stIDList = [];
+        var _examDateList = [];
+        var _scoreList = [];
+        var _testPaperUrlList = [];
+
+        $("input[name='employeeID']").each(function () {
+            _employeeIDList.push($(this).val());
+        });
+        info["employeeIDs"] = _employeeIDList.join("|");
+
+        $("input[name='stID']").each(function () {
+            _stIDList.push($(this).val());
+        });
+        info["stIDs"] = _stIDList.join("|");
+
+        $("input[name='examDate']").each(function () {
+            _examDateList.push($(this).val());
+        });
+        info["examDates"] = _examDateList.join("|");
+
+        $("input[name='testPaperUrl']").each(function () {
+            _testPaperUrlList.push($(this).val());
+        });
+        info["testPaperUrls"] = _testPaperUrlList.join("|");
+
+        jQuery.post("PostSave.do", info, function (result) {
+            alert(result.message);
+            $("#btnSave").removeAttr("disabled").val("保存学生成绩");
+            if (result.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+
+    function jsPaginated(employeeID,stID, examDate, pageIndex) {
+        $("#xhrList").load("XHrList.do?employeeID=" + employeeID + "&stID=" + stID + "&examDate=" + examDate + "&pageIndex=" + pageIndex);
+    }
+
+    function PostSearch() {
+        var info = {};
+        info["stID"] = $("#stID").val();
+        info["examDate"] = $("#examDate").val();
+
+        jsPaginated(0,info.stID, info.examDate, 1);
+    }
+
+    function PostBatchDelete() {
+        $("#btnBatchDelete").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+
+        var reportCardIDs = '';
+        $(":checkbox[name='reportCardID']").each(function () {
+            if ($(this).is(":checked") == true) {
+                reportCardIDs += $(this).attr("value") + ",";
+            }
+        })
+
+        info["reportCardIDs"] = reportCardIDs;
+        jQuery.post("PostBatchDelete.do", info, function (result) {
+            alert(result.message);
+            $("#btnBatchDelete").removeAttr("disabled").val("删除选定项");
+            if (result.code > 0) {
+                $("#btnSearch").click();
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">试卷列表</li>
+</ol>
+
+<div class="left-container">
+    <form class="form-inline" role="form" method="post" target="_self" id="listForm" name="listForm">
+        <div class="form-group">
+            <label class="control-label">报名班级：</label>
+            <select class="form-control" name="stID" id="stID">
+                #foreach($item in ${schoolTermList})
+                <option #if(${item.ID} == ${params.STID}) selected #end value="$!{item.ID}">$!{item.Name}</option>
+                #end
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">考试时间：</span>
+            <input type="text" class="form-control" name="examDate" id="examDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="$!{params.ExamDate}">
+            <span class="input-group-btn">
+                <input class="btn btn-success" name="btnSearch" id="btnSearch" type="button" value="成绩查询" onclick="PostSearch();" />
+            </span>
+        </div>
+        <div class="btn-group pull-right">
+            <input class="btn btn-success" name="btnBatchDelete" id="btnBatchDelete" type="button" value="删除选定项" onclick="PostBatchDelete();" />
+            <a class="btn btn-success" href="ImportExcel.do?stID=$!{params.STID}&examDate=$!{params.ExamDate}&pageIndex=$!{params.PageIndex}">批量导入学生成绩</a>
+        </div>
+    </form>
+    <hr class="help-block" />
+    <div id="xhrList"></div>
+</div>
+
+
+

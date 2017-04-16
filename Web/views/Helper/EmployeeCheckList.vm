@@ -1,0 +1,4 @@
+﻿#foreach($item in ${RegistrationList})
+<input type="checkbox" name="employeeID" id="employeeID${velocityCount}" value="$!{item.EmployeeID}"/>$!{item.TrueName} 
+#if($velocityCount % 5 == 0) <br/> #end
+#end

@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\JdSoft.Apns.Notifications.dll
+C:\project\NET\JNyuluV3.0\Lib\JdSoft.Apns.Notifications.pdb
+C:\project\NET\JNyuluV3.0\APNSSharp\JdSoft.Apple.Apns.Notifications\obj\Debug\JdSoft.Apple.Apns.Notifications.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\APNSSharp\JdSoft.Apple.Apns.Notifications\obj\Debug\JdSoft.Apns.Notifications.dll
+C:\project\NET\JNyuluV3.0\APNSSharp\JdSoft.Apple.Apns.Notifications\obj\Debug\JdSoft.Apns.Notifications.pdb

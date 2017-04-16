@@ -1,0 +1,102 @@
+﻿#capturefor(pageTitle)试卷列表#end
+
+#capturefor(includeCode)
+<link rel="stylesheet" type="text/css" href="/resources/jscripts/datepicker/css/datepicker3.css" />
+<script type="text/javascript" src="/resources/jscripts/datepicker/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+    $().ready(function () {
+        jsPaginated($!{params.STID}, $!{params.PageIndex});
+    });
+
+    function PostSave() {
+        $("#btnSave").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+
+        var _employeeIDList = [];
+        var _stIDList = [];
+        var _syllabusUrlList = [];
+
+        $("input[name='employeeID']").each(function () {
+            _employeeIDList.push($(this).val());
+        });
+        info["employeeIDs"] = _employeeIDList.join("|");
+
+        $("input[name='stID']").each(function () {
+            _stIDList.push($(this).val());
+        });
+        info["stIDs"] = _stIDList.join("|");
+
+        $("input[name='syllabusUrl']").each(function () {
+            _syllabusUrlList.push($(this).val());
+        });
+        info["syllabusUrls"] = _syllabusUrlList.join("|");
+
+        jQuery.post("PostSave.do", info, function (result) {
+            alert(result.message);
+            $("#btnSave").removeAttr("disabled").val("保存学生课表");
+            if (result.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+
+    function jsPaginated(stID, pageIndex) {
+        $("#xhrList").load("XHrList.do?stID=" + stID + "&pageIndex=" + pageIndex);
+    }
+
+    function PostSearch() {
+        var info = {};
+        info["stID"] = $("#stID").val();
+
+        jsPaginated(info.stID, 1);
+    }
+
+    function PostBatchDelete() {
+        $("#btnBatchDelete").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+
+        var syllabusIDs = '';
+        $(":checkbox[name='syllabusID']").each(function () {
+            if ($(this).is(":checked") == true) {
+                syllabusIDs += $(this).attr("value") + ",";
+            }
+        })
+
+        info["syllabusIDs"] = syllabusIDs;
+        jQuery.post("PostBatchDelete.do", info, function (result) {
+            alert(result.message);
+            $("#btnBatchDelete").removeAttr("disabled").val("删除选定项");
+            if (result.code > 0) {
+                $("#btnSearch").click();
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">试卷列表</li>
+</ol>
+
+<div class="left-container">
+    <form class="form-inline" role="form" method="post" target="_self" id="listForm" name="listForm">
+        <div class="form-group">
+            <label class="control-label">报名班级：</label>
+            <select class="form-control" name="stID" id="stID">
+                #foreach($item in ${schoolTermList})
+                <option #if(${item.ID} == ${params.STID}) selected #end value="$!{item.ID}">$!{item.Name}</option>
+                #end
+            </select>
+        </div>
+        <div class="btn-group pull-right">
+            <input class="btn btn-success" name="btnBatchDelete" id="btnBatchDelete" type="button" value="删除选定项" onclick="PostBatchDelete();" />
+            <a class="btn btn-success" href="ImportExcel.do?stID=$!{params.STID}&pageIndex=$!{params.PageIndex}">批量导入学生课表</a>
+        </div>
+    </form>
+    <hr class="help-block" />
+    <div id="xhrList"></div>
+</div>
+
+
+

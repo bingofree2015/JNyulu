@@ -1,0 +1,41 @@
+﻿#capturefor(pageTitle)班级管理#end
+
+#capturefor(includeCode)
+
+
+<script type="text/javascript">
+function PostDelete(schoolTermID){
+  var info = {"schoolTermID":schoolTermID};
+
+  jQuery.post("PostDelete.do",info,function(r){
+    alert(r.message);
+    if(r.code > 0){
+      location.reload();
+     }
+  },"json");
+}
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">班级管理</li>
+</ol>
+
+<div class="left-container">
+    <p class="text-right"><a class="btn btn-success" href="Create.do">新增班级</a></p>
+    <hr class="help-block" />
+    <table class="table table-striped">
+        <tr class="active">
+            <th>名称</th>
+            <th>年级</th>
+            <th>操作</th>
+        </tr>
+        #foreach($item in ${schoolTermList})
+          <tr>
+              <td>$!{item.Name}</td>
+              <td>$!{item.GradeName}</td>
+              <td><a class="h" href="Edit.do?schoolTermID=$!{item.ID}">修改</a> || <a class="h" href="#" onclick="PostDelete($!{item.ID});">删除</a></td>
+          </tr>
+        #end
+    </table>
+</div>

@@ -1,0 +1,102 @@
+﻿#capturefor(pageTitle)修改学员注册信息#end
+
+#capturefor(includeCode)
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+
+    jq(function () {
+        jq("#editForm").validator({
+            valid: function (form) {
+                var me = this;
+                // 提交表单之前，hold住表单，并且在以后每次hold住时执行回调
+                me.holdSubmit(function () {
+                    alert("正在处理中...");
+                });
+                jq.ajax({
+                    url: "PostEdit.do",
+                    data: jq(form).serialize(),
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                        // 提交表单成功后，释放hold，就可以再次提交
+                        alert(data.message);
+                        me.holdSubmit(false);
+                        if (data.code > 0) {
+                            location.replace("Main.do?searchUserName=$!{params.SearchUserName}&stID=$!{registration.STID}&pageIndex=$!{params.PageIndex}");
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="Main.do?searchUserName=$!{params.SearchUserName}&stID=$!{params.STID}&pageIndex=$!{params.PageIndex}">报名管理</a></li>
+    <li class="active">修改学员注册信息</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="editForm" name="editForm" autocomplete="off">
+        <input type="hidden" name="registrationID" id="registrationID" value="$!{registration.ID}"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学员编号：</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="employeeName" id="employeeName" value="$!{registration.EmployeeName}" data-rule="required;username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">原　　校：</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="schoolName" id="schoolName" value="$!{registration.SchoolName}">
+            </div>
+        </div>
+        <span class="help-block" id="schoolNameTip"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">原来年级：</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="gradeID" id="gradeID">
+                    #foreach($item in ${gradeList})
+                    <option #if(${item.ID} == ${registration.GradeID}) selected #end value="$!{item.ID}">$!{item.Name}</option>
+                    #end
+                </select>
+            </div>
+        </div>
+        <span class="help-block" id="employeeNameTip"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">报名班级：</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="stID" id="stID" data-rule="required;integer[+]">
+                    #foreach($item in ${schoolTermList})
+                    <option #if(${item.ID} == ${registration.STID}) selected #end value="$!{item.ID}">$!{item.Name}</option>
+                    #end
+                </select>
+            </div>
+        </div>
+        <span class="help-block" id="schoolTermIDTip"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">报名费用：</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="schoolFee" id="schoolFee" value="$!{registration.SchoolFee}">
+            </div>
+        </div>
+        <span class="help-block" id="schoolFeeTip"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备　　注：</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" rows="3" name="remark" id="remark">$!{registration.Remark}</textarea>
+            </div>
+        </div>
+        <span class="help-block" id="remarkTip"></span>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input class="btn btn-success btn-block" name="btnEdit" id="btnEdit" type="submit" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,57 @@
+﻿#capturefor(pageTitle)新同学报名#end
+
+#capturefor(includeCode)
+<link rel="stylesheet" type="text/css" href="/resources/jscripts/uploadify/uploadify.css" />
+<script type="text/javascript" src="/resources/jscripts/uploadify/jquery.uploadify.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("input[type='file']").each(function () {
+
+            $(this).uploadify({
+                buttonText: "<span class=\"glyphicon glyphicon-cloud-upload\"></span> " + $(this).attr("title"),
+                buttonClass: "btn btn-default",
+                swf: "/resources/jscripts/uploadify/uploadify.swf",
+                uploader: "PostImportExcel.do",
+                width: 200,
+                //接受一个文件路径。此文件检查正要上传的文件名是否已经存在目标目录中。存在时返回1，不存在时返回0(应该主要是作为后台的判断吧)，默认为false
+                //debug: true,
+                fileObjName: 'uploadFile',
+                formData: {
+                    ASPSESSID: '$!{params.ASPSESSID}',
+                    AUTHID: '$!{params.AUTHID}'
+                },
+                onUploadSuccess: function (file, data, response) {
+                    result = eval("(" + data + ")");
+                    $('.alert-info').text(result.message);
+                },
+                onCancel: function (file) {
+                    console.log('The file' + file.name + 'was cancelled.')
+                },
+                onUploadError: function (file, errorCode, errorMsg, errorString) {
+                    $('.alert-info').text(errorString);
+                }
+            });
+        });
+    });
+
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?trueName=$!{params.TrueName}&pageIndex=$!{params.PageIndex}">学籍列表</a></li>
+    <li class="active">学员学籍表导入</li>
+</ol>
+
+<div class="form-container">
+    <div class="panel panel-default">
+        <div class="panel-heading">批量导入学籍数据-Excel</div>
+        <div class="panel-body">
+            <form method="post" class="form-horizontal" target="_self" id="importExcelForm" name="importExcelForm">
+                <input type="file" id="uploadFile" name="uploadFile" title="请选择要上传的学籍表" />
+            </form>
+            <div class="alert alert-info" role="alert"></div>
+        </div>
+    </div>
+</div>
+
+

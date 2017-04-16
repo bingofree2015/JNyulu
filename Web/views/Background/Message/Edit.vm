@@ -1,0 +1,58 @@
+﻿#capturefor(pageTitle)新增小班#end
+
+#capturefor(includeCode)
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(function () {
+
+        //接收表单验证通过的事件
+        jq('#editForm').bind('valid.form', function () {
+            jq.ajax({
+                url: 'PostEdit.do',
+                type: 'POST',
+                dataType: "json",
+                data: jq(this).serialize(),
+                success: function (result) {
+                    alert(result.message);
+                    if (result.code > 0) {
+                        location.replace("List.do?pageIndex=$!{params.PageIndex}");
+                    }
+                }
+            });
+        });
+    })
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?pageIndex=$!{params.PageIndex}">用户留言</a></li>
+    <li class="active">回答问题</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" method="post" target="_self" id="editForm" name="editForm" autocomplete="off">
+        <input type="hidden" name="messageID" id="messageID" value="$!{message.ID}">
+        <div class="input-group">
+            <span class="input-group-addon">标　　题：</span>
+            <input type="text" class="form-control" name="subject" id="subject" value="$!{message.Subject}" data-rule="留言标题:required;length[5~]"/>
+        </div>
+        <span class="help-block" id="subjectTip"></span>
+        <div class="input-group">
+            <span class="input-group-addon">问　　题：</span>
+            <textarea class="form-control" cols="3" name="issue" id="issue">$!{message.Issue}</textarea>
+        </div>
+        <span class="help-block" id="issueTip"></span>
+        <div class="input-group">
+            <span class="input-group-addon">回　　答：</span>
+            <textarea class="form-control" cols="3" name="reply" id="reply">$!{message.Reply}</textarea>
+        </div>
+        <span class="help-block" id="replyTip"></span>
+        <div class="text-left">
+            <button class="btn btn-success btn-block" name="btnEdit" id="btnEdit" type="submit" value="确定">确定</button>
+        </div>
+    </form>
+</div>

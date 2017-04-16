@@ -1,0 +1,79 @@
+﻿#capturefor(pageTitle)教室资源管理#end
+
+#capturefor(includeCode)
+
+<script type="text/javascript">
+    function PostCreate() {
+        $("#btnCreate").attr("disabled", "disabled").val("处理中,请稍候...");
+
+        var key = ["name", "campusID"];
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostCreate.do", info, function (r) {
+            alert(r.message);
+            $("#btnCreate").removeAttr("disabled").val("新增教室");
+            if (r.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+
+    function PostDelete(schoolRoomID) {
+        var info = {};
+        info["schoolRoomID"] = schoolRoomID;
+
+        jQuery.post("PostDelete.do", info, function (r) {
+            alert(r.message);
+            if (r.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">教室配置</li>
+</ol>
+
+<div class="left-container">
+    <form class="form-inline" role="form" method="post" target="_self" id="listForm" name="listForm" action="PostCreate.do">
+        <div class="form-group">
+            <label class="control-label">所属校区：</label>
+            <select class="form-control" name="campusID" id="campusID">
+                #foreach($item in ${campusList})
+                    <option value="$!{item.ID}">$!{item.Name}</option>
+                #end
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">教室名称：</span>
+            <input type="text" class="form-control" name="name" id="name">
+            <span class="input-group-btn">
+                <button class="btn btn-success" name="btnCreate" id="btnCreate" type="button" value="新增教室" onclick="PostCreate();">新增教室</button>
+            </span>
+        </div>
+    </form>
+    <hr class="help-block" />
+    <table class="table table-striped">
+        <tr class="active">
+            <th>教室名称</th>
+            <th>所属校区</th>
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+
+        #foreach($item in ${schoolRoomList})
+       <tr>
+           <td>$!{item.Name}</td>
+           <td>$!{item.CampusName}</td>
+           <td>$!{item.RecordDate.ToString("yyyy-MM-dd hh:mm:ss")}</td>
+           <td><a href="Edit.do?schoolRoomID=$!{item.ID}">修改</a> | <a class="h" href="#" onclick="PostDelete($!{item.ID});">删除</a></td>
+       </tr>
+        #end
+  
+    </table>
+</div>

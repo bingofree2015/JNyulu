@@ -1,0 +1,25 @@
+﻿#capturefor(pageTitle)学校推送消息#end
+
+<ol class="breadcrumb">
+    <li class="active">学校推送消息</li>
+</ol>
+
+<div class="left-container">
+    <table class="table table-condensed">
+        <tr class="active">
+            <th>编号</th>
+            <th>标 题</th>
+            <th style="width:600px;">消息内容</th>
+            <th>日 期</th>
+        </tr>
+        #foreach($item in ${notificationList})
+        <tr>
+            <td>$!{item.ID}</td>
+            <td>$!{item.Title}</td>
+            <td>$!{item.Body}</td>
+            <td>$!{item.RecordDate.ToString("yyyy-MM-dd")}</td>
+        </tr>
+        #end
+    </table>
+    <ul class="pagination">$!{ltlShowPager}</ul>
+</div>

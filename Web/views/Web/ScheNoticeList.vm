@@ -1,0 +1,31 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+<link href="/resources/web/css/jnyulu.css" rel="stylesheet" type="text/css" />
+#end
+
+#parse("shared/head.vm")
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-9 left-context">
+            <p class="title">开课通知</p>
+            <div class="panel-box">
+                #foreach($item in ${scheNoticeList})
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        用户：$!{item.TrueName}　　手机：$!{item.UserName}
+                    </li>
+                    <li class="list-group-item">
+                    <span class="badge">$!{item.CreateTime.ToString("yyyy-MM-dd")}</span>
+                    $!{item.Context}
+                  </li>
+                </ul>
+                #end
+            </div>
+        </div>
+        <div class="col-md-3 right-nav">
+        </div>
+    </div>
+</div>
+#parse("shared/footer.vm")

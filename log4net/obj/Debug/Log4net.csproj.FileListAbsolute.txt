@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\log4net.dll
+C:\project\NET\JNyuluV3.0\Lib\log4net.pdb
+C:\project\NET\JNyuluV3.0\Lib\log4net.xml
+C:\project\NET\JNyuluV3.0\log4net\obj\Debug\log4net.dll
+C:\project\NET\JNyuluV3.0\log4net\obj\Debug\log4net.pdb

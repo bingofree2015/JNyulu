@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Video
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Video" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Video" />
+  </alias>
+  <resultMaps>
+    <resultMap id="VideoBaseResult" class="Video">
+      <result property="ID" column="ID"  des="自增型ID" />
+      <result property="STID" column="STID"  des="班级ID" />
+      <result property="Title" column="Title"  des="图片标题" />
+      <result property="CoversUrl" column="CoversUrl"  des="图片路径" />
+      <result property="MediaUrl" column="MediaUrl"  des="视频路径" />
+      <result property="MediaHtml" column="MediaHtml"  des="链接地址" />
+      <result property="SortNum" column="SortNum"  des="排序" />
+      <result property="Permit" column="Permit"  des="权限" />
+      <result property="UploadTime" column="UploadTime"  des="创建时间" />
+    </resultMap>
+
+    <resultMap id="VideoResult" class="Video" extends="VideoBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="video-insert-params">
+      <parameter property="STID" column="stID"  direction="Input" dbType="Int"/>
+      <parameter property="Title" column="title"  direction="Input" dbType="NVarChar"/>
+      <parameter property="CoversUrl" column="coversUrl"  direction="Input" dbType="NVarChar"/>
+      <parameter property="MediaUrl" column="mediaUrl"  direction="Input" dbType="NVarChar"/>
+      <parameter property="MediaHtml" column="mediaHtml"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Permit" column="permit"  direction="Input" dbType="Int"/>
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="video-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>  
+  <statements>
+
+    <select id="GetBaseVideo" parameterClass="Video" resultMap="VideoBaseResult">
+      <![CDATA[ 
+      SELECT 
+        Video.ID AS ID, 
+        Video.STID AS STID, 
+        Video.Title AS Title, 
+        Video.CoversUrl AS CoversUrl, 
+        Video.MediaUrl AS MediaUrl, 
+        '' AS MediaHtml, 
+        Video.SortNum AS SortNum,
+        Video.Permit AS Permit,
+        Video.UploadTime AS UploadTime
+      FROM Video ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ Video.STID = #STID# ]]>
+        </isNotEmpty>
+     </dynamic>
+    </select>
+
+    <select id="GetBaseVideoByID" parameterClass="string" resultMap="VideoBaseResult">
+      <![CDATA[ 
+      SELECT 
+        Video.ID AS ID, 
+        Video.STID AS STID, 
+        Video.Title AS Title, 
+        Video.CoversUrl AS CoversUrl, 
+        Video.MediaUrl AS MediaUrl, 
+        '' AS MediaHtml, 
+        Video.SortNum AS SortNum,
+        Video.Permit AS Permit,
+        Video.UploadTime AS UploadTime
+      FROM Video
+      WHERE Video.ID = #value# 
+      ]]>
+    </select>
+
+    <select id="GetVideo" parameterClass="Video" resultMap="VideoResult">
+      <![CDATA[ 
+      SELECT 
+        Video.ID AS ID, 
+        Video.STID AS STID, 
+        Video.Title AS Title, 
+        Video.CoversUrl AS CoversUrl, 
+        Video.MediaUrl AS MediaUrl, 
+        '' AS MediaHtml, 
+        Video.SortNum AS SortNum, 
+        Video.Permit AS Permit,
+        Video.UploadTime AS UploadTime
+      FROM Video 
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ Video.STID = #STID# ]]>
+        </isNotEmpty>        
+        <isNotEmpty prepend="AND"  property="Title">
+          <![CDATA[ Video.Title = #Title# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetVideoByID" parameterClass="string" resultMap="VideoResult">
+      <![CDATA[
+      SELECT 
+        Video.ID AS ID, 
+        Video.STID AS STID, 
+        Video.Title AS Title, 
+        Video.CoversUrl AS CoversUrl, 
+        Video.MediaUrl AS MediaUrl, 
+        '' AS MediaHtml, 
+        Video.SortNum AS SortNum, 
+        Video.Permit AS Permit,
+        Video.UploadTime AS UploadTime
+      FROM Video
+      WHERE Video.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertVideo" resultClass="int" parameterMap="video-insert-params">
+      InsertVideo
+    </procedure>
+
+    <procedure id="PaginatedVideo" resultClass="Video" parameterMap="video-paginated-params">
+      PaginatedVideo
+    </procedure>
+
+    <update id="UpdateVideo" parameterClass="Video">
+      <![CDATA[ UPDATE Video
+      SET 
+        STID = #STID#, 
+        Title = #Title#, 
+        CoversUrl = #CoversUrl#,
+        MediaUrl = #MediaUrl#,
+        MediaHtml = #MediaHtml#,
+        SortNum = #SortNum#,
+        Permit = #Permit#
+      WHERE  Video.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteVideoByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Video
+      WHERE Video.ID = #value#
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

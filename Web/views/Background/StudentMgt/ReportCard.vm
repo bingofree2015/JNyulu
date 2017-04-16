@@ -1,0 +1,34 @@
+﻿#capturefor(pageTitle)我的试卷#end
+
+#capturefor(includeCode)
+
+#end
+
+<ol class="breadcrumb">
+    <li class="active">我的试卷</li>
+</ol>
+
+<div class="left-container">
+    <div class="list-group">
+        #foreach($item in ${registrationList})
+    <h4 class="list-group-item-heading">$!{item.SchoolTermName}</h4>
+        <p class="list-group-item-text">
+            <table class="table table-condensed">
+                <tr class="active">
+                    <th>试卷地址</th>
+                    <th>下载</th>
+                </tr>
+                #foreach($reportCard in ${item.ReportCardList})
+                #if(${reportCard.TestPaperUrl})
+                <tr>
+                    <td>${reportCard.TestPaperUrl}</td>
+                    <td>#if(${reportCard.TestPaperUrl.Trim().Length} > 3) <a href="${reportCard.TestPaperUrl}"><span class="glyphicon glyphicon-download-alt"></span></a>  #end</td>
+                </tr>
+                #end
+                #end
+            </table>
+        </p>
+        #end
+    </div>
+</div>
+

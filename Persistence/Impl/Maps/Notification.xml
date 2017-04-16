@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2010-01-12 11:12:15
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Notification
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Notification" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Notification" />
+  </alias>
+  <resultMaps>
+    <resultMap id="NotificationBaseResult" class="Notification">
+      <result property="ID" column="ID"  des="" />
+      <result property="Title" column="Title"  des="" />
+      <result property="Body" column="Body"  des="" />
+      <result property="Platform" column="Platform"  des="" />
+      <result property="Receivers" column="Receivers"  des="" />
+      <result property="STID" column="STID"  des="" />
+      <result property="RecordTime" column="RecordTime"  des="" />
+    </resultMap>
+
+    <resultMap id="NotificationResult" class="Notification" extends="NotificationBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="notification-insert-params">
+      <parameter property="Title" column="title"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Body" column="body"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Platform" column="platform"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Receivers" column="receivers"  direction="Input" dbType="NVarChar"/>
+      <parameter property="STID" column="stid"  direction="Input" dbType="Int"/>
+
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="notification-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  
+  <statements>
+    <select id="GetNotificationByID" parameterClass="string" resultMap="NotificationResult">
+      <![CDATA[ 
+      SELECT 
+        Notification.ID, 
+        Notification.Title, 
+        Notification.Body, 
+        Notification.Platform,
+        Notification.Receivers,
+        Notification.STID,
+        Notification.RecordTime
+      FROM Notification
+      WHERE  Notification.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertNotification" resultClass="int" parameterMap="notification-insert-params">
+      InsertNotification
+    </procedure>
+
+    <procedure id="PaginatedNotification" resultClass="Notification" parameterMap="notification-paginated-params">
+      PaginatedNotification
+    </procedure>
+
+    <update id="UpdateNotification" parameterClass="Notification">
+      <![CDATA[ 
+      UPDATE Notification
+      SET       
+        Title = #Title#, 
+        Body = #Body#,
+        Platform = #Platform#,
+        Receiver = #Receivers#,
+        STID = #STID#
+      WHERE Notification.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteNotificationByID" parameterClass="Notification">
+      <![CDATA[ 
+      DELETE FROM Notification
+      WHERE Notification.ID = #ID# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

@@ -1,0 +1,43 @@
+﻿#capturefor(pageTitle)校区管理#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostEdit() {
+        $("#btnEdit").attr("disabled", "disabled").val("处理中,请稍候...");
+
+        var key = ["campusID", "name"];
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostEdit.do", info, function (r) {
+            alert(r.message);
+            $("#btnEdit").removeAttr("disabled").val("修改校区");
+            if (r.code > 0) {
+                location.replace("List.do");
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do">校区配置</a></li>
+    <li class="active">修改信息</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="listForm" name="listForm" action="PostEdit.do">
+        <input type="hidden" name="campusID" id="campusID" value="$!{campus.ID}" />
+        <div class="input-group">
+            <span class="input-group-addon">校区名称：</span>
+            <input type="text" class="form-control" name="name" id="name" value="$!{campus.Name}">
+            <span class="input-group-btn">
+                <button class="btn btn-success" name="btnEdit" id="btnEdit" type="button" value="修改校区" onclick="PostEdit();">修改校区</button>
+            </span>
+        </div>
+    </form>
+</div>
+
+

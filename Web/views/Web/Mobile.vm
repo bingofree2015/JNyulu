@@ -1,0 +1,50 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+<link href="/resources/web/css/jnyulu.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jscripts/holder.min.js"></script>
+
+#end
+
+#parse("shared/head.vm")
+
+<div class="phone-logo"></div>
+<div class="container phone-list">
+    <p class="h4 bg-success">
+        备注：针对已经安装旧版的安卓手机用户，需要先卸载旧版应用，然后再重新安装安卓新版。
+    </p>
+    <ul>
+        <li>
+            <img src="/resources/web/images/phone_07.jpg" />
+            <span>扫描关注雨露微信</span>
+        </li>
+        <li>
+            <a class="androidPick" href="http://www.jnyulu.com/App/jnyulu.apk">
+                <img src="/resources/web/images/phone_09.jpg" />
+            </a>
+            <span style="text-align: left;">版本：1.0<br />
+                适用：Android 2.1以上<br />
+                发布日期：2014-01-01</span>
+        </li>
+        <li>
+            <a class="iosPick" href="https://itunes.apple.com/cn/app/ji-nan-yu-lu/id805270381?mt=8">
+                <img src="/resources/web/images/phone_11.jpg" />
+            </a>
+            <span style="text-align: left;">版本：1.0<br />
+                适用：IOS 4.1以上iPhone<br />
+                发布日期：2014-01-01</span>
+        </li>
+        <li>
+            <img src="/resources/web/images/phone_13.jpg" />
+            <span>扫描下载雨露客户端</span>
+        </li>
+    </ul>
+</div>
+<div class="container panel-box">
+    <dl>
+        <dt><span class="title">应用工具下载</span></dt>
+        <dd><a href="http://dlsw.baidu.com/sw-search-sp/soft/31/12612/AdbeRdr11000_zh_CN11.0.0.379.1410747856.exe">pdf阅读器下载</a></dd>
+        <dd><a href="http://dlsw.baidu.com/sw-search-sp/soft/34/17153/install_flash_player_15_active_x-ie-15.0.0.239.1416985167.exe">Adobe Flash Player for IE</a></dd>
+    </dl>
+</div>
+#parse("shared/footer.vm")

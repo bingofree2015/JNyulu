@@ -1,0 +1,3 @@
+﻿[#foreach($item in ${courseList})
+{"courseID":"${item.ID}","courseName":"${item.Name}"}#if(${velocityCount} < ${courseList.Count}),#end
+#end]

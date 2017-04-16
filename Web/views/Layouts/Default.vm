@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>$!{pageTitle}</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="/resources/bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="/resources/bootstrap/css/ie.css">
+    <![endif]-->
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script type="text/javascript" src="/resources/bootstrap/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        table.table {
+            margin-bottom: 10px;
+        }
+
+        ul.pagination {
+            margin: 5px 0;
+        }
+
+        .table {
+            font-size: 12px;
+        }
+
+        .form-control-sm {
+            background-color: #FFFFFF;
+            background-image: none;
+            border: 1px solid #CCCCCC;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+            color: #555555;
+            display: block;
+            font-size: 12px;
+            height: 28px;
+            line-height: 1.42857;
+            padding: 3px 6px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            vertical-align: middle;
+            width: 100%;
+        }
+
+        .left-container {
+
+        }
+
+        .form-container {
+            width:60%;
+        }
+
+    </style>
+    $!{includeCode}
+</head>
+
+<body>
+    $childContent
+    <!--[if lte IE 6]>
+    <script type="text/javascript" src="/resources/bootstrap/bootstrap-ie.js"></script>
+    <![endif]-->
+</body>
+</html>
+
+

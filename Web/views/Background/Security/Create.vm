@@ -1,0 +1,55 @@
+﻿#capturefor(pageTitle)新建帐号#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostCreate() {
+        var key = ["name", "passWord", "description"];
+        $("#btnCreate").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostCreate.do", info, function (result) {
+            alert(result.message);
+            $("#btnCreate").removeAttr("disabled").val("创建帐号");
+            if (result.code > 0) {
+                location.replace("List.do");
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do">帐号权限管理</a></li>
+    <li class="active">新建帐号</li>
+</ol>
+
+<div class="form-container">
+    <form  class="form-horizontal" method="post" target="_self" id="createForm" name="createForm" action="PostCreate.do">
+        <div class="input-group">
+            <span class="input-group-addon">登录帐号：</span>
+            <input type="text" class="form-control" name="name" id="name">
+        </div>
+        <span class="help-block" id="nameTip"></span>
+        <div class="input-group">
+            <span class="input-group-addon">登录密码：</span>
+            <input type="password" class="form-control" name="passWord" id="passWord">
+        </div>
+        <span class="help-block" id="passWordTip"></span>
+        <div class="input-group">
+            <span class="input-group-addon">密码确认：</span>
+            <input type="password" class="form-control" name="passWord1" id="passWord1">
+        </div>
+        <span class="help-block" id="passWord1Tip"></span>
+        <div class="input-group">
+            <span class="input-group-addon">备　　注：</span>
+            <textarea class="form-control" cols="3" name="description" id="description" style="width: 400px; height: 160px;"></textarea>
+        </div>
+        <span class="help-block" id="descriptionTip"></span>
+        <div class="form-group">
+            <button class="btn btn-success btn-block" type="button" id="btnCreate" name="btnCreate" onclick="PostCreate();">确定</button>
+        </div>
+    </form>
+</div>

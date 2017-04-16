@@ -1,0 +1,50 @@
+﻿#capturefor(pageTitle)班级管理#end
+
+#capturefor(includeCode)>
+<script type="text/javascript">
+
+    function PostEdit() {
+        var key = ["schoolTermID", "name", "gradeID"];
+
+        $("#btnEdit").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostEdit.do", info, function (r) {
+            alert(r.message);
+            $("#btnEdit").removeAttr("disabled").val("修改班级");
+            if (r.code > 0) {
+                location.replace("List.do");
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do">班级管理</a></li>
+    <li class="active">修改班级</li>
+</ol>
+
+<div class="form-container">
+    <form  class="form-horizontal" role="form" method="post" target="_self" id="listForm" name="listForm" action="PostEdit.do">
+        <input name="schoolTermID" id="schoolTermID" type="hidden" value="$!{schoolTerm.ID}" />
+        <div class="input-group">
+            <span class="input-group-addon">所属年级：</span>
+            <select class="form-control" name="gradeID" id="gradeID">
+            #foreach($item in ${gradeList})
+              <option value="$!{item.ID}"#if(${item.ID} == ${schoolTerm.GradeID}) selected #end>$!{item.Name}</option>
+            #end
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">班级名称：</span>
+            <input type="text" class="form-control" name="name" id="name" type="text" value="$!{schoolTerm.Name}">
+            <span class="input-group-btn">
+                <button class="btn btn-success" name="btnEdit" id="btnEdit" type="button" value="确定" onclick="PostEdit();">确定</button>
+            </span>
+        </div>
+    </form>
+</div>

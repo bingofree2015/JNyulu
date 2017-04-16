@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B800BCB-534D-4A3B-9640-CE0DA452C16F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JNyuluSoft.Controllers</RootNamespace>
+    <AssemblyName>JNyuluSoft.Controllers</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel">
+      <HintPath>..\Lib\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework">
+      <HintPath>..\Lib\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework.Views.NVelocity">
+      <HintPath>..\Lib\Castle.MonoRail.Framework.Views.NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.WindsorExtension">
+      <HintPath>..\Lib\Castle.MonoRail.WindsorExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.Log4netIntegration">
+      <HintPath>..\Lib\Castle.Services.Logging.Log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\Lib\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NVelocity">
+      <HintPath>..\Lib\NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\ApiController.cs" />
+    <Compile Include="Api\ArticleController.cs" />
+    <Compile Include="Api\AuthFilter.cs" />
+    <Compile Include="Api\BulletinBoardController.cs" />
+    <Compile Include="Api\DeviceTokenController.cs" />
+    <Compile Include="Api\MessageController.cs" />
+    <Compile Include="Api\StudentController.cs" />
+    <Compile Include="Api\UserController.cs" />
+    <Compile Include="authenticationFilter.cs" />
+    <Compile Include="autoLoginHttpModule.cs" />
+    <Compile Include="Components\Header.cs" />
+    <Compile Include="Components\LeftToolBar.cs" />
+    <Compile Include="Controllers\Background\BulletinBoardController.cs" />
+    <Compile Include="Controllers\Background\CatalogController.cs" />
+    <Compile Include="Controllers\Background\ArticleController.cs" />
+    <Compile Include="Controllers\Background\CampusController.cs" />
+    <Compile Include="Controllers\Background\SchoolRoomController.cs" />
+    <Compile Include="Controllers\Background\GradeController.cs" />
+    <Compile Include="Controllers\Background\ReportCardController.cs" />
+    <Compile Include="Controllers\Background\EmployeeController.cs" />
+    <Compile Include="Controllers\Background\RegistrationController.cs" />
+    <Compile Include="Controllers\Background\HomeController.cs" />
+    <Compile Include="Controllers\Background\NotificationsController.cs" />
+    <Compile Include="Controllers\Background\SchoolTermController.cs" />
+    <Compile Include="Controllers\Background\SecurityController.cs" />
+    <Compile Include="Controllers\Background\StudentMgtController.cs" />
+    <Compile Include="Controllers\Background\MessageController.cs" />
+    <Compile Include="Controllers\Background\PhotoGraphController.cs" />
+    <Compile Include="Controllers\Background\ScheNoticeController.cs" />
+    <Compile Include="Controllers\Background\VideoController.cs" />
+    <Compile Include="Controllers\Background\SyllabusController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
+    <Compile Include="Controllers\WebController.cs" />
+    <Compile Include="formatHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{02bf41f6-2dc0-4c95-abb4-32947b860e90}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{2c4c0430-e915-49d9-92f9-1d025394415a}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{7900537e-4e3c-464f-a6df-c596affffef2}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

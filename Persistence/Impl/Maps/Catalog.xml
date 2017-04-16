@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Catalog
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Catalog" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Catalog" />
+  </alias>
+  <resultMaps>
+    <resultMap id="CatalogResult" class="Catalog">
+      <result property="ID" column="ID"  des="自增型ID" />
+      <result property="ModuleCn" column="ModuleCn"  des="模块名称" />
+      <result property="FatherID" column="FatherID"  des="父级ID" />      
+      <result property="Name" column="Name"  des="分类名称" />
+      <result property="RecordDate" column="RecordDate"  des="创建时间" />
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="catalog-insert-params">
+      <parameter property="ModuleCn" column="moduleCn"  direction="Input" dbType="NVarChar"/>
+      <parameter property="FatherID" column="fatherID"  direction="Input" dbType="Int" />
+      <parameter property="Name" column="name"  direction="Input" dbType="NVarChar"/>
+      
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="catalog-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>  
+  <statements>
+
+    <select id="GetCatalog" parameterClass="Catalog" resultMap="CatalogResult">
+      <![CDATA[ 
+      SELECT 
+        Catalog.ID AS ID, 
+        Catalog.ModuleCn AS ModuleCn,
+        Catalog.FatherID AS FatherID,
+        Catalog.Name AS Name, 
+        Catalog.RecordDate AS RecordDate
+      FROM Catalog ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="ModuleCn">
+          <![CDATA[ Catalog.ModuleCn = #ModuleCn# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="FatherID">
+          <![CDATA[ Catalog.FatherID = #FatherID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ Catalog.Name = #Name# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetCatalogByID" parameterClass="string" resultMap="CatalogResult">
+      <![CDATA[ 
+      SELECT 
+        Catalog.ID AS ID, 
+        Catalog.ModuleCn AS ModuleCn,
+        Catalog.FatherID AS FatherID,
+        Catalog.Name AS Name, 
+        Catalog.RecordDate AS RecordDate
+      FROM Catalog
+      WHERE Catalog.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertCatalog" resultClass="int" parameterMap="catalog-insert-params">
+      InsertCatalog
+    </procedure>
+
+    <procedure id="PaginatedCatalog" resultClass="Catalog" parameterMap="catalog-paginated-params">
+      PaginatedCatalog
+    </procedure>
+
+    <update id="UpdateCatalog" parameterClass="Catalog">
+      <![CDATA[ 
+      UPDATE Catalog
+        SET Name = #Name#
+      WHERE  Catalog.ID = #ID# 
+      ]]>
+    </update>
+
+    <delete id="DeleteCatalogByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Catalog
+      WHERE Catalog.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

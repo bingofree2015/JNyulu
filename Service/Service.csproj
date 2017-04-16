@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2C4C0430-E915-49D9-92F9-1D025394415A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JNyuluSoft.Service</RootNamespace>
+    <AssemblyName>JNyuluSoft.Service</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CampusService.cs" />
+    <Compile Include="EmployeeService.cs" />
+    <Compile Include="OAuthBase.cs" />
+    <Compile Include="Paginated.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportCardService.cs" />
+    <Compile Include="SchoolRoomService.cs" />
+    <Compile Include="SchoolTermService.cs" />
+    <Compile Include="ServiceConfig.cs" />
+    <Compile Include="AssessmentService.cs" />
+    <Compile Include="RegistrationService.cs" />
+    <Compile Include="CatalogService.cs" />
+    <Compile Include="DeviceTokenService.cs" />
+    <Compile Include="NotificationService.cs" />
+    <Compile Include="ScheNoticeService.cs" />
+    <Compile Include="VideoService.cs" />
+    <Compile Include="SyllabusService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArticleService.cs" />
+    <Compile Include="PermissionType.cs" />
+    <Compile Include="BulletinBoardService.cs" />
+    <Compile Include="MessageService.cs" />
+    <Compile Include="GradeService.cs" />
+    <Compile Include="PhotoGraphService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\APNSSharp\JdSoft.Apple.Apns.Notifications\JdSoft.Apple.Apns.Notifications.csproj">
+      <Project>{4cfb9aa8-55f8-46dc-b7bd-9e18b9939110}</Project>
+      <Name>JdSoft.Apple.Apns.Notifications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBatisNet\IBatisNet.Common\IBatisNet.Common.csproj">
+      <Project>{bbc8da4a-ea88-41d9-8b93-929b8f3adade}</Project>
+      <Name>IBatisNet.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBatisNet\IBatisNet.DataAccess\IBatisNet.DataAccess.csproj">
+      <Project>{befc4a45-7df9-40e4-942c-82dc1ba5e708}</Project>
+      <Name>IBatisNet.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{02bf41f6-2dc0-4c95-abb4-32947b860e90}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{ac7ad07a-0baa-437a-8256-6d9d649cfcd0}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{7900537e-4e3c-464f-a6df-c596affffef2}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

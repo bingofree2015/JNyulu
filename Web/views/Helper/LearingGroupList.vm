@@ -1,0 +1,3 @@
+﻿[#foreach($item in ${learingGroupList})
+{"lgID":"${item.ID}","scgName":"${item.Name}"}#if(${velocityCount} < ${learingGroupList.Count}),#end
+#end]

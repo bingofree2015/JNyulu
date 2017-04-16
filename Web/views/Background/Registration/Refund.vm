@@ -1,0 +1,116 @@
+﻿#capturefor(pageTitle)登记新同学#end
+
+#capturefor(headHref)
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+
+    jq(function () {
+        jq("#refundForm").validator({
+            valid: function (form) {
+                var me = this;
+                // 提交表单之前，hold住表单，并且在以后每次hold住时执行回调
+                me.holdSubmit(function () {
+                    alert("正在处理中...");
+                });
+                jq.ajax({
+                    url: "PostEditRefund.do",
+                    data: jq(form).serialize(),
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                        // 提交表单成功后，释放hold，就可以再次提交
+                        alert(data.message);
+                        me.holdSubmit(false);
+                        if (data.code > 0) {
+                            location.replace("Main.do?searchUserName=$!{params.SearchUserName}&stID=$!{params.STID}&pageIndex=$!{params.PageIndex}");
+                        }
+                    }
+                });
+            }
+        });
+    })
+
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="Main.do?searchUserName=$!{params.SearchUserName}&stID=$!{params.STID}&pageIndex=$!{[params.PageIndex}">学生报名管理</a></li>
+    <li class="active">学员退费处理</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="refundForm" name="refundForm" autocomplete="off">
+        <input type="hidden" name="registrationID" id="registrationID" value="$!{registration.ID}" />
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学　　号：</label>
+            <div class="col-sm-9">
+                <label class="form-control-static">$!{employee.Name}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学生姓名：</label>
+            <div class="col-sm-9">
+                <label class="form-control-static">$!{employee.TrueName}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">家庭电话：</label>
+            <div class="col-sm-9">
+                <label class="form-control-static">$!{employee.Phone}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">家长手机：</label>
+            <div class="col-sm-9">
+                <label class="form-control-static">$!{employee.Mobile}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学　　费：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="schoolFee" id="schoolFee" type="text" value="$!{registration.SchoolFee}" />
+            </div>
+        </div>
+        <span class="help-block" id="schoolFeeTip"></span>
+        #if(${registration.Status} == 0)
+        <div class="form-group">
+            <label class="col-sm-3 control-label">退课金额：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="refund" id="refund" type="text" value="$!{registration.Refund}" />
+            </div>
+        </div>
+        <span class="help-block" id="refundTip"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">退课原因：</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="reasons" id="reasons">$!{registration.Reasons}</textarea>
+            </div>
+        </div>
+        <span class="help-block" id="reasonsTip"></span>
+        #else
+        <div class="form-group">
+            <label class="col-sm-3 control-label">退课原因：</label>
+            <div class="col-sm-9">
+                <label class="form-control-static">$!{registration.Reasons}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备　　注：</label>
+            <div class="col-sm-9">
+                <label class="form-control-static">$!{registration.Remark}</label>
+            </div>
+        </div>
+        #end
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button class="btn btn-primary btn-block" name="btnEditRefund" id="btnEditRefund" type="submit" value="确 定">确 定</button>
+            </div>
+        </div>
+    </form>
+</div>
+

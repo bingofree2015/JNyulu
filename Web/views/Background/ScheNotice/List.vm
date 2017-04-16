@@ -1,0 +1,114 @@
+﻿#capturefor(pageTitle)试卷列表#end
+
+#capturefor(includeCode)
+<link rel="stylesheet" type="text/css" href="/resources/jscripts/datepicker/css/datepicker3.css" />
+<script type="text/javascript" src="/resources/jscripts/datepicker/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+    function PostSave() {
+        $("#btnSave").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+
+        var _idList = [];
+        var _userNameList = [];
+        var _trueNameList = [];
+
+        $("input[name='id']").each(function () {
+            _idList.push($(this).val());
+        });
+        info["ids"] = _idList.join("|");
+
+        $("input[name='userName']").each(function () {
+            _userNameList.push($(this).val());
+        });
+        info["userNames"] = _userNameList.join("|");
+
+        $("input[name='trueName']").each(function () {
+            _trueNameList.push($(this).val());
+        });
+        info["trueNames"] = _trueNameList.join("|");
+
+        jQuery.post("PostSave.do", info, function (result) {
+            alert(result.message);
+            $("#btnSave").removeAttr("disabled").val("保存学生课表");
+            if (result.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+
+    function PostBatchDelete() {
+        $("#btnBatchDelete").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+
+        var scheNoticeIDs = '';
+        $(":checkbox[name='scheNoticeID']").each(function () {
+            if ($(this).is(":checked") == true) {
+                scheNoticeIDs += $(this).attr("value") + ",";
+            }
+        })
+
+        info["scheNoticeIDs"] = scheNoticeIDs;
+        jQuery.post("PostBatchDelete.do", info, function (result) {
+            alert(result.message);
+            location.reload();
+            $("#btnBatchDelete").removeAttr("disabled").val("删除选定项");
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">开课通知</li>
+</ol>
+
+<div class="left-container">
+    <form class="form-inline" role="form" method="post" target="_self" id="listForm" name="listForm">
+        <div class="input-group">
+            <span class="input-group-addon">输入学生姓名</span>
+            <input type="text" class="form-control" name="searchName" placeholder="输入学生姓名" value="$!{params.SearchName}">
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="submit" name="btnSearch" id="btnSearch">查询</button>
+            </span>
+        </div>
+        <div class="btn-group pull-right">
+            <input class="btn btn-success" name="btnBatchDelete" id="btnBatchDelete" type="button" value="删除选定项" onclick="PostBatchDelete();" />
+            <a class="btn btn-success" href="ImportExcel.do?pageIndex=$!{params.PageIndex}">批量导入开课通知</a>
+        </div>
+    </form>
+    <hr class="help-block" />
+    <div id="xhrList">
+        #if(${scheNoticeList.Count} > 0)
+        <table class="table table-condensed">
+            <tr class="active">
+                <th>编号</th>
+                <th style="width: 120px;">电话</th>
+                <th style="width: 100px;">姓名</th>
+                <th style="width: 640px;">内容</th>
+                <th>操 作</th>
+            </tr>
+            #foreach($item in ${scheNoticeList})
+          <input type="hidden" name="id" value="$!{item.ID}" />
+            <tr>
+                <td>$!{item.ID}</td>
+                <td>
+                    <input class="form-control-sm input-sm" name="userName" type="text" value="$!{item.UserName}" /></td>
+                <td>
+                    <input class="form-control-sm input-sm" name="trueName" type="text" value="$!{item.TrueName}" /></td>
+                <td>$!{item.Context}</td>
+                <td>
+                    <input type="checkbox" name="scheNoticeID" id="scheNoticeID$!{item.ID}" value="$!{item.ID}" /></td>
+            </tr>
+            #end
+        </table>
+        <ul class="pagination">
+            $!{ltlShowPager}
+        </ul>
+        <p class="text-right">
+            <input class="btn btn-success" type="button" name="btnSave" id="btnSave" value="保存开课通知" onclick="PostSave();" /></p>
+        #end
+    </div>
+</div>
+
+
+

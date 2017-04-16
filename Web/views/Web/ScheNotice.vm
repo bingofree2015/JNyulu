@@ -1,0 +1,86 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+<link href="/resources/web/css/jnyulu.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jscripts/holder.min.js"></script>
+<style type="text/css">
+    h3.title {
+        border-left: 3px solid #232324;
+        border-bottom: 1px solid #4cff00;
+        padding: 8px;
+        padding-left:46px;
+        background-position: 8px center;
+    }
+
+    .well-lg {
+        text-indent: 2em;
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0.05) inset;
+        padding: 5px;
+        border: 0;
+        background: #fff;
+        font-size: 15px;
+        line-height: 28px;
+    }
+
+    .list-unstyled li {
+        padding:5px;
+    }
+</style>
+
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq().ready(function () {
+        jq('#scheNoticeForm').validator({
+            timely: 0,
+            stopOnError: true,
+            msgMaker: function (opt) {
+                if (opt.msg != "") {
+                    alert(opt.msg);
+                }
+                return false;
+            },
+            valid: function (form) {
+                //表单验证通过，提交表单到服务器
+                jq.ajax({
+                    url: "/web/CheckUserName.do",
+                    type: 'POST',
+                    dataType: "json",
+                    data: jq(form).serialize(),
+                    success: function (result) {
+                        alert(result.message);
+                        if (result.code > 0) {
+                            var backUrl = "/web/scheNoticeList.do?userName=" + jq("#scheNoticeForm input[name='userName']").val();
+                            location.replace(backUrl);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+#end
+
+#parse("shared/head.vm")
+
+<div class="container" data-spy="scroll"  data-target=".right-nav">
+    <div class="row">
+        <div class="col-md-9 left-context">
+            <h3 class="title">开课查询</h3>
+            <form method="post" target="_self" id="scheNoticeForm" name="scheNoticeForm" class="form-inline" role="form">
+                <div class="form-group">
+                    <label for="userName">输入手机号：</label>
+                    <input name="userName" type="text" class="form-control" id="userName" placeholder="手机号" data-rule="手机号:required;username">
+                </div>
+                <button name="btnSearch" class="btn btn-default" type="submit">查询</button>
+            </form>                
+            <p class="help-block">每个新班开课前一天，请输入报名时留的第一个手机号码，查询所报班开课的具体时间，教室等信息。</p>
+        </div>
+        <div class="col-md-3 right-nav">
+        </div>
+    </div>
+</div>
+#parse("shared/footer.vm")

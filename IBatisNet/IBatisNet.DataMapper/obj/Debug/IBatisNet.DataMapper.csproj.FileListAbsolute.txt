@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.DataMapper.dll
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.DataMapper.pdb
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.DataMapper\obj\Debug\IBatisNet.DataMapper.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.DataMapper\obj\Debug\IBatisNet.DataMapper.dll
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.DataMapper\obj\Debug\IBatisNet.DataMapper.pdb

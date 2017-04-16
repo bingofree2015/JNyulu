@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : ScheNotice
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="ScheNotice" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.ScheNotice" />
+  </alias>
+  <parameterMaps>
+    <parameterMap class="map" id="scheNotice-insert-params">
+      <parameter property="UserName" column="userName"  direction="Input" dbType="NVarChar" />
+      <parameter property="TrueName" column="trueName"  direction="Input" dbType="NVarChar" />
+      <parameter property="Context" column="context"  direction="Input" dbType="NVarChar" />
+
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="scheNotice-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetScheNotice" parameterClass="map" resultClass="ScheNotice">
+      <![CDATA[ 
+      SELECT 
+        ScheNotice.ID AS ID,
+        ScheNotice.UserName AS UserName,
+        ScheNotice.TrueName AS TrueName,         
+        ScheNotice.Context AS Context,
+        ScheNotice.CreateTime AS CreateTime
+      FROM ScheNotice 
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="UserName">
+          <![CDATA[ ScheNotice.UserName = #UserName# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="TrueName">
+          <![CDATA[ TrueName = #TrueName# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetScheNoticeByID" parameterClass="string" resultClass="ScheNotice">
+      <![CDATA[ 
+      SELECT
+        ScheNotice.ID AS ID,
+        ScheNotice.UserName AS UserName,
+        ScheNotice.TrueName AS TrueName,         
+        ScheNotice.Context AS Context,
+        ScheNotice.CreateTime AS CreateTime
+     FROM ScheNotice
+     WHERE ScheNotice.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertScheNotice" resultClass="int" parameterMap="scheNotice-insert-params">
+      InsertScheNotice
+    </procedure>
+
+    <procedure id="PaginatedScheNotice" resultClass="ScheNotice" parameterMap="scheNotice-paginated-params">
+      PaginatedScheNotice
+    </procedure>
+
+    <update id="UpdateScheNotice" parameterClass="ScheNotice">
+      <![CDATA[ 
+      UPDATE ScheNotice
+      SET 
+        UserName = #UserName#, 
+        TrueName = #TrueName#,
+        Context = #Context#
+      WHERE  ScheNotice.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteScheNoticeByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM ScheNotice WHERE ScheNotice.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

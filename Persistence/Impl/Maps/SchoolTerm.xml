@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:20
+    修 改 者 : 
+    修改时间 : 
+    描    述 : SchoolTerm
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="SchoolTerm" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.SchoolTerm" />
+  </alias>
+  <resultMaps>
+    <resultMap id="SchoolTermBaseResult" class="SchoolTerm">
+      <result property="ID" column="ID"  des="自增型ID" />
+      <result property="GradeID" column="GradeID"  des="所属年级" />
+      <result property="GradeName" column="GradeName"  des="所属年级名称" />
+      <result property="Name" column="Name"  des="班级名称" /> 
+      <result property="RecordDate" column="RecordDate"  des="创建日期" /> 
+    </resultMap>
+
+    <resultMap id="SchoolTermResult" class="SchoolTerm" extends="SchoolTermBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="schoolTerm-insert-params">
+      <parameter property="Name" column="name"  direction="Input" dbType="NVarChar" />
+      <parameter property="GradeID" column="gradeID"  direction="Input" dbType="Int" />
+      
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="schoolTerm-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetBaseSchoolTerm" parameterClass="SchoolTerm" resultMap="SchoolTermBaseResult">
+      <![CDATA[
+      SELECT
+        SchoolTerm.ID AS ID, 
+        SchoolTerm.GradeID AS GradeID, 
+        SchoolTerm.Name AS Name,
+        Grade.Name AS GradeName,
+        SchoolTerm.RecordDate AS RecordDate
+      FROM SchoolTerm 
+      INNER JOIN Grade ON Grade.ID = SchoolTerm.GradeID
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="GradeID">
+          <![CDATA[ SchoolTerm.GradeID = #GradeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ SchoolTerm.Name = #Name# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseSchoolTermByID" parameterClass="string" resultMap="SchoolTermBaseResult">
+      <![CDATA[
+      SELECT
+        SchoolTerm.ID AS ID, 
+        SchoolTerm.GradeID AS GradeID, 
+        SchoolTerm.Name AS Name,
+        Grade.Name AS GradeName,
+        SchoolTerm.RecordDate AS RecordDate
+      FROM SchoolTerm 
+      INNER JOIN Grade ON Grade.ID = SchoolTerm.GradeID
+      WHERE SchoolTerm.ID = #value# ]]>
+    </select>
+
+    <select id="GetBaseSchoolTermByName" parameterClass="string" resultMap="SchoolTermBaseResult">
+      <![CDATA[
+      SELECT
+        SchoolTerm.ID AS ID, 
+        SchoolTerm.GradeID AS GradeID, 
+        SchoolTerm.Name AS Name,
+        Grade.Name AS GradeName,
+        SchoolTerm.RecordDate AS RecordDate
+      FROM SchoolTerm 
+      INNER JOIN Grade ON Grade.ID = SchoolTerm.GradeID
+      WHERE SchoolTerm.Name = #value# ]]>
+    </select>    
+    
+    <select id="GetSchoolTerm" parameterClass="SchoolTerm" resultMap="SchoolTermResult">
+      <![CDATA[ 
+      SELECT
+        SchoolTerm.ID AS ID, 
+        SchoolTerm.GradeID AS GradeID, 
+        SchoolTerm.Name AS Name,
+        Grade.Name AS GradeName,
+        SchoolTerm.RecordDate AS RecordDate
+      FROM SchoolTerm 
+      INNER JOIN Grade ON Grade.ID = SchoolTerm.GradeID
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="GradeID">
+          <![CDATA[ SchoolTerm.GradeID = #GradeID# ]]>
+        </isNotEmpty>        
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ SchoolTerm.Name = #Name# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetSchoolTermByID" parameterClass="string" resultMap="SchoolTermResult">
+      <![CDATA[ 
+      SELECT
+        SchoolTerm.ID AS ID, 
+        SchoolTerm.GradeID AS GradeID, 
+        SchoolTerm.Name AS Name,
+        Grade.Name AS GradeName,
+        SchoolTerm.RecordDate AS RecordDate
+      FROM SchoolTerm 
+      INNER JOIN Grade ON Grade.ID = SchoolTerm.GradeID
+      WHERE SchoolTerm.ID = #value# 
+      ]]>
+    </select>
+
+    <procedure id="InsertSchoolTerm" resultClass="int" parameterMap="schoolTerm-insert-params">
+      InsertSchoolTerm
+    </procedure>
+
+    <procedure id="PaginatedSchoolTerm" resultClass="SchoolTerm" parameterMap="schoolTerm-paginated-params">
+      PaginatedSchoolTerm
+    </procedure>
+
+    <update id="UpdateSchoolTerm" parameterClass="SchoolTerm">
+      <![CDATA[ 
+      UPDATE SchoolTerm
+      SET GradeID = #GradeID#,
+        Name = #Name#
+      WHERE  SchoolTerm.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteSchoolTermByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM SchoolTerm
+      WHERE SchoolTerm.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

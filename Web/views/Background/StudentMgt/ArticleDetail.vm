@@ -1,0 +1,17 @@
+﻿#capturefor(pageTitle)新增小班#end
+
+#capturefor(includeCode)
+
+#end
+
+<ol class="breadcrumb">
+    <li><a href="article.do?catalogID=$!{params.CatalogID}&pageIndex=$!{params.PageIndex}">答案下载</a></li>
+    <li class="active">答案内容</li>
+</ol>
+
+<div class="left-container">
+    <div class="panel panel-default">
+        <div class="panel-heading">$!{article.Subject}</div>
+        <div class="panel-body">$!{article.Context}</div>
+    </div>
+</div>

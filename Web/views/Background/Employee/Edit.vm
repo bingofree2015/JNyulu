@@ -1,0 +1,78 @@
+﻿#capturefor(pageTitle)登记新同学#end
+
+#capturefor(includeCode)
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(function () {
+        jq("#editForm").validator({
+            valid: function (form) {
+                var me = this;
+                // 提交表单之前，hold住表单，并且在以后每次hold住时执行回调
+                me.holdSubmit(function () {
+                    alert("正在处理中...");
+                });
+                jq.ajax({
+                    url: "/Background/Employee/PostEdit.do",
+                    data: jq(form).serialize(),
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                        // 提交表单成功后，释放hold，就可以再次提交
+                        alert(data.message);
+                        me.holdSubmit(false);
+                        if (data.code > 0) {
+                            location.replace("List.do?searchTrueName=$!{params.SearchTrueName}&pageIndex=$!{params.PageIndex}");
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?searchTrueName=$!{params.SearchTrueName}&pageIndex=$!{params.PageIndex}">学籍列表</a></li>
+    <li class="active">学籍修改</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" method="post" role="form" target="_self" id="editForm" name="editForm" autocomplete="off">
+        <input type="hidden" name="employeeID" id="employeeID" value="$!{employee.ID}" />
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学生姓名：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="trueName" id="trueName" type="text" value="$!{employee.TrueName}" data-rule="required;length[4~, true]" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">联系手机：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="mobile" id="mobile" type="text" value="$!{employee.Mobile}" data-rule="required; mobile" />
+            </div>
+        </div>
+        <span class="help-block"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">家庭电话：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="phone" id="phone" type="text" value="$!{employee.Phone}" />
+            </div>
+        </div>
+        <span class="help-block"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备　　注：</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="description" id="description">$!{employee.Description}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button class="btn btn-success btn-block" name="btnEdit" id="btnEdit" type="submit" value="确定">确定</button>
+            </div>
+        </div>
+    </form>
+</div>

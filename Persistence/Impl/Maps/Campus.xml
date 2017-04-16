@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Campus
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Campus" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Campus" />
+  </alias>
+  <resultMaps>
+    <resultMap id="CampusResult" class="Campus">
+      <result property="ID" column="ID"  des="自增型ID" />
+      <result property="Name" column="Name"  des="校区名称" />
+      <result property="RecordDate" column="RecordDate"  des="创建时间" />
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="campus-insert-params">
+      <parameter property="Name" column="name"  direction="Input" dbType="NVarChar"/>
+      
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="campus-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>  
+  <statements>
+
+    <select id="GetCampus" parameterClass="Campus" resultMap="CampusResult">
+      <![CDATA[ 
+      SELECT 
+        Campus.ID AS ID, 
+        Campus.Name AS Name, 
+        Campus.RecordDate AS RecordDate
+      FROM Campus ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="Name">
+          <![CDATA[ Campus.Name = #Name# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetCampusByID" parameterClass="string" resultMap="CampusResult">
+      <![CDATA[ 
+      SELECT 
+        Campus.ID AS ID, 
+        Campus.Name AS Name, 
+        Campus.RecordDate AS RecordDate
+      FROM Campus
+      WHERE Campus.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertCampus" resultClass="int" parameterMap="campus-insert-params">
+      InsertCampus
+    </procedure>
+
+    <procedure id="PaginatedCampus" resultClass="Campus" parameterMap="campus-paginated-params">
+      PaginatedCampus
+    </procedure>
+
+    <update id="UpdateCampus" parameterClass="Campus">
+      <![CDATA[ 
+      UPDATE Campus
+        SET Name = #Name#
+      WHERE  Campus.ID = #ID# 
+      ]]>
+    </update>
+
+    <delete id="DeleteCampusByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Campus
+      WHERE Campus.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

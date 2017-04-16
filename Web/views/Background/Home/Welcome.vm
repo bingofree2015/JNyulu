@@ -1,0 +1,19 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台-后台管理3.0#end
+<div class="jumbotron">
+    <div class="container">
+        <div class="page-header" style="border-bottom: solid 3px #330066; font-family: Aldhabi;">
+            <h2><span class="glyphicon glyphicon-leaf"></span>济南市雨露培训学校信息化服务平台 <small>v3.0.0</small></h2>
+        </div>
+        <div class="media">
+            <span class="media-left">
+                <img src="/resources/images/desktop.png" class="img-responsive img-circle" style="width: 240px;" />
+            </span>
+            <div class="media-body">
+                <div class="well h4" style="font-family: Aldhabi; padding-top:120px;">
+                    目标的坚定是性格中最必要的力量泉源之一，也是成功的利器之一。没有它，天才也会在矛盾无定的迷径中，徒劳无功。
+                    <p class="text-right">——查士德斐尔爵士</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

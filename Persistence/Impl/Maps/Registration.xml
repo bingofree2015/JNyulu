@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:04
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Registration
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Registration" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Registration" />
+  </alias>
+  <resultMaps>
+    <resultMap id="RegistrationBaseResult" class="Registration">
+      <result property="ID" column="ID"  des="自增型ID" />
+      <result property="EmployeeID" column="EmployeeID"  des="注册用户ID" />
+      <result property="STID" column="STID"  des="班级ID" />
+      <result property="SchoolTermName" column="SchoolTermName"  des="班级名称" />
+      <result property="SchoolFee" column="SchoolFee"  des="报名费用" />
+      <result property="Status" column="Status"  des="0:正常;-1:已退课" />
+      <result property="Refund" column="Refund"  des="退费" />
+      <result property="Reasons" column="Reasons"  des="退课原因" /> 
+      <result property="Assessor" column="Assessor"  des="办理人" /> 
+      <result property="Remark" column="Remark"  des="备注" />
+      <result property="Judgment" column="Judgment"  des="" />
+      <result property="RecordDate" column="RecordDate"  des="创建时间" /> 
+    </resultMap>
+
+    <resultMap id="RegistrationResult" class="Registration" extends="RegistrationBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="Registration-insert-params">
+      <parameter property="EmployeeID" column="employeeID"  direction="Input" dbType="Int" />
+      <parameter property="SchoolName" column="schoolName"  direction="Input" dbType="NVarChar" />
+      <parameter property="GradeID" column="gradeID"  direction="Input" dbType="Int" />
+      <parameter property="GradeName" column="gradeName"  direction="Input" dbType="NVarChar" />
+      <parameter property="STID" column="stID"  direction="Input" dbType="Int" />
+      <parameter property="SchoolFee" column="schoolFee"  direction="Input" dbType="Float" />
+      <parameter property="Reasons" column="reasons"  direction="Input" dbType="NVarChar" />
+      <parameter property="Assessor" column="assessor"  direction="Input" dbType="NVarChar" />
+      <parameter property="Remark" column="remark"  direction="Input" dbType="NVarChar" />
+      <parameter property="RecordDate" column="recordDate"  direction="Input" dbType="DateTime" />
+
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="Registration-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetBaseRegistration" parameterClass="Registration" resultClass="Registration">
+      <![CDATA[ 
+      SELECT 
+        Registration.ID AS ID, 
+        Registration.EmployeeID AS EmployeeID, 
+        Registration.STID AS STID,         
+        SchoolTerm.Name AS SchoolTermName 
+     FROM Registration 
+     INNER JOIN SchoolTerm ON Registration.STID = SchoolTerm.ID
+     ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ Registration.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="GradeID">
+          <![CDATA[ SchoolTerm.GradeID = #GradeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ Registration.STID = #STID# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseRegistrationByID"  parameterClass="string" resultClass="Registration">
+      <![CDATA[ 
+      SELECT 
+        Registration.ID AS ID, 
+        Registration.EmployeeID AS EmployeeID, 
+        Employee.Name AS EmployeeName, 
+        Registration.STID AS STID,         
+        SchoolTerm.Name AS SchoolTermName, 
+        Registration.SchoolName AS SchoolName, 
+        Registration.GradeID AS GradeID,          
+        Registration.GradeName AS GradeName, 
+        Registration.SchoolFee AS SchoolFee, 
+        Registration.Status AS Status, 
+        Registration.Refund AS Refund,
+        Registration.Reasons AS Reasons, 
+        Registration.Assessor AS Assessor, 
+        Registration.Remark AS Remark, 
+        Registration.RecordDate AS RecordDate
+      FROM Registration 
+      INNER JOIN Employee ON Registration.EmployeeID = Employee.ID 
+      INNER JOIN SchoolTerm ON Registration.STID = SchoolTerm.ID      
+      WHERE  Registration.ID = #value# ]]>
+    </select>
+
+    <select id="GetRegistration" parameterClass="Registration" resultClass="Registration">
+      <![CDATA[ 
+      SELECT 
+        Registration.ID AS ID, 
+        Registration.EmployeeID AS EmployeeID, 
+        Employee.Name AS EmployeeName, 
+        Registration.STID AS STID,         
+        SchoolTerm.Name AS SchoolTermName, 
+        Registration.SchoolName AS SchoolName, 
+        Registration.GradeName AS GradeName,
+        Registration.SchoolFee AS SchoolFee, 
+        Registration.Status AS Status, 
+        Registration.Refund AS Refund, 
+        Registration.Reasons AS Reasons, 
+        Registration.Assessor AS Assessor, 
+        Registration.Remark AS Remark,
+        Assessment.Judgment AS Judgment, 
+        Registration.RecordDate AS RecordDate
+      FROM Registration 
+      INNER JOIN  Employee ON Registration.EmployeeID = Employee.ID 
+      INNER JOIN  SchoolTerm ON Registration.STID = SchoolTerm.ID      
+      LEFT OUTER JOIN Assessment ON Registration.EmployeeID = Assessment.EmployeeID AND Registration.STID = Assessment.STID
+      ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="EmployeeID">
+          <![CDATA[ Registration.EmployeeID = #EmployeeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="GradeID">
+          <![CDATA[ SchoolTerm.GradeID = #GradeID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="STID">
+          <![CDATA[ Registration.STID = #STID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="SchoolFee">
+          <![CDATA[ Registration.SchoolFee = #SchoolFee# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Status">
+          <![CDATA[ Registration.Status = #Status# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetRegistrationByName"  parameterClass="string" resultClass="Registration">
+      <![CDATA[ 
+      SELECT 
+        Registration.ID AS ID, 
+        Registration.EmployeeID AS EmployeeID, 
+        Employee.Name AS EmployeeName, 
+        Employee.TrueName AS TrueName, 
+        Employee.Mobile AS Mobile, 
+        Employee.Phone AS Phone, 
+        Registration.STID AS STID,         
+        Registration.SchoolName AS SchoolName, 
+        Registration.GradeName AS GradeName,
+        Registration.SchoolFee AS SchoolFee, 
+        Registration.Status AS Status, 
+        Registration.Refund AS Refund, 
+        Registration.Reasons AS Reasons, 
+        Registration.Assessor AS Assessor, 
+        Registration.Remark AS Remark, 
+        Registration.RecordDate AS RecordDate
+      FROM Registration 
+      INNER JOIN  Employee ON Registration.EmployeeID = Employee.ID 
+      WHERE Registration.STID = 0 AND Employee.Name = #value# ]]>
+    </select>    
+    
+    <select id="GetRegistrationByID"  parameterClass="string" resultClass="Registration">
+      <![CDATA[ 
+      SELECT 
+        Registration.ID AS ID, 
+        Registration.EmployeeID AS EmployeeID, 
+        Employee.Name AS EmployeeName, 
+        Employee.TrueName AS TrueName, 
+        Employee.Mobile AS Mobile, 
+        Employee.Phone AS Phone, 
+        Registration.SchoolName AS SchoolName, 
+        Registration.GradeID AS GradeID, 
+        Registration.GradeName AS GradeName, 
+        Registration.STID AS STID,
+        SchoolTerm.Name AS SchoolTermName,
+        Registration.SchoolFee AS SchoolFee, 
+        Registration.Status AS Status, 
+        Registration.Refund AS Refund, 
+        Registration.Reasons AS Reasons, 
+        Registration.Assessor AS Assessor, 
+        Registration.Remark AS Remark, 
+        Registration.RecordDate AS RecordDate
+      FROM Registration 
+      INNER JOIN  Employee ON Registration.EmployeeID = Employee.ID 
+      INNER JOIN  SchoolTerm ON Registration.STID = SchoolTerm.ID
+      WHERE  Registration.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertRegistration" resultClass="int" parameterMap="Registration-insert-params">
+      InsertRegistration
+    </procedure>
+
+    <procedure id="PaginatedRegistration" resultClass="Registration" parameterMap="Registration-paginated-params">
+      PaginatedRegistration
+    </procedure>
+
+    <update id="UpdateRegistration" parameterClass="Registration">
+      <![CDATA[ 
+      UPDATE Registration
+      SET 
+        EmployeeID = #EmployeeID#, 
+        SchoolName = #SchoolName#, 
+        GradeID = #GradeID#,        
+        GradeName = #GradeName#,
+        STID = #STID#, 
+        SchoolFee = #SchoolFee#,
+        Refund = #Refund#,
+        Status = #Status#, 
+        Reasons = #Reasons#, 
+        Assessor = #Assessor#, 
+        Remark = #Remark#
+      WHERE  Registration.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteRegistrationByID"  parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM Registration WHERE  Registration.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2009-12-11 13:54:21
+    修 改 者 : 
+    修改时间 : 
+    描    述 : PhotoGraph
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="PhotoGraph" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.PhotoGraph" />
+  </alias>
+  <resultMaps>
+    <resultMap id="PhotoGraphBaseResult" class="PhotoGraph">
+      <result property="ID" column="ID"  des="自增型ID" /> 
+      <result property="CatalogID" column="CatalogID"  des="分类ID" />
+      <result property="Subject" column="Subject"  des="图片标题" />
+      <result property="ImageUrl" column="ImageUrl"  des="图片路径" />
+      <result property="LinkUrl" column="LinkUrl"  des="链接地址" />
+      <result property="SortNum" column="SortNum"  des="排序" />
+      <result property="RecordDate" column="RecordDate"  des="创建时间" />
+    </resultMap>
+
+    <resultMap id="PhotoGraphResult" class="PhotoGraph" extends="PhotoGraphBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="photoGraph-insert-params">
+      <parameter property="CatalogID" column="catalogID"  direction="Input" dbType="Int"/>
+      <parameter property="Subject" column="subject"  direction="Input" dbType="NVarChar"/>
+      <parameter property="ImageUrl" column="imageUrl"  direction="Input" dbType="NVarChar"/>
+      <parameter property="LinkUrl" column="linkUrl"  direction="Input" dbType="NVarChar"/>
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="photoGraph-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>  
+  <statements>
+
+    <select id="GetBasePhotoGraph" parameterClass="PhotoGraph" resultMap="PhotoGraphBaseResult">
+      <![CDATA[ 
+      SELECT 
+        PhotoGraph.ID AS ID, 
+        PhotoGraph.CatalogID AS CatalogID, 
+        PhotoGraph.Subject AS Subject, 
+        PhotoGraph.ImageUrl AS ImageUrl, 
+        PhotoGraph.LinkUrl AS LinkUrl, 
+        PhotoGraph.SortNum AS SortNum,
+        PhotoGraph.RecordDate AS RecordDate
+      FROM PhotoGraph ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="CatalogID">
+          <![CDATA[ PhotoGraph.CatalogID = #CatalogID# ]]>
+        </isNotEmpty>
+     </dynamic>
+    </select>
+
+    <select id="GetBasePhotoGraphByID" parameterClass="string" resultMap="PhotoGraphBaseResult">
+      <![CDATA[ 
+      SELECT 
+        PhotoGraph.ID AS ID, 
+        PhotoGraph.CatalogID AS CatalogID, 
+        PhotoGraph.Subject AS Subject, 
+        PhotoGraph.ImageUrl AS ImageUrl, 
+        PhotoGraph.LinkUrl AS LinkUrl, 
+        PhotoGraph.SortNum AS SortNum,
+        PhotoGraph.RecordDate AS RecordDate
+      FROM PhotoGraph
+      WHERE PhotoGraph.ID = #value# ]]>
+    </select>
+
+    <select id="GetPhotoGraph" parameterClass="PhotoGraph" resultMap="PhotoGraphResult">
+      <![CDATA[ 
+      SELECT 
+        PhotoGraph.ID AS ID, 
+        PhotoGraph.CatalogID AS CatalogID, 
+        PhotoGraph.Subject AS Subject, 
+        PhotoGraph.ImageUrl AS ImageUrl, 
+        PhotoGraph.LinkUrl AS LinkUrl, 
+        PhotoGraph.SortNum AS SortNum, 
+        PhotoGraph.RecordDate AS RecordDate
+      FROM PhotoGraph ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="CatalogID">
+          <![CDATA[ PhotoGraph.CatalogID = #CatalogID# ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="AND"  property="Subject">
+          <![CDATA[ PhotoGraph.Subject = #Subject# ]]>
+        </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <select id="GetPhotoGraphByID" parameterClass="string" resultMap="PhotoGraphResult">
+      <![CDATA[
+      SELECT 
+        PhotoGraph.ID AS ID, 
+        PhotoGraph.CatalogID AS CatalogID, 
+        PhotoGraph.Subject AS Subject, 
+        PhotoGraph.ImageUrl AS ImageUrl, 
+        PhotoGraph.LinkUrl AS LinkUrl, 
+        PhotoGraph.SortNum AS SortNum, 
+        PhotoGraph.RecordDate AS RecordDate
+      FROM PhotoGraph
+      WHERE PhotoGraph.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertPhotoGraph" resultClass="int" parameterMap="photoGraph-insert-params">
+      InsertPhotoGraph
+    </procedure>
+
+    <procedure id="PaginatedPhotoGraph" resultClass="PhotoGraph" parameterMap="photoGraph-paginated-params">
+      PaginatedPhotoGraph
+    </procedure>
+
+    <update id="UpdatePhotoGraph" parameterClass="PhotoGraph">
+      <![CDATA[ 
+      UPDATE PhotoGraph
+      SET 
+        CatalogID = #CatalogID#, 
+        Subject = #Subject#, 
+        ImageUrl = #ImageUrl#,
+        LinkUrl = #LinkUrl#,
+        SortNum = #SortNum#
+      WHERE  PhotoGraph.ID = #ID# 
+      ]]>
+    </update>
+
+    <delete id="DeletePhotoGraphByID" parameterClass="string">
+      <![CDATA[ 
+      DELETE FROM PhotoGraph
+      WHERE PhotoGraph.ID = #value# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

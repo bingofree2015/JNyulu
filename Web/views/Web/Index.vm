@@ -1,0 +1,202 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+<link href="/resources/web/css/jnyulu.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jscripts/holder.min.js"></script>
+<script type="text/javascript" src="/resources/jscripts/jqfloat.js"></script>
+
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<!-- Example assets -->
+<link rel="stylesheet" type="text/css" href="/resources/jscripts/jcarousel/jcarousel.responsive.css">
+<script type="text/javascript" src="/resources/jscripts/jcarousel/jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="/resources/jscripts/jcarousel/jcarousel.responsive.js"></script>
+
+</style>
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq().ready(function () {
+        jq('#jcarousel2').jcarousel({
+            // Configuration goes here
+            visible: 3
+        });
+
+        jq("#hvideo").float({ position: "rm" });
+
+        jq('#loginForm').validator({
+            timely: 0,
+            stopOnError: true,
+            msgMaker: function (opt) {
+                if (opt.msg != "") {
+                    alert(opt.msg);
+                }
+                return false;
+            },
+            valid: function (form) {
+                jq.ajax({
+                    url: '/Background/Home/PostLogin.do',
+                    type: 'POST',
+                    dataType: "json",
+                    data: jq(form).serialize(),
+                    success: function (result) {
+                        alert(result.message);
+                        if (result.code > 0) {
+                            var backUrl = "/Background/Home/Index.do";
+                            location.replace(backUrl);
+                        }
+                    }
+                });
+            }
+        });
+
+        jq('#scheNoticeForm').validator({
+            timely: 0,
+            stopOnError: true,
+            msgMaker: function (opt) {
+                if (opt.msg != "") {
+                    alert(opt.msg);
+                }
+                return false;
+            },
+            valid: function (form) {
+                //表单验证通过，提交表单到服务器
+                jq.ajax({
+                    url: "/web/CheckUserName.do",
+                    type: 'POST',
+                    dataType: "json",
+                    data: jq(form).serialize(),
+                    success: function (result) {
+                        alert(result.message);
+                        if (result.code > 0) {
+                            var backUrl = "/web/scheNoticeList.do?userName=" + jq("#scheNoticeForm input[name='userName']").val();
+                            location.replace(backUrl);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+#end
+
+#parse("shared/head.vm")
+
+<div class="horizontal-container">
+    <div class="carousel-slide">
+        <div id="carousel-top" class="carousel slide" data-ride="carousel" data-interval="2000">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                #foreach($item in ${photoGrapList1})
+                <li data-target="#carousel-top" data-slide-to="${velocitycount}" class="#if(${velocitycount} == 1) active #end"></li>
+                #end
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                #foreach($item in ${photoGrapList1})
+                <div class="item #if(${velocitycount} == 1) active #end">
+                    <img src="$!{item.ImageUrl}" alt="$!{item.Subject}" data-src="holder.js/1170x275/sky" class="img-responsive" style="height: 275px;">
+                    <div class="carousel-caption">
+                        <a href="$!{item.LinkUrl}" target="_blank">$!{item.Subject}</a>
+                    </div>
+                </div>
+                #end
+            </div>
+        </div>
+
+        <div class="user-login">
+            <form method="post" target="_self" id="loginForm" name="loginForm">
+                <input name="userName" id="userName" type="text" class="input username" placeholder="学员编号" data-rule="学员编号:required;username" />
+                <input name="passWord" id="passWord" type="password" class="input password" placeholder="密码" data-rule="密码:required;password" />
+                <input name="btnLogin" id="btnLogin" type="submit" value="登录" class="login" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="news-container clearfix">
+    <div class="left-container panel-box">
+        <dl>
+            <dt><span class="title">雨露快讯</span>YULU NEWS<a href="/web/list.do?catalogID=3">MORE</a></dt>
+            #foreach($item in ${artilceList3})
+            <dd class="#if(${velocityCount}%2 == 0) active #end"><a href="/web/article.do?articleID=$!{item.ID}">$!{item.Subject}</a>$!{item.RecordDate.ToString("MM-dd")}</dd>
+            #end
+        </dl>
+    </div>
+    <div class="search-box">
+        <div class="search-form">
+            <form method="post" target="_self" id="scheNoticeForm" name="scheNoticeForm">
+                <input name="userName" type="text" class="keyword" placeholder="手机号" data-rule="手机号:required;username" />
+                <input name="btnSearch" type="submit" class="search" value="" />
+            </form>
+        </div>
+        <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            每个新班开课前一天，请输入报名时留的第一个手机号码，查询所报班开课的具体时间，教室等信息。
+        </p>
+        <div class="about">
+            雨露培训将为你提供一个高效的训练平台，在这里，你不仅要受到系统多效的训练，还将听到有趣的命题故事，从"变"的现象中发现"不变"的本质…
+        </div>
+    </div>
+</div>
+
+<div class="video-container">
+    <div class="container">
+        <dl>
+            <dt><a href="/web/videoList.do" class="more">MORE</a></dt>
+            #foreach($item in ${videoList})
+            <dd>
+                <a href="/web/video.do?videoID=$!{item.ID}">
+                    <img src="$!{item.CoversUrl}" width="136" height="132" />
+                    <!--<span>$!{item.Title}</span>-->
+                </a>
+            </dd>
+            #end
+        </dl>
+    </div>
+</div>
+
+<div class="container panel-box">
+    <dl>
+        <dt><span class="title">招生信息</span>RECRUIT STUDENTS<a href="/web/list.do?catalogID=2">MORE</a></dt>
+        #foreach($item in ${artilceList2})
+        <dd class="#if(${velocityCount}%2 == 0) active #end"><a href="/web/article.do?articleID=$!{item.ID}">$!{item.Subject}</a>$!{item.RecordDate.ToString("MM-dd")}</dd>
+        #end
+    </dl>
+</div>
+
+<div class="container panel-box">
+    <dl>
+        <dt><span class="title">雨露学生</span>YULU STUDENTS<a href="/web/list.do?catalogID=4">MORE</a></dt>
+        #foreach($item in ${artilceList4})
+        <dd class="#if(${velocityCount}%2 == 0) active #end"><a href="/web/article.do?articleID=$!{item.ID}">$!{item.Subject}</a>$!{item.RecordDate.ToString("MM-dd")}</dd>
+        #end
+    </dl>
+</div>
+
+<div class="activities-container">
+    <div class="container">
+        <div class="jcarousel-wrapper">
+            <div class="jcarousel" id="jcarousel2">
+                <ul>
+                    #foreach($item in ${photoGrapList2})
+                    <li>
+                        <img src="$!{item.ImageUrl}" data-src="holder.js/380x320/sky" class="img-thumbnail">
+                    </li>
+                    #end
+                </ul>
+            </div>
+            <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+            <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+        </div>
+    </div>
+</div>
+
+#if(${photoGraph})
+<div class="hvideo" id="hvideo">
+    <a href="${photoGraph.LinkUrl}"><img src="${photoGraph.ImageUrl}" /></a>
+</div>
+#end
+
+#parse("shared/footer.vm")

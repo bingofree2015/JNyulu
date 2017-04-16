@@ -1,0 +1,134 @@
+﻿#capturefor(pageTitle)新增小班#end
+
+#capturefor(includeCode)
+<link rel="stylesheet" type="text/css" href="/resources/jscripts/uploadify/uploadify.css" />
+<script type="text/javascript" src="/resources/jscripts/uploadify/jquery.uploadify.js"></script>
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(function () {
+        jq("input[type='file']").each(function () {
+
+            jq(this).uploadify({
+                buttonText: "<span class=\"glyphicon glyphicon-cloud-upload\"></span> " + jq(this).attr("title"),
+                buttonClass: "btn btn-default",
+                swf: "/resources/jscripts/uploadify/uploadify.swf",
+                uploader: "/Helper/UploadFiles.do",
+                width: 140,
+                //接受一个文件路径。此文件检查正要上传的文件名是否已经存在目标目录中。存在时返回1，不存在时返回0(应该主要是作为后台的判断吧)，默认为false
+                //debug: true,
+                fileObjName: 'uploadFile',
+                formData: {
+                    ASPSESSID: '$!{params.ASPSESSID}',
+                    AUTHID: '$!{params.AUTHID}'
+                },
+                onUploadSuccess: function (file, data, response) {
+                    result = jq.parseJSON(data);
+                    jq("#coversUrl").val(result.message);
+                },
+                onCancel: function (file) {
+                    console.log('The file' + file.name + 'was cancelled.')
+                },
+                onUploadError: function (file, errorCode, errorMsg, errorString) {
+                    alert(errorString);
+                }
+            });
+        });
+
+        jq("#createForm").validator({
+            valid: function (form) {
+                var me = this;
+                // 提交表单之前，hold住表单，并且在以后每次hold住时执行回调
+                me.holdSubmit(function () {
+                    alert("正在处理中...");
+                });
+                jq.ajax({
+                    url: "/Background/Video/PostCreate.do",
+                    data: jq(form).serialize(),
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                        // 提交表单成功后，释放hold，就可以再次提交
+                        alert(data.message);
+                        me.holdSubmit(false);
+                        if (data.code > 0) {
+                            location.replace("List.do?stID=$!{video.STID}&pageIndex=$!{params.PageIndex}");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?stID=$!{video.STID}&pageIndex=$!{params.PageIndex}">视频管理</a></li>
+    <li class="active">发布视频</li>
+</ol>
+
+<div class="form-container">
+    <form  class="form-horizontal" method="post"  role="form" target="_self" id="createForm" name="createForm" autocomplete="off">
+        <div class="form-group">
+            <label class="control-label col-sm-3">班级名称：</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="stID" id="stID">
+                    #foreach($item in ${schoolTermList})
+                    <option #if(${item.ID} == ${video.STID}) selected #end value="$!{item.ID}">$!{item.Name}</option>
+                    #end
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">视频标题：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="title" id="title" type="text" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">本地路径：</label>
+            <div class="col-sm-9">
+                <input type="file" id="uploadFile" name="uploadFile" title="上传视频封面" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">封面地址：</label>
+            <div class="col-sm-9">
+                <input class="form-control" readonly="readonly" name="coversUrl" id="coversUrl" type="text" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">视频地址：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="mediaUrl" id="mediaUrl" type="text" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">视频内容：</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" cols="3" name="mediaHtml" id="mediaHtml"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">视频排序：</label>
+            <div class="col-sm-9">
+                <input class="form-control" name="sortNum" id="sortNum" type="text" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">视频属性：</label>
+            <div class="col-sm-9">
+                <label class="radio-inline" for="rpermit0"><input type="radio" name="permit" checked="checked" id="rpermit0" value="0">公开</label>
+                <label class="radio-inline" for="rpermit1"><input type="radio" name="permit" id="rpermit1" value="1">私有</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button class="btn btn-success btn-block" name="btnCreate" id="btnCreate" type="submit" value="确定(封面尺寸大小320px×320px)">确定(封面尺寸大小320px×320px)</button>
+            </div>
+        </div>
+    </form>
+</div>

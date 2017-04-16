@@ -1,0 +1,52 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台#end
+
+#capturefor(includeCode)
+<link href="/resources/web/css/jnyulu.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jscripts/holder.min.js"></script>
+<style type="text/css">
+    .thumbnail img {
+        width:180px;
+        height:125px;
+    }
+    body > .container {
+        border-right:10px solid #f2f2f2;
+    }
+</style>
+#end
+
+#parse("shared/head.vm")
+<div class="video-logo"></div>
+
+<div class="container">
+    <div class="video-menu">
+        <dl>
+            <dt>雨露微课堂</dt>
+            #foreach($item in ${schoolTermList})
+            <dd><a href="videoList.do?stID=$!{item.ID}">$!{item.Name}</a></dd>
+            #end
+        </dl>
+    </div>
+    <div class="video-list">
+        <p class="title">$!{schoolTerm.Name}</p>
+        <p class="pull-right h4 text-danger">更多雨露微课堂精彩内容，请登录后观看！</p>
+        <ul class="list-inline">
+            #foreach($item in ${videoList})
+            <li>
+                <div class="thumbnail">
+                    <a href="video.do?videoID=$!{item.ID}">
+                        <img data-src="holder.js/200x140" src="$!{item.CoversUrl}"/>
+                    </a>
+                    <div class="caption text-center">
+                        $!{item.Title}
+                    </div>
+                </div>
+            </li>
+            #if(${velocitycount} % 3 == 0 && ${velocitycount} > 0) </ul><ul class="list-inline"> #end
+            #end
+        </ul>
+        <ul class="pagination">$!{ltlShowPager}</ul>
+    </div>
+</div>
+
+#parse("shared/footer.vm")
+

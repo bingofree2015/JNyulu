@@ -1,0 +1,122 @@
+﻿#capturefor(pageTitle)教学时间管理#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    $().ready(function () {
+        $("#am option[value='$!{weekPeriod.AM}']").attr("selected", "selected");
+        $("#pm option[value='$!{weekPeriod.PM}']").attr("selected", "selected");
+        $("#xnight option[value='$!{weekPeriod.XNight}']").attr("selected", "selected");
+    });
+
+    function PostEditWeekPeriod() {
+
+        $("#btnPostEditWeekPeriod").attr("disabled", "disabled").val("处理中,请稍候...");
+        var key = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+        var info = {};
+
+        jQuery.each(key, function (k, v) {
+            if ($("#" + v).is(":checked")) {
+                info[v] = 1;
+            }
+            else {
+                info[v] = 0;
+            }
+        });
+
+        info["weekPeriodID"] = $("#weekPeriodID").val();
+        info["am"] = $("#am").val();
+        info["pm"] = $("#pm").val();
+        info["xnight"] = $("#xnight").val();
+
+        jQuery.post("PostEditWeekPeriod.do", info, function (r) {
+            alert(r.message);
+            $("#btnPostEditWeekPeriod").removeAttr("disabled").val("确定").css("background", "").css("color", "");
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">教学时间管理</li>
+</ol>
+
+<div class="form-container">
+    <form method="post" target="_self" id="WeekPeriodForm" name="WeekPeriodForm" action="PostEditWeekPeriod.do">
+        <input type="hidden" id="weekPeriodID" name="weekPeriodID" value="$!{weekPeriod.ID}" />
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <ul  class="list-inline">
+                    <li class="col-md-6">
+                        <dl>
+                            <dt>每天上课天数</dt>
+                            <dd>
+                                <table class="table table-bordered">
+                                  <tr>
+                                    <td style="width:50%;vertical-align:top;">
+                                      <p><input name="monday" id="monday" type="checkbox" #if(${weekPeriod.Monday} > 0) checked="checked" #end /> 星期一</p>
+                                      <p><input name="tuesday" id="tuesday" type="checkbox" #if(${weekPeriod.Tuesday} > 0) checked="checked" #end /> 星期二</p>
+                                      <p><input name="wednesday" id="wednesday" type="checkbox" #if(${weekPeriod.Wednesday} > 0) checked="checked" #end /> 星期三</p>
+                                      <p><input name="thursday" id="thursday" type="checkbox" #if(${weekPeriod.Thursday} > 0) checked="checked" #end /> 星期四</p>
+                                    </td>
+                                    <td style="width:50%;vertical-align:top;">
+                                      <p><input name="friday" id="friday" type="checkbox" #if(${weekPeriod.Friday} > 0) checked="checked" #end /> 星期五</p>
+                                      <p><input name="saturday" id="saturday" type="checkbox" #if(${weekPeriod.Saturday} > 0) checked="checked" #end /> 星期六</p>
+                                      <p><input name="sunday" id="sunday" type="checkbox" #if(${weekPeriod.Sunday} > 0) checked="checked" #end /> 星期日</p>
+                                    </td>
+                                  </tr>
+                                </table>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="col-md-6">
+                        <dl>
+                            <dt>每天上课节次</dt>
+                            <dd>
+                                <ul class="list-group">
+                                  <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">上午：</span>
+                                        <select class="form-control" name="am" id="am">
+                                            <option value="1">1节</option>
+                                            <option value="2">2节</option>
+                                            <option value="3">3节</option>
+                                            <option value="4">4节</option>
+                                        </select>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">下午：</span>
+                                        <select class="form-control" name="pm" id="pm">
+                                            <option value="1">1节</option>
+                                            <option value="2">2节</option>
+                                            <option value="3">3节</option>
+                                            <option value="4">4节</option>
+                                        </select>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">晚上：</span>
+                                        <select class="form-control" name="xnight" id="xnight">
+                                            <option value="1">1节</option>
+                                            <option value="2">2节</option>
+                                            <option value="3">3节</option>
+                                            <option value="4">4节</option>
+                                        </select>
+                                    </div>
+                                  </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-footer text-right">
+                <input class="btn btn-success" name="btnPostEditWeekPeriod" id="btnPostEditWeekPeriod" type="button" value="确定" onclick="PostEditWeekPeriod();" />
+            </div>
+        </div>
+    </form>
+</div>
+

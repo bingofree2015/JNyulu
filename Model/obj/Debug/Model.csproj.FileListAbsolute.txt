@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\JNyuluSoft.Model.dll
+C:\project\NET\JNyuluV3.0\Lib\JNyuluSoft.Model.pdb
+C:\project\NET\JNyuluV3.0\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\Model\obj\Debug\JNyuluSoft.Model.dll
+C:\project\NET\JNyuluV3.0\Model\obj\Debug\JNyuluSoft.Model.pdb

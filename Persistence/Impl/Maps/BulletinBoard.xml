@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2010-01-12 11:12:15
+    修 改 者 : 
+    修改时间 : 
+    描    述 : BulletinBoard
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="BulletinBoard" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.BulletinBoard" />
+  </alias>
+  <resultMaps>
+    <resultMap id="BulletinBoardBaseResult" class="BulletinBoard">
+      <result property="ID" column="ID"  des="" /> 
+      <result property="Sender" column="Sender"  des="" /> 
+      <result property="Receiver" column="Receiver"  des="" /> 
+      <result property="Subject" column="Subject"  des="" /> 
+      <result property="MsgText" column="MsgText"  des="" /> 
+      <result property="RecordDate" column="RecordDate"  des="" /> 
+    </resultMap>
+
+    <resultMap id="BulletinBoardResult" class="BulletinBoard" extends="BulletinBoardBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="bulletinboard-insert-params">
+      <parameter property="Sender" column="sender"  direction="Input" dbType="Int"/>
+      <parameter property="Receiver" column="receiver"  direction="Input" dbType="Int"/>
+      <parameter property="Subject" column="subject"  direction="Input" dbType="NVarChar"/>
+      <parameter property="MsgText" column="msgText"  direction="Input" dbType="NVarChar"/>
+      
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="bulletinboard-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+
+    <select id="GetBaseBulletinBoard" parameterClass="BulletinBoard" resultMap="BulletinBoardBaseResult">
+      <![CDATA[ 
+      SELECT 
+        BulletinBoard.ID, 
+        BulletinBoard.Sender, 
+        BulletinBoard.Receiver, 
+        BulletinBoard.Subject, 
+        BulletinBoard.MsgText, 
+        BulletinBoard.RecordDate
+      FROM BulletinBoard ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="Sender">
+          <![CDATA[ BulletinBoard.Sender = #Sender# ]]>
+        </isNotEmpty>
+        <iterate prepend="AND" property="Receivers" open="(" close=")" conjunction="OR">
+          <![CDATA[ Receiver=#Receivers[]# ]]>
+        </iterate>
+      </dynamic>
+    </select>
+
+    <select id="GetBaseBulletinBoardByID" parameterClass="string" resultMap="BulletinBoardBaseResult">
+      <![CDATA[ 
+      SELECT 
+        BulletinBoard.ID, 
+        BulletinBoard.Sender, 
+        BulletinBoard.Receiver, 
+        BulletinBoard.Subject, 
+        BulletinBoard.MsgText, 
+        BulletinBoard.RecordDate
+      FROM BulletinBoard
+      WHERE  WHERE BulletinBoard.ID = #value#]]>
+    </select>
+
+    <select id="GetBulletinBoard" parameterClass="BulletinBoard" resultMap="BulletinBoardResult">
+      <![CDATA[ 
+      SELECT 
+        BulletinBoard.ID, 
+        BulletinBoard.Sender, 
+        BulletinBoard.Receiver, 
+        BulletinBoard.Subject, 
+        BulletinBoard.MsgText, 
+        BulletinBoard.RecordDate
+      FROM BulletinBoard ]]>
+      <dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND"  property="Sender">
+          <![CDATA[ BulletinBoard.Sender = #Sender# ]]>
+        </isNotEmpty>
+        <iterate prepend="AND" property="Receivers" open="(" close=")" conjunction="OR">
+          <![CDATA[ Receiver=#Receivers[]# ]]>
+        </iterate>
+      </dynamic>
+    </select>
+
+    <select id="GetBulletinBoardByID" parameterClass="string" resultMap="BulletinBoardResult">
+      <![CDATA[ 
+      SELECT 
+        BulletinBoard.ID, 
+        BulletinBoard.Sender, 
+        BulletinBoard.Receiver, 
+        BulletinBoard.Subject, 
+        BulletinBoard.MsgText, 
+        BulletinBoard.RecordDate
+      FROM BulletinBoard
+      WHERE  BulletinBoard.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertBulletinBoard" resultClass="int" parameterMap="bulletinboard-insert-params">
+      InsertBulletinBoard
+    </procedure>
+
+    <procedure id="PaginatedBulletinBoard" resultClass="BulletinBoard" parameterMap="bulletinboard-paginated-params">
+      PaginatedBulletinBoard
+    </procedure>
+
+    <update id="UpdateBulletinBoard" parameterClass="BulletinBoard">
+      <![CDATA[ 
+      UPDATE BulletinBoard
+        SET Sender = #Sender#, 
+        Receiver = #Receiver#, 
+        Subject = #Subject#, 
+        MsgText = #MsgText#
+      WHERE BulletinBoard.ID = #ID# ]]>
+    </update>
+
+    <delete id="DeleteBulletinBoardByID" parameterClass="BulletinBoard">
+      <![CDATA[ 
+      DELETE FROM BulletinBoard
+      WHERE BulletinBoard.ID = #ID# 
+      ]]>
+    </delete>
+
+  </statements>
+</sqlMap>

@@ -1,0 +1,64 @@
+﻿#capturefor(pageTitle)小班信息管理#end
+
+#capturefor(includeCode)
+<script type="text/javascript" src="/resources/jscripts/jquery.fillOptions.js"></script>
+<script type="text/javascript" src="/resources/jscripts/jquery.cascadingSelect.js"></script>
+
+<script type="text/javascript">
+    function PostDelete(videoID) {
+        var info = {};
+        info["videoID"] = videoID;
+
+        jQuery.post("PostDelete.do", info, function (result) {
+            alert(result.message);
+            location.reload();
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">视频列表</li>
+</ol>
+
+<div class="left-container">
+    <form  class="form-inline" role="form" method="post" target="_self" id="listForm" name="listForm">
+        <div class="form-group">
+            <label class="control-label">班级分类：</label>
+            <select class="form-control" name="stID" id="stID">
+                #foreach($item in ${schoolTermList})
+                <option #if(${item.ID} == ${params.STID}) selected #end value="$!{item.ID}">$!{item.Name}</option>
+                #end
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-success" name="btnSearch" id="btnSearch" type="submit" value="查询" />
+        </div>
+        <div class="form-group pull-right">
+            <a class="btn btn-success" href="Create.do?stID=$!{params.STID}&pageIndex=$!{params.PageIndex}">发布视频</a>
+        </div>
+    </form>
+    <hr class="help-block" />
+    #if(${videoList.Count} > 0)    
+    <table class="table table-striped">
+        <tr class="active">
+            <th>编 号</th>
+            <th>标 题</th>
+            <th>排 序</th>
+            <th>日 期</th>
+            <th>操作</th>
+        </tr>
+
+        #foreach($item in ${videoList})
+          <tr>
+              <td>$!{item.ID}</td>
+              <td>$!{item.Title}</td>
+              <td>$!{item.SortNum}</td>
+              <td>$!{item.UploadTime.ToString("yyyy-MM-dd")}</td>
+              <td><a href="Edit.do?videoID=$!{item.ID}&stID=$!{params.STID}&pageIndex=$!{params.PageIndex}">修改</a> | <a class="h" href="#" onclick="PostDelete($!{item.ID});">删除</a></td>
+          </tr>
+        #end
+    </table>
+    <ul class="pagination">$!{ltlShowPager}</ul>
+    #end
+</div>

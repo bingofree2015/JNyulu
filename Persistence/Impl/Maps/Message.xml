@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- =====================================================
+    作    者 : bingofree
+    创建时间 : 2010-01-12 11:12:15
+    修 改 者 : 
+    修改时间 : 
+    描    述 : Message
+===================================================== -->
+<sqlMap namespace="JNyulu" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <alias>
+    <typeAlias alias="Message" assembly="JNyuluSoft.Model.dll" type="JNyuluSoft.Model.Message" />
+  </alias>
+  <resultMaps>
+    <resultMap id="MessageBaseResult" class="Message">
+      <result property="ID" column="ID"  des="" />
+      <result property="UserName" column="UserName"  des="" />
+      <result property="Subject" column="Subject"  des="" /> 
+      <result property="Issue" column="Issue"  des="" /> 
+      <result property="Reply" column="Reply"  des="" /> 
+      <result property="RecordDate" column="RecordDate"  des="" /> 
+    </resultMap>
+
+    <resultMap id="MessageResult" class="Message" extends="MessageBaseResult" >
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap class="map" id="message-insert-params">
+      <parameter property="UserName" column="userName"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Subject" column="subject"  direction="Input" dbType="NVarChar"/>
+      <parameter property="Issue" column="issue"  direction="Input" dbType="NVarChar"/>
+      
+      <parameter property="ID" column="id"  direction="Output" dbType="Int" />
+    </parameterMap>
+    <parameterMap class="map" id="message-paginated-params">
+      <parameter property="pageIndex"  column="pageIndex"  direction="Input" dbType="Int" />
+      <parameter property="pageSize"  column="pageSize"  direction="Input" dbType="Int" />
+      <parameter property="sortFields" column="sortFields"  direction="Input" dbType="NVarChar" />
+      <parameter property="conAttr" column="conAttr"  direction="Input" dbType="NVarChar" />
+      <parameter property="totalNum" column="totalNum"  direction="Output" dbType="Int" />
+    </parameterMap>
+  </parameterMaps>
+  <statements>
+    <select id="GetMessageByID" parameterClass="string" resultMap="MessageResult">
+      <![CDATA[ 
+      SELECT 
+        Message.ID, 
+        Message.UserName, 
+        Message.Subject, 
+        Message.Issue, 
+        Message.Reply, 
+        Message.RecordDate
+      FROM Message
+      WHERE  Message.ID = #value# ]]>
+    </select>
+
+    <procedure id="InsertMessage" resultClass="int" parameterMap="message-insert-params">
+      InsertMessage
+    </procedure>
+
+    <procedure id="PaginatedMessage" resultClass="Message" parameterMap="message-paginated-params">
+      PaginatedMessage
+    </procedure>
+
+    <update id="UpdateMessage" parameterClass="Message">
+      <![CDATA[ 
+      UPDATE Message
+        SET Reply = #Reply#
+      WHERE Message.ID = #ID# 
+      ]]>
+    </update>
+
+    <delete id="DeleteMessageByID" parameterClass="Message">
+      <![CDATA[ 
+      DELETE FROM Message
+      WHERE Message.ID = #ID# 
+      ]]>
+    </delete>
+  </statements>
+</sqlMap>

@@ -1,0 +1,50 @@
+﻿#capturefor(pageTitle)班级管理#end
+
+#capturefor(includeCode)
+
+<script type="text/javascript">
+
+    function PostCreate() {
+        var key = ["schoolTermID", "name", "gradeID"];
+
+        $("#btnCreate").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostCreate.do", info, function (r) {
+            alert(r.message);
+            $("#btnCreate").removeAttr("disabled").val("新增班级");
+            if (r.code > 0) {
+                location.href = "List.do";
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do">班级管理</a></li>
+    <li class="active">新增班级</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" method="post" target="_self" id="listForm" name="listForm" action="PostCreate.do">
+        <div class="input-group">
+            <div class="input-group-addon">班级名称：</div>
+            <input class="form-control" name="name" id="name" />
+        </div>
+        <div class="input-group">
+            <div class="input-group-addon">所属年级：</div>
+            <select class="form-control" name="gradeID" id="gradeID">
+                #foreach($item in ${gradeList})
+              <option value="$!{item.ID}">$!{item.Name}</option>
+                #end
+            </select>
+            <span class="input-group-btn">
+                <button class="btn btn-success" name="btnCreate" id="btnCreate" type="button" value="确定" onclick="PostCreate();">确定</button>
+            </span>
+        </div>
+    </form>
+</div>

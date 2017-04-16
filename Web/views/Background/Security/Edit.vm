@@ -1,0 +1,80 @@
+﻿#capturefor(pageTitle)修改权限#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    var permissionKey = ["assessment","essential","student","curriculum","article"];
+    var _permItem = 0;
+
+    $().ready(function(){
+        var permission = $!{employee.Permission};
+        var p = 0;
+        jQuery.each(permissionKey,function(k,v){
+            _permItem = parseInt($("#" + v).val(),2);
+            p = _permItem & permission;
+            if(p != 0)
+            {
+                $("#" + v).attr('checked',true);
+            }
+        });
+    });
+
+    function PostEditAccount(){
+        $("#btnEditAccount").attr("disabled","disabled").val("处理中,请稍候...");
+        var info = {};
+        var _permission = 0x0;
+    
+        jQuery.each(permissionKey,function(k,v){
+            if($("#" + v).attr('checked'))
+            {
+                _permItem = parseInt($("#" + v).val(),2);
+                _permission = _permission | _permItem;
+            }
+        });
+    
+        info["employeeID"]=$("#employeeID").val();
+        info["permission"]=_permission;
+
+        jQuery.post("PostEditAccount.do",info,function(r){
+            alert(r.message);
+            $("#btnEditAccount").removeAttr("disabled").val("修改帐号");
+            if(r.code > 0){
+                location.replace("List.do");
+            }
+        },"json");
+    }
+</script>
+
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do">帐号权限管理</a></li>
+    <li class="active">修改帐号</li>
+</ol>
+
+<div class="form-container">
+    <div class="panel panel-info">
+        <div class="panel-heading">账号：<strong class="p2">$!{employee.Name}</strong></div>
+        <div class="panel-body">
+            <form  class="form-horizontal" method="post" target="_self" id="AccountForm" name="AccountForm" action="PostEditAccount.do">
+                <div class="form-group">
+                    <input name="employeeID" id="employeeID" type="hidden" value="$!{employee.ID}" />
+                    <label class="checkbox">
+                        <input name="article" id="article" type="checkbox" value="00000100000000000000" />
+                        网站内容
+                    </label>
+                    <label class="checkbox">
+                        <input name="student" id="student" type="checkbox" value="00010000000000000000" />
+                        学生管理
+                    </label>
+                    <label class="checkbox">
+                        <input name="essential" id="essential" type="checkbox" value="00100000000000000000" />
+                        系统配置
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer pull-right">
+            <button class="btn btn-success" name="btnEditAccount" id="btnEditAccount" type="button" value="确定" onclick="PostEditAccount();">确定</button>
+        </div>
+    </div>
+</div>

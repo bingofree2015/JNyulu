@@ -1,0 +1,63 @@
+﻿#capturefor(pageTitle)修改密码#end
+
+#capturefor(includeCode)
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(function () {
+        jq("#employeeForm").validator({
+            valid: function (form) {
+                var me = this;
+                // 提交表单之前，hold住表单，并且在以后每次hold住时执行回调
+                me.holdSubmit(function () {
+                    alert("正在处理中...");
+                });
+                jq.ajax({
+                    url: "/Background/Home/PostEdit.do",
+                    data: jq(form).serialize(),
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                        // 提交表单成功后，释放hold，就可以再次提交
+                        alert(data.message);
+                        me.holdSubmit(false);
+                    }
+                });
+            }
+        });
+    })
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">修改密码</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="editAccount" name="editAccount" autocomplete="off">
+        <div class="input-group">
+            <span class="input-group-addon">请输入新的密码：</span>
+            <input class="form-control" type="password" name="newPassWord" id="newPassWord" data-rule="密码:required;password" />
+        </div>
+        <span class="help-block" id="newPassWordTip"></span>
+        <div class="input-group">
+            <span class="input-group-addon">请再输一次密码：</span>
+            <input class="form-control" type="password" name="newPassWord1" id="newPassWord1" data-rule="确认密码: required;match(user[newPassWord]);" />
+        </div>
+        <span class="help-block" id="newPassWord1Tip"></span>
+        <div class="text-right">
+            <button class="btn btn-success btn-block" id="btnEdit" name="btnEdit" type="submit" value="确定">确定</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+

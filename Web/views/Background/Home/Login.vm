@@ -1,0 +1,101 @@
+﻿#capturefor(pageTitle)济南市雨露培训学校信息化服务平台-后台管理3.0#end
+
+#capturefor(includeCode)
+
+<style type="text/css">
+    .bg-primary {
+        border-bottom: solid 3px #330033;
+    }
+
+    .col-md-6 {
+        border-right: solid 3px #330033;
+    }
+    .page-header h1 {
+        margin-left:250px;
+        color:#ffffff;
+        font-family:Aldhabi;
+        font:700;
+    }
+</style>
+
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(function () {
+
+        //接收表单验证通过的事件
+        jq('#loginForm').bind('valid.form', function () {
+            jq.ajax({
+                url: '/Background/Home/PostLogin.do',
+                type: 'POST',
+                dataType: "json",
+                data: jq(this).serialize(),
+                success: function (result) {
+                    alert(result.message);
+                    if (result.code <= 0) {
+                        jq("#btnLogin").removeAttr("disabled").val("用户登录");
+                    }
+                    else {
+                        var backUrl = "/Background/Home/Index.do";
+                        location.replace(backUrl);
+                    }
+                }
+            });
+        });
+    })
+</script>
+#end
+
+<table class="table">
+    <tr style="border-top: solid 3px #330033; border-bottom: solid 2px #330033;">
+        <td colspan="2" style="height: 120px; background: #000000;">
+            <div class="page-header">
+                <h1><span class="glyphicon glyphicon-leaf"></span>　济南市雨露培训学校信息化服务平台 <small>v3.0.0</small></h1>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: solid 1px #330033; background: #f2f2f2; width: 300px;background:url('/resources/images/login-left.png') repeat fixed!important;"></td>
+        <td style="padding: 80px 240px;">
+            <div class="panel panel-default" style="width: 380px;">
+                <div class="panel-heading panel-title">登录雨露</div>
+                <div class="panel-body" style="padding-left: 15px;">
+                    <form class="form-horizontal" method="post" autocomplete="off" data-validator-option="{theme:'yellow_right_effect',stopOnError:true,debug:1}" target="_self" id="loginForm" name="loginForm">
+                        <p class="help-block"></p>
+                        <div class="input-group">
+                            <span class="input-group-addon">学员编号：</span>
+                            <input name="userName" id="userName" type="text" class="form-control" data-rule="学员编号:required;username" placeholder="学员编号">
+                        </div>
+                        <p class="help-block"></p>
+                        <div class="input-group">
+                            <span class="input-group-addon">密　　码：</span>
+                            <input name="passWord" id="passWord" type="password" class="form-control" data-rule="密码:required;password" placeholder="密码">
+                        </div>
+                        <p class="help-block"></p>
+                        <div class="input-group">
+                            <span class="input-group-addon">年　　级：</span>
+                            <select name="gradeID" id="gradeID" class="form-control">
+                                <option value="0">所有年级</option>
+                                #foreach($item in ${gradeList})
+                                    <option value="${item.ID}">${item.Name}</option>
+                                #end
+                            </select>
+                        </div>
+                        <p class="help-block"></p>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-success" name="btnLogin" id="btnLogin"><span class="glyphicon glyphicon-ok"></span>登  录</button>
+                        </div>
+                        <div class="text-right"><a href="/templates.zip" class="btn btn-link">Excel模板下载</a></div>
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr style="border-top: solid 3px #330033;">
+        <td colspan="2"></td>
+    </tr>
+</table>
+

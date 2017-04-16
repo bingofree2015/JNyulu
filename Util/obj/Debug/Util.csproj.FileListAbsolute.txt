@@ -1,0 +1,16 @@
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\JNyuluSoft.Util.dll
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\JNyuluSoft.Util.pdb
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\Baidu.Notifications.dll
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\JdSoft.Apns.Notifications.dll
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\JNyuluSoft.Model.dll
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\log4net.dll
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\Newtonsoft.Json.dll
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\JdSoft.Apns.Notifications.pdb
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\Baidu.Notifications.pdb
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\log4net.pdb
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\log4net.xml
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\JNyuluSoft.Model.pdb
+C:\project\NET\JNyuluV3.0\Util\bin\Debug\Newtonsoft.Json.xml
+C:\project\NET\JNyuluV3.0\Util\obj\Debug\Util.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\Util\obj\Debug\JNyuluSoft.Util.dll
+C:\project\NET\JNyuluV3.0\Util\obj\Debug\JNyuluSoft.Util.pdb

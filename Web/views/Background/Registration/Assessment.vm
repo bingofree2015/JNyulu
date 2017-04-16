@@ -1,0 +1,54 @@
+﻿#capturefor(pageTitle)记录学员考评信息#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostAssessment(stID)
+    {
+        $("#btnCreate" + stID).attr("disabled","disabled").val("处理中,请稍候...");
+        var info = {};
+  
+        info["employeeID"] = $("#employeeID").val();
+        info["employeeName"] = $("#employeeName").val();
+        info["stID"] = stID;
+        info["judgment"] = $("#judgment" + stID).val();
+  
+        jQuery.post("PostAssessment.do",info,function(result){
+            alert(result.message);
+            $("#btnCreate" + stID).removeAttr("disabled").val("确定");
+            if(result.code > 0){
+                location.replace("Main.do?searchUserName=$!{params.SearchUserName}&stID=$!{params.STID}&pageIndex=$!{params.PageIndex}");
+            }
+        },"json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="Main.do?searchUserName=$!{params.SearchUserName}&stID=$!{params.STID}&pageIndex=$!{[params.PageIndex}">学生报名管理</a></li>
+    <li class="active">记录学员考评信息</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="createForm" name="createForm" action="PostAssessment.do">
+        <input name="employeeID" id="employeeID" type="hidden" value="$!{employee.ID}" />
+        <div class="input-group">
+            <span class="input-group-addon">输入学员编号查询：</span>
+            <input type="text" class="form-control" name="employeeName" id="employeeName" value="$!{employee.Name}">
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="submit" name="btnSearch" id="btnSearch">查询</button>
+            </span>
+        </div>
+    </form>
+
+    <dl>
+        #foreach($item in ${registrationList})
+        <dt><strong>班级：</strong>$!{item.SchoolTermName}</dt>
+        <dd>
+            <textarea class="form-control" rows="3" name="judgment$!{item.STID}" id="judgment$!{item.STID}">$!{item.Judgment}</textarea>
+        </dd>
+        <dd>
+            <input class="btn btn-success btn-block" name="btnCreate$!{item.STID}" id="btnCreate$!{item.STID}" type="button" value="确定" onclick="PostAssessment($!{item.STID});" />
+        </dd>
+        #end
+    </dl>
+</div>

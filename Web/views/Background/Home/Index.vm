@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>济南市雨露培训学校信息化服务平台-后台管理3.0</title>
+    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        function ConfirmLogout() {
+            if (confirm("注销当前用户,并以其它身份登录？")) {
+                window.top.location = "/Background/Home/Logout.do";
+            }
+            return false;
+        }
+    </script>
+    <style>
+        .menu {
+            padding: 15px 0px;
+            background: #f5f5f5;
+            border-left: solid 1px #330033;
+        }
+
+            .menu .menu-title {
+                color: white;
+                background-color: #330033;
+            }
+
+                .menu .menu-title p {
+                    margin-left: 5px;
+                    padding: 5px 8px;
+                }
+
+            .menu .menu-container {
+                margin: 0 0 10px 10px;
+            }
+
+        nav.navbar-inverse {
+            margin-bottom: 0px;
+            border-radius: 0px;
+        }
+
+        .row .col-md-2, .row .col-md-10 {
+            padding: 0px;
+        }
+
+        .navbar-text {
+            margin-top: 5px;
+            margin-bottom: 0px;
+        }
+
+        .bg-primary {
+            background: #330066;
+        }
+
+        a:link, a:visited, a:hover, a:active {
+            text-decoration: none; /* 指正常的未被访问过的链接*/
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <p class="h3" style="color: white;">
+                    <span class="glyphicon glyphicon-leaf"></span>
+                    济南市雨露培训学校信息化服务平台 V3
+                </p>
+            </div>
+            <div class="navbar-text navbar-right">
+                #if(${Session.logonUser.UserType} == 0)
+                <p class="text-left">
+                    帐　号：$!{Session.logonUser.TrueName}
+                    <a href="#" onclick="ConfirmLogout();">[退出系统]</a><br />
+                    学员编号：$!{Session.logonUser.Name}
+                </p>
+                #else
+                <p class="text-left">
+                    帐　　号：$!{Session.logonUser.TrueName}
+                    <a href="#" onclick="ConfirmLogout();">[退出系统]</a><br />
+                    上次登录：$!{Session.logonUser.LastLoginDate.ToString("yyyy-MM-dd hh:mm:ss")}
+                </p>
+                #end
+                <div class="text-right">
+                    电话：88320336、88320338、15318846000
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <ul class="list-unstyled menu">
+                    #if(${Session.logonUser.UserType} == 0)
+                    <li class="menu-title">
+                        <p class="bg-primary">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            学生后台
+                        </p>
+                    </li>
+                    <li class="menu-container">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/Index.do" target="container">我的课程表</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/BulletinBoard.do" target="container">学校公告</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/Message.do" target="container">我要留言</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/Article.do?CatalogID=5" target="container">答案下载</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/Article.do?CatalogID=11" target="container">学习·思维·分享</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/Video.do" target="container">雨露微课堂</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/Assessment.do" target="container">班级考评</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/ReportCard.do" target="container">我的试卷</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/Notification.do" target="container">消息盒子</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/StudentMgt/EditAccount.do" target="container">修改密码</a>
+                            </li>
+                        </ul>
+                    </li>
+                    #elseif(${Session.logonUser.UserType} == 2)
+
+                    #if(${article} != 0)
+                    <li class="menu-title">
+                        <p class="bg-primary">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            网站内容
+                        </p>
+                    </li>
+                    <li class="menu-container">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Catalog/List.do?moduleCn=Article" target="container">资讯分类</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Article/List.do?catalogID=11" target="container">资讯管理</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Notifications/List.do" target="container">消息推送</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Video/List.do" target="container">　微课堂</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Message/List.do" target="container">学员留言</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/BulletinBoard/List.do" target="container">学校公告</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/PhotoGraph/List.do" target="container">网站图片</a>
+                            </li>
+                        </ul>
+                    </li>
+                    #end
+                    
+                    #if(${student} != 0)
+                    <li class="menu-title">
+                        <p class="bg-primary">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            学生管理
+                        </p>
+                    </li>
+                    <li class="menu-container">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Employee/List.do" target="container">学员学籍</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Registration/Main.do" target="container">报名管理</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/ReportCard/List.do" target="container">学员试卷</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/ReportCard/UploadTestPaper.do" target="container">上传试卷</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Syllabus/List.do" target="container">学员课表</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Syllabus/UploadSyllabus.do" target="container">上传课表</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/ScheNotice/List.do" target="container">开课通知</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    #end
+
+                    #if(${essential} != 0)
+                    <li class="menu-title">
+                        <p class="bg-primary">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            系统配置
+                        </p>
+                    </li>
+                    <li class="menu-container">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Grade/List.do" target="container">年级配置</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Campus/List.do" target="container">校区信息</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/SchoolRoom/List.do" target="container">教室配置</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/SchoolTerm/List.do" target="container">班级管理</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="/Background/Security/List.do" target="container">权限管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    #end
+                    #end
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <iframe src="/Background/Home/Welcome.do?v=1.0" name="container" id="container" style="margin-left: 10px; width: 100%; min-height: 680px; border: 0px; overflow: hidden;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <hr style="border-bottom: solid 1px #330033;" />
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

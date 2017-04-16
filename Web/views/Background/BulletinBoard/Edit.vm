@@ -1,0 +1,88 @@
+﻿#capturefor(pageTitle)新增小班#end
+
+#capturefor(includeCode)
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+<script src="/resources/jscripts/tinymce/tinymce.min.js"></script>
+
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        toolbar: "bold italic strikethrough link unlink numlist bullist blockquote upload image fullscreen",
+        width: 600,
+        height: 200,
+        language: 'zh_CN',
+        upload_action: '/Helper/UploadFiles.do?returnType=1',//required
+        upload_file_name: 'uploadFile',//required
+        plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+        ]
+    });
+</script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(function () {
+        //jq("input[name='receiver'][value='$!{bulletinBoard.Receiver}']").attr("checked", true);
+        $("#receiver").val('$!{bulletinBoard.Receiver}');
+
+        //接收表单验证通过的事件
+        jq('#editForm').bind('valid.form', function () {
+            jq.ajax({
+                url: 'PostEdit.do',
+                type: 'POST',
+                dataType: "json",
+                data: jq(this).serialize(),
+                success: function (result) {
+                    alert(result.message);
+                    if (result.code > 0) {
+                        location.replace("List.do?pageIndex=$!{params.PageIndex}");
+                    }
+                }
+            });
+        });
+    })
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?pageIndex=$!{params.PageIndex}">公告列表</a></li>
+    <li class="active">修改公告</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" role="form" method="post" target="_self" id="editForm" name="editForm" autocomplete="off">
+        <input type="hidden" name="bulletinBoardID" id="bulletinBoardID" value="$!{bulletinBoard.ID}" />
+        <div class="form-group">
+            <label class="control-label col-sm-3">公告标题：</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="subject" id="subject" value="$!{bulletinBoard.Subject}" data-rule="公告标题:required;length[5~]" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">内　　容：</label>
+            <div class="col-sm-9">
+                <textarea name="msgText" id="msgText" cols="3" class="form-control" style="width: 600px; height: 260px;">$!{bulletinBoard.MsgText}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">接收者：</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="receiver" id="receiver">
+                    <option value="0" >所有人</option>
+                    #foreach($item in ${schoolTermList})
+                    <option value="$!{item.ID}">$!{item.Name}</option>
+                    #end
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input class="btn btn-success btn-block" type="submit" name="btnEdit" id="btnEdit" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>

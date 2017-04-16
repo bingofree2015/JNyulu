@@ -1,0 +1,36 @@
+﻿<table class="table table-striped">
+    <thead>
+        <tr class="active">
+            <th>学员编号</th>
+            <th>密码</th>
+            <th>姓名</th>
+            <th>家长手机</th>
+            <th colspan="4">操  作</th>
+        </tr>
+    </thead>
+    <tbody>
+        #foreach($item in ${employeeList})
+          <tr>
+              <td>$!{item.Name}</td>
+              <td>$!{item.PassWord}</td>
+              <td>$!{item.TrueName}</td>
+              <td>$!{item.Mobile}</td>
+              <td>
+                  <a href="Edit.do?employeeID=$!{item.ID}&searchTrueName=$!{params.SearchTrueName}&pageIndex=$!{params.PageIndex}">修改</a> || <a href="#" onclick="PostDelete($!{item.ID});">删除</a>
+              </td>
+              <td>
+                  <input type="checkbox" name="employeeID" value="$!{item.ID}" />
+              </td>
+              <td>
+                  <input type="checkbox" data-id="$!{item.ID}" data-lock="$!{item.Locked}" name="locked" data-off-text="冻结" data-on-text="开启" data-size="mini">
+              </td>
+              <td>
+                  <a href="../Registration/Build.do?employeeID=$!{item.ID}&searchTrueName=$!{params.SearchTrueName}&pageIndex=$!{params.PageIndex}">报名</a>
+              </td>
+          </tr>
+        #end
+    </tbody>
+</table>
+<ul class="pagination">
+    $!{ltlShowPager}
+</ul>

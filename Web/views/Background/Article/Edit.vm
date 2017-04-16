@@ -1,0 +1,80 @@
+﻿#capturefor(pageTitle)添加修改#end
+
+#capturefor(includeCode)
+<script src="/resources/jscripts/tinymce/tinymce.min.js"></script>
+
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        toolbar: "bold italic strikethrough link unlink numlist bullist blockquote upload image fullscreen fontsizeselect",
+        width: 600,
+        height: 200,
+        language: 'zh_CN',
+        upload_action: '/Helper/UploadFiles.do?returnType=1',//required
+        upload_file_name: 'uploadFile',//required
+        plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste upload"
+        ]
+    });
+
+    function PostEdit() {
+        $("#btnEdit").attr("disabled", "disabled").val("处理中,请稍候...");
+        var key = ["articleID", "subject", "catalogID"];
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+        info["context"] = tinyMCE.get('context').getContent();
+
+        jQuery.post("PostEdit.do", info, function (result) {
+            alert(result.message);
+            $("#btnEdit").removeAttr("disabled").val("确定");
+            if (result.code > 0) {
+                location.replace("List.do?catalogID=" + info.catalogID + "&pageIndex=$!{params.PageIndex}");
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li><a href="List.do?catalogID=${article.CatalogID}&pageIndex=$!{params.PageIndex}">网站资讯</a></li>
+    <li class="active">修改内容</li>
+</ol>
+
+<div class="form-container">
+    <form class="form-horizontal" method="post" target="_self" id="editForm" name="editForm" action="PostEdit.do">
+        <input type="hidden" name="articleID" id="articleID" value="$!{article.ID}" />
+        <div class="form-group">
+            <label class="col-sm-3 control-label">文章标题：</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="subject" id="subject" value="$!{article.Subject}" />
+            </div>
+        </div>
+        <span class="help-block" id="subjectTip"></span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">选择分类：</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="catalogID" id="catalogID">
+                #foreach($item in ${catalogList})
+                <option value="$!{item.ID}" #if(${item.ID} == ${article.CatalogID}) selected #end)>$!{item.Name}</option>
+                #end
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">内　　容：</label>
+            <div class="col-sm-9">
+                <textarea name="context" id="context" cols="3" class="form-control" style="width:600px;height:360px;">$!{article.Context}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input class="btn btn-success btn-block" type="button" id="btnEdit" name="btnEdit" onclick="PostEdit();" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+

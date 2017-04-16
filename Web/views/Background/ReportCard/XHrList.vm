@@ -1,0 +1,33 @@
+﻿        #if(${reportCardList.Count} > 0)
+        <table class="table table-condensed">
+          <tr class="active">
+            <th>学员编号</th>
+            <th>姓名</th>
+            <th>班级</th>
+            <th>考试时间</th>
+            <th>试卷路径</th>
+            <th colspan="2">操 作</th>
+          </tr>        
+          #foreach($item in ${reportCardList})
+          <tr>
+            <td>
+              <input type="hidden" name="employeeID" value="$!{item.EmployeeID}"/>
+              <input type="hidden" name="stID" value="$!{item.STID}"/>
+              $!{item.EmployeeName}
+            </td>
+            <td>$!{item.TrueName}</td>
+            <td>$!{item.SchoolTermName}</td>
+            <td><input class="form-control-sm input-sm" name="examDate" type="text" style="width:90px;" value="$!{item.ExamDate.ToString("yyyy-MM-dd")}" /></td>
+            <td><input class="form-control-sm input-sm" name="testPaperUrl" type="text" style="width:420px;" value="$!{item.TestPaperUrl}" /></td>
+            <td>
+                <input type="checkbox" name="reportCardID" id="reportCardID$!{item.ID}" value="$!{item.ID}"/>
+            </td>
+            <td>#if(${item.TestPaperUrl.Trim().Length} > 3)<a href="${item.TestPaperUrl}"><span class="glyphicon glyphicon-download-alt"></span></a>#end</td>
+          </tr>
+          #end
+        </table>
+		<ul class="pagination">
+		    $!{ltlShowPager}
+		</ul>
+        <p class="pull-right"><input class="btn btn-success" type="button" name="btnSave" id="btnSave" value="保存学生成绩" onclick="PostSave();" /></p>
+        #end

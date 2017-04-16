@@ -1,0 +1,13 @@
+﻿#capturefor(pageTitle)新增小班#end
+
+<ol class="breadcrumb">
+    <li><a href="bulletinBoard.do?pageIndex=$!{params.PageIndex}">公告列表</a></li>
+    <li class="active">公告内容</li>
+</ol>
+
+<div class="left-container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>公告标题：</strong>$!{bulletinBoard.Subject}</div>
+        <div class="panel-body"><strong>内容：</strong>$!{bulletinBoard.MsgText}</div>
+    </div>
+</div>

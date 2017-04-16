@@ -1,0 +1,7 @@
+﻿<ul class="list-inline">
+    #foreach($item in ${learingGroupList})
+    <li>
+        <input type="checkbox" name="lgID" id="lgID${velocityCount}" value="$!{item.ID}" />$!{item.Name} 
+    </li>
+    #end
+</ul>

@@ -1,0 +1,37 @@
+﻿<table class="table table-condensed">
+    <tr class="active">
+        <th>学员编号</th>
+        <th>姓名</th>
+        <th style="width:180px;">班级</th>
+        <th style="width:60px;">学费</th>
+        <th style="width:40px;">退费</th>
+        <th colspan="5" class="text-center">操作</th>
+    </tr>
+    #set($totalSchoolFee = 0)
+    #set($totalRefund = 0)
+    #foreach($item in ${registrationList})
+    <tr>
+        <td>$!{item.EmployeeName}</td>
+        <td>$!{item.TrueName}</td>
+        <td class="select" id="$!{item.ID}" data-field="STID">$!{item.SchoolTermName}</td>
+        <td class="text" id="$!{item.ID}" data-field="SchoolFee">$!{item.SchoolFee}</td>
+        <td class="text" id="$!{item.ID}" data-field="Refund">$!{item.Refund}</td>
+        <td><a href="Edit.do?registrationID=$!{item.ID}&searchUserName=$!{params.SearchUserName}&stID=$!{item.STID}&pageIndex=$!{params.PageIndex}">修改</a></td>
+        <td><a href="Assessment.do?employeeID=$!{item.EmployeeID}&searchUserName=$!{params.SearchUserName}&stID=$!{item.STID}&pageIndex=$!{params.PageIndex}">考评</a></td>
+        <td><a href="../ReportCard/List.do?employeeID=$!{item.EmployeeID}">试卷</a></td>
+        <td><a href="Refund.do?registrationID=$!{item.ID}&searchUserName=$!{params.SearchUserName}&stID=$!{item.STID}&pageIndex=$!{params.PageIndex}">办理退课</a></td>
+        <td>
+            <input type="checkbox" name="registrationID" value="$!{item.ID}" />
+        </td>
+    </tr>
+    #set($totalSchoolFee = ${totalSchoolFee} + ${item.SchoolFee})
+    #set($totalRefund = ${totalRefund} + $!{item.Refund})
+    #end
+    <tr>
+        <td colspan="10"><b>合计　　学费：${totalSchoolFee} 元　　退费：${totalRefund} 元</b></td>
+    </tr>
+</table>
+<ul class="pagination">
+    $!{ltlShowPager}
+</ul>
+

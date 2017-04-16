@@ -1,0 +1,5 @@
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.DataAccess.dll
+C:\project\NET\JNyuluV3.0\Lib\IBatisNet.DataAccess.pdb
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.DataAccess\obj\Debug\IBatisNet.DataAccess.csprojResolveAssemblyReference.cache
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.DataAccess\obj\Debug\IBatisNet.DataAccess.dll
+C:\project\NET\JNyuluV3.0\IBatisNet\IBatisNet.DataAccess\obj\Debug\IBatisNet.DataAccess.pdb

@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC7AD07A-0BAA-437A-8256-6D9D649CFCD0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JNyuluSoft.Persistence</RootNamespace>
+    <AssemblyName>JNyuluSoft.Persistence</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseSqlMapDao.cs" />
+    <Compile Include="ICampusDao.cs" />
+    <Compile Include="IEmployeeDao.cs" />
+    <Compile Include="Impl\CampusSqlMapDao.cs" />
+    <Compile Include="Impl\EmployeeSqlMapDao.cs" />
+    <Compile Include="Impl\ReportCardSqlMapDao.cs" />
+    <Compile Include="Impl\SchoolRoomSqlMapDao.cs" />
+    <Compile Include="Impl\SchoolTermSqlMapDao.cs" />
+    <Compile Include="Impl\AssessmentSqlMapDao.cs" />
+    <Compile Include="Impl\RegistrationSqlMapDao.cs" />
+    <Compile Include="Impl\CatalogSqlMapDao.cs" />
+    <Compile Include="Impl\DeviceTokenSqlMapDao.cs" />
+    <Compile Include="Impl\NotificationSqlMapDao.cs" />
+    <Compile Include="Impl\ScheNoticeSqlMapDao.cs" />
+    <Compile Include="Impl\VideoSqlMapDao.cs" />
+    <Compile Include="Impl\SyllabusSqlMapDao.cs" />
+    <Compile Include="IReportCardDao.cs" />
+    <Compile Include="ISchoolRoomDao.cs" />
+    <Compile Include="ISchoolTermDao.cs" />
+    <Compile Include="IAssessmentDao.cs" />
+    <Compile Include="IScheNoticeDao.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IRegistrationDao.cs" />
+    <Compile Include="IDeviceTokenDao.cs" />
+    <Compile Include="INotificationDao.cs" />
+    <Compile Include="IVideoDao.cs" />
+    <Compile Include="ISyllabusDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\providers.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <Compile Include="Impl\MessageSqlMapDao.cs" />
+    <Compile Include="IMessageDao.cs" />
+    <None Include="Impl\SqlMap.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\Campus.xml" />
+    <EmbeddedResource Include="Impl\Maps\Registration.xml" />
+    <EmbeddedResource Include="Impl\Maps\Employee.xml" />
+    <EmbeddedResource Include="Impl\Maps\ReportCard.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Impl\Maps\SchoolRoom.xml" />
+    <EmbeddedResource Include="Impl\Maps\SchoolTerm.xml" />
+    <EmbeddedResource Include="Impl\Maps\Assessment.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\Catalog.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\Article.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Impl\ArticleSqlMapDao.cs" />
+    <Compile Include="ICatalogDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IArticleDao.cs" />
+    <Compile Include="Impl\GradeSqlMapDao.cs" />
+    <Compile Include="Impl\BulletinBoardSqlMapDao.cs" />
+    <Compile Include="Impl\PhotoGraphSqlMapDao.cs" />
+    <Compile Include="IGradeDao.cs" />
+    <Compile Include="IBulletinBoardDao.cs" />
+    <Compile Include="IPhotoGraphDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\Grade.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\BulletinBoard.xml" />
+    <EmbeddedResource Include="Impl\Maps\Message.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\PhotoGraph.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IBatisNet\IBatisNet.Common\IBatisNet.Common.csproj">
+      <Project>{bbc8da4a-ea88-41d9-8b93-929b8f3adade}</Project>
+      <Name>IBatisNet.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBatisNet\IBatisNet.DataAccess\IBatisNet.DataAccess.csproj">
+      <Project>{befc4a45-7df9-40e4-942c-82dc1ba5e708}</Project>
+      <Name>IBatisNet.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBatisNet\IBatisNet.DataMapper\IBatisNet.DataMapper.csproj">
+      <Project>{f3e45f39-3224-4ead-b138-eb5cc0e32824}</Project>
+      <Name>IBatisNet.DataMapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{02bf41f6-2dc0-4c95-abb4-32947b860e90}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{7900537e-4e3c-464f-a6df-c596affffef2}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\DeviceToken.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\Notification.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\Video.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\Syllabus.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Maps\ScheNotice.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

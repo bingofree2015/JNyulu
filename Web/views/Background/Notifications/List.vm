@@ -1,0 +1,44 @@
+﻿#capturefor(pageTitle)小班信息管理#end
+
+#capturefor(includeCode)
+<script type="text/javascript">
+    function PostDelete(notificationID) {
+        var info = {};
+        info["notificationID"] = notificationID;
+
+        jQuery.post("PostDelete.do", info, function (result) {
+            alert(result.message);
+            if (result.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">推送消息栏管理</li>
+</ol>
+
+<div class="left-container">
+    <p class="text-right"><a class="btn btn-success" href="Create.do?pageIndex=$!{params.PageIndex}">发布推送消息</a></p>
+    <table class="table table-striped">
+        <tr class="active">
+            <th>编号</th>
+            <th>标 题</th>
+            <th>日 期</th>
+            <th>操作</th>
+        </tr>
+
+        #foreach($item in ${notificationList})
+        <tr>
+            <td>$!{item.ID}</td>
+            <td>$!{item.Title}</td>
+            <td>$!{item.RecordTime.ToString("yyyy-MM-dd")}</td>
+            <td><a href="Edit.do?notificationID=$!{item.ID}&pageIndex=$!{params.PageIndex}">修改</a> | <a href="#" onclick="PostDelete($!{item.ID});">删除</a></td>
+        </tr>
+        #end
+          
+    </table>
+    <ul class="pagination">$!{ltlShowPager}</ul>
+</div>

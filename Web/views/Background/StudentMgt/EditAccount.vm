@@ -1,0 +1,43 @@
+﻿#capturefor(pageTitle)修改密码#end
+
+#capturefor(includeCode)
+
+<script type="text/javascript">
+    function PostEditAccount() {
+        var key = ["newPassWord"];
+        $("#btnEditAccount").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+        jQuery.each(key, function (k, v) {
+            info[v] = $("#" + v).val();
+        });
+
+        jQuery.post("PostEditAccount.do", info, function (result) {
+            alert(result.message);
+            $("#btnEditAccount").removeAttr("disabled").val("修改密码");
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">修改密码</li>
+</ol>
+
+<div class="form-container">
+    <form role="form" method="post" class="form-horizontal" target="_self" id="EditAccountForm" name="EditAccountForm" action="PostEditAccount.do">
+        <div class="input-group">
+            <span class="input-group-addon">请输入新的密码：</span>
+            <input class="form-control" type="password" value="" name="newPassWord" id="newPassWord" />
+        </div>
+        <span class="help-block" id="newPassWordTip"></span>
+        <div class="input-group">
+            <span class="input-group-addon">请再输一次密码：</span>
+            <input class="form-control" type="password" name="newPassWord1" id="newPassWord1" />
+        </div>
+        <span class="help-block" id="newPassWord1Tip"></span>
+        <div class="text-right">
+            <button class="btn btn-success" id="btnEditAccount" name="btnEditAccount" onclick="PostEditAccount();" type="button" value="确定">确定</button>
+        </div>
+    </form>
+</div>
+

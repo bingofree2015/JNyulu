@@ -1,0 +1,81 @@
+﻿<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+<style type="text/css">
+input.login {
+    border-style: solid !important;
+    border-width: 1px !important;
+    height: 22px !important;
+    margin: 0 !important;
+    outline-style: none !important;
+    vertical-align: middle !important;
+    background: none repeat scroll 0 0 #fff;
+    border-color: #d0d0d0;    
+    font: 12px/1.125 "Simsun","Arial Narrow","HELVETICA" !important;
+    margin: 0;
+    padding: 0;    
+    outline-style: none;
+    font-size: 12px;
+    font-family: "SimSun","宋体";
+    padding-bottom: 0;
+    padding-top: 0;    
+}
+</style>
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq().ready(function () {
+        jq('#cloginForm').validator({
+            timely: 0,
+            stopOnError: true,
+            msgMaker: function (opt) {
+                if (opt.msg != "") {
+                    alert(opt.msg);
+                }
+                return false;
+            },
+            valid: function (form) {
+                jq.ajax({
+                    url: '/Background/Home/PostLogin.do',
+                    type: 'POST',
+                    dataType: "json",
+                    data: jq(form).serialize(),
+                    success: function (result) {
+                        alert(result.message);
+                        if (result.code > 0) {
+                            var backUrl = "http://chat.jnyulu.com/?userName=" + jq("#cuserName").val();
+                            location.replace(backUrl);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+<div class="nav-top">
+    <div class="container">
+        <span class="chat"><a href="http://v2.jnyulu.com/" target="_blank">旧版入口</a></span>
+        <span class="customer-tel">雨露客服电话：4000-909-908</span>
+        <span class="mobile-app"><a href="/web/mobile.do">手机雨露</a></span>
+        <form method="post" target="_self" id="cloginForm" name="cloginForm">
+        <span class="chat">
+            手机号：<input class="login" tabindex="1" name="userName" id="cuserName" type="text" placeholder="手机号" style="width:80px;" />
+            密码：<input class="login" tabindex="2" name="passWord" type="password" placeholder="密码" style="width:70px;" />
+            <input name="btnLogin" type="submit" value="聊天室" style="height:24px; line-height:10px;" class="btn btn-success" />
+        </span>
+        </form>
+    </div>
+</div>
+<div class="nav-menu">
+    <a href="/" class="logo"></a>
+    <div class="menu-container">
+        <a class="#if(${catalog} == 0) active #end" href="/web/index.do">首页</a>
+        <a class="#if(${catalog} == -1) active #end" href="/web/videoList.do">雨露微课堂</a>
+        <a class="#if(${catalog} == -2) active #end" href="/web/corp.do">学校简介</a>
+        <a class="#if(${catalog.ID} == 2) active #end" href="/web/list.do?catalogID=2">招生信息</a>
+        <a class="#if(${catalog.ID} == 3) active #end" href="/web/list.do?catalogID=3">雨露快讯</a>
+        <a class="#if(${catalog.ID} == 7) active #end" href="/web/list.do?catalogID=7">特色培训</a>
+        <a class="#if(${catalog.ID} == 6) active #end" href="/web/list.do?catalogID=6">教学研究</a>
+        <a class="#if(${catalog.ID} == 5) active #end" href="/web/list.do?catalogID=5">学生答案</a>
+        <a class="#if(${catalog.ID} == 4) active #end" href="/web/list.do?catalogID=4">雨露学生</a>
+    </div>
+</div>

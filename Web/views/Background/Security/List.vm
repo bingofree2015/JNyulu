@@ -1,0 +1,44 @@
+﻿#capturefor(pageTitle)帐号权限管理#end
+
+#capturefor(includeCode)
+
+
+<script type="text/javascript">
+    function PostDelete(employeeID) {
+        var info = {};
+        info["employeeID"] = employeeID;
+
+        jQuery.post("PostDelete.do", info, function (result) {
+            alert(result.message);
+            if (result.code > 0) {
+                location.reload();
+            }
+        }, "json");
+    }
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">帐号权限管理</li>
+</ol>
+
+<div class="left-container">
+    <p class="text-right"><a class="btn btn-success" href="Create.do">新建管理员账号</a></p>
+    <hr class="help-block" />
+    <table class="table table-striped">
+        <tr class="active">
+            <th>登录名</th>
+            <th>创建时间</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        #foreach($item in ${emplyeeList})
+        <tr>
+            <td>$!{item.Name}</td>
+            <td>$!{item.RecordDate.ToString("yyyy-MM-dd hh:mm:ss")}</td>
+            <td class="td3">$!{item.Description}</td>
+            <td><a href="Edit.do?employeeID=$!{item.ID}">修改权限</a> | <a class="h" href="#" onclick="PostDelete($!{item.ID});">删除</a></td>
+        </tr>
+        #end
+    </table>
+</div>

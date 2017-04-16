@@ -1,0 +1,125 @@
+﻿#capturefor(pageTitle)学籍管理#end
+
+#capturefor(includeCode)
+<link type="text/css" href="/resources/jscripts/switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/switch/js/bootstrap-switch.min.js"></script>
+
+<link type="text/css" href="/resources/jscripts/validator/jquery.validator.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/jscripts/validator/jquery.validator.js"></script>
+<script type="text/javascript" src="/resources/jscripts/validator/local/zh_CN.js"></script>
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+
+    jq().ready(function () {
+        jq("#xhrList").load("XHrList.do?searchTrueName=$!{params.SearchTrueName}&pageIndex=$!{params.PageIndex}", function () {
+            renderStatus();
+        });
+    });
+
+    function jsPaginated(searchTrueName, pageIndex) {
+        jq("#xhrList").load("XHrList.do?searchTrueName=" + searchTrueName + "&pageIndex=" + pageIndex, function () {
+            renderStatus();
+        });
+    }
+
+    function PostSearch() {
+        var info = {};
+
+        info["searchTrueName"] = jq("#searchTrueName").val();
+        jsPaginated(info.searchTrueName, 1);
+    }
+
+    function renderStatus() {
+        jq("input:checkbox[name='locked']").each(function () {
+            var lock = jq(this).attr('data-lock');
+            jq(this).attr('checked', lock == -1 ? true : false);
+        });
+        jq("input:checkbox[name='locked']").bootstrapSwitch();
+
+        jq("input:checkbox[name='locked']").on('switchChange.bootstrapSwitch', function (event, state) {
+
+            var id = jq(this).attr('data-id');
+            var lock = state ? -1 : 0;
+
+            jQuery.getJSON("PostStatus.do", { employeeId: id, locked: lock }, function (json) {
+                var lock = json.Code;
+                if (lock >= -1) {
+                    jq(this).attr("data-lock", lock);
+                }
+            });
+            console.log(state); // true | false
+        });
+    }
+
+    function PostDelete(employeeID) {
+        var info = {};
+        info["employeeID"] = employeeID;
+
+        jQuery.post("PostDelete.do", info, function (result) {
+            alert(result.message);
+            if (result.code > 0) {
+                jsPaginated(jq("#searchTrueName").val(), 1);
+            }
+        }, "json");
+    }
+
+    function PostBatchDelete() {
+
+        var employeeIDList = '';
+        jq("input:checkbox[name='employeeID']:checked").each(function () {
+            employeeIDList += jq(this).attr("value") + ",";
+        })
+
+        jq("#btnBatchDelete").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+        info["employeeIDList"] = employeeIDList;
+
+        jQuery.post("PostBatchDelete.do", info, function (result) {
+            alert(result.message + result.code);
+            if (result.code > 0) {
+                jsPaginated(jq("#searchTrueName").val(), 1);
+            }
+            jq("#btnBatchDelete").removeAttr("disabled").val("删除选定项");
+        }, "json");
+    }
+
+    function PostAllDelete() {
+
+        jq("#btnAllDelete").attr("disabled", "disabled").val("处理中,请稍候...");
+        var info = {};
+
+        jQuery.post("PostAllDelete.do", info, function (result) {
+            alert(result.message + result.code);
+            if (result.code > 0) {
+                jsPaginated(jq("#searchTrueName").val(), 1);
+            }
+            jq("#btnAllDelete").removeAttr("disabled").val("删除选定项");
+        }, "json");
+    }
+
+</script>
+#end
+
+<ol class="breadcrumb">
+    <li class="active">学籍管理</li>
+</ol>
+
+<div class="left-container">
+    <form class="form-inline" role="form" method="post" target="_self" id="listForm" name="listForm">
+        <div class="input-group">
+            <span class="input-group-addon">输入学生姓名</span>
+            <input type="text" class="form-control" name="searchTrueName" id="searchTrueName" placeholder="输入学生姓名" value="$!{params.SearchTrueName}">
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="button" name="btnSearch" id="btnSearch" onclick="PostSearch();">查询</button>
+            </span>
+        </div>
+        <div class="btn-group pull-right">
+            <a class="btn btn-success" href="Create.do?searchTrueName=$!{params.SearchTrueName}&pageIndex=$!{params.PageIndex}">学籍注册</a>
+            <button class="btn btn-success" name="btnBatchDelete" id="btnBatchDelete" type="button" value="删除选定项" onclick="PostBatchDelete();">删除选定项</button>
+            <a class="btn btn-success" href="ImportExcel.do?searchTrueName=$!{params.SearchTrueName}&pageIndex=$!{params.PageIndex}">批量导入学籍信息</a>
+        </div>
+    </form>
+    <hr class="help-block" />
+    <div id="xhrList"></div>
+</div>

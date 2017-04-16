@@ -1,0 +1,26 @@
+﻿#capturefor(pageTitle)我的课程表#end
+
+<ol class="breadcrumb">
+    <li class="active">我的课程表</li>
+</ol>
+
+<div class="left-container">
+    <div class="list-group">
+        #foreach($item in ${registrationList})
+        <h4 class="list-group-item-heading">$!{item.SchoolTermName}</h4>
+        <p class="list-group-item-text">
+            <table class="table table-condensed">
+                <tr class="active">
+                    <th>课程表下载</th>
+                </tr>
+                #foreach($syllabus in ${item.SyllabusList})
+                <tr>
+                    <td>#if(${syllabus.SyllabusUrl})<a href="${syllabus.SyllabusUrl}"><span class="glyphicon glyphicon-download-alt"></span></a>#end</td>
+                </tr>
+                #end
+            </table>
+        </p>
+        #end
+    </div>
+</div>
+
